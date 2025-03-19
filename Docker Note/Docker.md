@@ -156,22 +156,17 @@ sudo usermod -aG docker $USER #ubuntu/windows
 ```
 #### After running these commands, you may need to log out and back in (or restart the EC2 instance) for the Docker group changes to take effect
 
-### Authenticate Docker
+### Push Your Docker Image to Docker Hub
 
-#### Before pushing your Docker image to Amazon ECR, you need to authenticate Docker with your Amazon ECR registry.
+#### Login to Docker Hub from your EC2 instance:
 ```
-sudo docker login --username 
+docker login
 ```
-### Build the Docker Image
+#### Tag your image (replace yourusername with your Docker Hub username):
 ```
-docker build -t <image_name>:<tag> .
+docker tag my-first-image yourusername/my-first-image
 ```
-#### Replace:
-#### `<image_name>` with your desired image name.
-#### `<tag>` with the desired tag (e.g., latest).
-
-#### Tag the Docker Image
+#### Push your image
 ```
-docker tag <image_name>:<tag>
+docker push yourusername/my-first-image
 ```
-
