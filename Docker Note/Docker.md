@@ -11,7 +11,7 @@
 #### Docker Hub: A public registry where Docker images are stored and shared
 
 ### Docker Architecture
-![alt text](image.png)
+
 
 ### container 
 #### A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
@@ -30,7 +30,7 @@
 |Management        |Complex at scale (hypervisor needed)    |Easier with tools like Docker Compose or Kubernetes|
 |Use Case	         |Running multiple OSes, heavy workloads  |Microservices, CI/CD pipelines, lightweight apps   |
 
-![alt text](image-1.png)
+
 
 ### Containers are light weight
 #### Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
