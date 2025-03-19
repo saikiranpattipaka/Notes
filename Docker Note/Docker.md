@@ -121,4 +121,57 @@
 #### docker restart <container_id>: Restart a container.
 #### docker exec -it <container_id> bash: Access the container’s shell for interactive commands.
 #### docker rm <container_id>: Remove a container.
+#### docker iamges : Verify Docker image is created.
 #### docker rmi <image_name>: Remove a Docker image.
+
+```
+# Update the package repository
+sudo apt update -y
+
+# Install required packages
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+
+# Add Docker's official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Add Docker repository to apt sources
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker
+sudo apt update -y
+sudo apt install -y docker-ce
+
+# Start Docker service
+sudo systemctl start docker
+
+# Enable Docker to start on boot
+sudo systemctl enable docker
+
+# verify Docker Installation
+docker --version
+
+# Add your user to the Docker group (optional but recommended)
+sudo usermod -aG docker $USER #ubuntu/windows
+
+```
+#### After running these commands, you may need to log out and back in (or restart the EC2 instance) for the Docker group changes to take effect
+
+### Authenticate Docker
+
+#### Before pushing your Docker image to Amazon ECR, you need to authenticate Docker with your Amazon ECR registry.
+```
+sudo docker login --username 
+```
+### Build the Docker Image
+```
+docker build -t <image_name>:<tag> .
+```
+#### Replace:
+#### `<image_name>` with your desired image name.
+#### `<tag>` with the desired tag (e.g., latest).
+
+#### Tag the Docker Image
+```
+docker tag <image_name>:<tag>
+```
+
