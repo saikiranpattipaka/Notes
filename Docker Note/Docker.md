@@ -348,6 +348,8 @@ docker run -p 5000:5000 my-python-app
 ### Multi-Stage Docker Build
 #### A multi-stage Docker build is a technique that allows you to create smaller, more efficient Docker images by using multiple `FROM` statements in a single Dockerfile. Each `FROM` defines a new stage in the build process, and this method is especially useful for reducing the final image size by separating the build and runtime environments.
 
+![alt text](image-1.png)
+
 ### Key Benefits of Multi-Stage Builds:
 #### Smaller Image Sizes: You can reduce the size of the final image by only copying the necessary artifacts from earlier stages, leaving behind development tools and dependencies used only for building the app.
 #### Cleaner Dockerfiles: Helps in organizing and structuring the build process in a clear and maintainable manner.
