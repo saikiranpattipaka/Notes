@@ -343,3 +343,173 @@ docker run -p 5000:5000 my-python-app
 |Overridable       |Yes, can be overridden by passing a different command	|Cannot be easily overridden without --entrypoint flag |
 |Typical Use       |Set default command/arguments	                        |Set the main command (core process)                   |
 |Syntax	           |CMD ["executable", "param1"]                            |ENTRYPOINT ["executable", "param1"]                   |
+
+
+### Multi-Stage Docker Build
+#### A multi-stage Docker build is a technique that allows you to create smaller, more efficient Docker images by using multiple `FROM` statements in a single Dockerfile. Each `FROM` defines a new stage in the build process, and this method is especially useful for reducing the final image size by separating the build and runtime environments.
+
+### Key Benefits of Multi-Stage Builds:
+#### Smaller Image Sizes: You can reduce the size of the final image by only copying the necessary artifacts from earlier stages, leaving behind development tools and dependencies used only for building the app.
+#### Cleaner Dockerfiles: Helps in organizing and structuring the build process in a clear and maintainable manner.
+#### Faster Builds: It allows the reuse of intermediate stages and layers, which can speed up the build process when only a small part of the Dockerfile changes.
+
+#### How Multi-Stage Build Works
+#### In a multi-stage Dockerfile, each stage can have its own `FROM` statement and is treated as an isolated environment for building. You define multiple `FROM` blocks in the same Dockerfile, but only the final stage is used for the final image. You can copy the necessary files from one stage to another using the `COPY --from=<stage>` command.
+
+#### Basic Syntax
+```
+# Stage 1: Build Stage
+FROM build-image AS build
+# Install dependencies and build application
+RUN install dependencies
+COPY . /app
+WORKDIR /app
+RUN build command
+
+# Stage 2: Final Image
+FROM runtime-image
+COPY --from=build /app /app
+CMD ["app command"]
+```
+
+#### Here, the first stage builds the application and the second stage creates the runtime image, which only contains the necessary files for running the app, keeping it minimal.
+
+#### Detailed Example
+#### Let's break down a real-world example using a Go application.
+
+#### 1. Stage 1: Build Stage
+#### The first stage is used to build the Go binary. It uses a Golang image, installs dependencies, and builds the app.
+
+```
+# Stage 1: Build the Go binary
+FROM golang:1.18 AS builder
+
+# Set the Current Working Directory inside the container
+WORKDIR /go/src/app
+
+# Copy the Go Modules manifests
+COPY go.mod go.sum ./
+
+# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+RUN go mod download
+
+# Copy the source code into the container
+COPY . .
+
+# Build the Go app
+RUN go build -o /go/bin/app
+```
+
+#### 2. Stage 2: Final Image (Runtime Stage)
+#### The second stage creates a final image for running the application. It starts with a minimal base image (e.g., `alpine`), copies the compiled binary from the builder stage, and sets the command to run the application.
+
+```
+# Stage 2: Create the runtime image
+FROM alpine:latest
+
+# Install any necessary dependencies for runtime
+RUN apk --no-cache add ca-certificates
+
+# Copy the Go binary from the builder stage
+COPY --from=builder /go/bin/app /usr/local/bin/app
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Command to run the application
+CMD ["app"]
+```
+
+#### 3. Building the Image
+#### Once the multi-stage Dockerfile is ready, you can build the Docker image with the following command:
+
+```
+docker build -t my-go-app .
+```
+
+#### This command will execute the instructions in the Dockerfile, but only the final image will be used to create the container, keeping the image size small because it only contains the necessary runtime components.
+
+#### 4. Why Multi-Stage Builds Work Well in This Case
+#### Build Efficiency: The Go compiler and build tools (`golang:1.18`) are used only in the first stage to build the application and are not included in the final image.
+#### Final Image Optimization: The final image is based on `alpine`, which is a much smaller image, and contains only the compiled binary (`app`) and the necessary runtime dependencies (`ca-certificates`).
+#### Reduced Docker Image Size: The final image will be significantly smaller than a traditional single-stage image, which might have included unnecessary build tools, libraries, and other dependencies.
+
+### Advanced Features of Multi-Stage Builds
+
+#### 1. Named Stages
+#### You can assign names to each stage in the Dockerfile for easier reference. This allows you to selectively copy artifacts between stages.
+
+```
+FROM node:14 AS build
+WORKDIR /app
+COPY . .
+RUN npm install
+
+FROM node:14-slim
+WORKDIR /app
+COPY --from=build /app /app
+CMD ["node", "app.js"]
+```
+#### Here, the first stage is named `build`, and we copy files from that stage using `--from=build`.
+
+#### 2. Using Different Base Images for Different Stages
+#### Each stage can use a different base image. This is particularly useful for optimizing both the build and runtime environments.
+```
+# Stage 1: Build the app using a large image with build tools
+FROM python:3.9 AS builder
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+
+# Stage 2: Create the smaller runtime image using a minimal image
+FROM python:3.9-slim
+WORKDIR /app
+COPY --from=builder /app /app
+CMD ["python", "app.py"]
+```
+
+#### In this example, `python:3.9` (a larger image) is used in the build stage, while `python:3.9-slim` (a smaller image) is used in the runtime stage.
+
+#### 3. Minimizing Final Image Size by Using Scratch
+#### If your application doesn’t require any base operating system (for example, you’re building a static binary), you can use scratch as the final base image, which is an empty image.
+
+```
+FROM golang:1.18 AS builder
+WORKDIR /go/src/app
+COPY . .
+RUN go build -o /go/bin/app
+
+FROM scratch
+COPY --from=builder /go/bin/app /app
+CMD ["/app"]
+```
+
+#### Here, the final image contains only the app binary and no OS dependencies.
+
+#### 4. Optimizing Build Context
+#### In multi-stage builds, each stage has its own set of files, which can help reduce the amount of unnecessary files being included in each stage. For instance, you might copy only the required files to the build context in each stage rather than copying the entire repository.
+
+```
+# Stage 1: Only copy the necessary files for building the app
+FROM golang:1.18 AS builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+
+# Stage 2: Final image with only the built binary
+FROM alpine:latest
+COPY --from=builder /app/myapp /bin/myapp
+CMD ["/bin/myapp"]
+```
+### 1.Best Practices for Multi-Stage Builds
+#### Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
+
+#### 2.Use Smaller Base Images for Runtime: Always use the smallest possible image for the final image, such as `alpine` or `slim` variants, to minimize the image size.
+
+#### 3.Copy Only Necessary Files: Avoid copying unnecessary files (e.g., .`git`, `tests`, build directories) into the Docker image.
+
+#### 4.Use Caching to Speed Up Builds: Docker caches layers to avoid redoing work. Organize your Dockerfile so that the build dependencies (like installing dependencies or building the project) happen early in the Dockerfile. This way, Docker can reuse layers if the dependencies haven't changed.
+
+#### Multi-stage Docker builds are an excellent way to optimize your Docker images by reducing their size, making the build process cleaner, and separating concerns between building and running the application. It is especially useful in scenarios where you need a specific build environment (e.g., full SDKs, compilers, etc.) but want to keep the final image as small and secure as possible. By following best practices like using smaller base images and only copying necessary files, you can significantly improve the efficiency of your Docker images.
+
