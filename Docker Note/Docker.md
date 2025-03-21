@@ -19,16 +19,16 @@
 #### A container is a bundle of Application, Application libraries required to run your application and the minimum system dependencies
 
 ### Docker vs Virtual Machines (VMs)
-|Feature	         |Virtual Machines (VMs)	                |Docker (Containers)                                |
+|Feature	       |Virtual Machines (VMs)	                |Docker (Containers)                                |
 |------------------|----------------------------------------|---------------------------------------------------|
 |Isolation	       |Full isolation, separate OS	            |Process-level isolation, shared kernel             |
 |Resource Usage    |High (each VM needs full OS)            |Low (shares host OS)                               |
 |Performance       |Slower due to OS overhead               |Faster due to lightweight design                   |
-|Portability       |Less portable	                          |Highly portable across environments                |
+|Portability       |Less portable	                        |Highly portable across environments                |
 |Start Time	       |Slow (full OS boot required)            |Fast (containers start instantly)                  |
-|Security	         |Stronger (hardware-level isolation)	    |Weaker (shared kernel)                             |
+|Security	       |Stronger (hardware-level isolation)	    |Weaker (shared kernel)                             |
 |Management        |Complex at scale (hypervisor needed)    |Easier with tools like Docker Compose or Kubernetes|
-|Use Case	         |Running multiple OSes, heavy workloads  |Microservices, CI/CD pipelines, lightweight apps   |
+|Use Case	       |Running multiple OSes, heavy workloads  |Microservices, CI/CD pipelines, lightweight apps   |
 
 
 
@@ -334,3 +334,11 @@ docker build -t my-python-app .
 docker run -p 5000:5000 my-python-app
 ```
 #### This will start the container, and it will be listening on port 5000
+
+
+|Feature           |CMD	                                                    |ENTRYPOINT                                            |
+|------------------|--------------------------------------------------------|------------------------------------------------------|
+|Purpose	       |Default command to run in the container	                |Defines the main command to run                       |
+|Overridable       |Yes, can be overridden by passing a different command	|Cannot be easily overridden without --entrypoint flag |
+|Typical Use       |Set default command/arguments	                        |Set the main command (core process)                   |
+|Syntax	           |CMD ["executable", "param1"]                            |ENTRYPOINT ["executable", "param1"]                   |
