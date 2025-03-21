@@ -633,4 +633,10 @@ CMD ["/app/app.py"]
 #### 4.Not Suitable for All Applications:
 #### Distroless images are perfect for simple runtime scenarios, but for applications that require complex runtime debugging or additional tools (e.g., development environments), distroless images might not be the best fit.
 
+#### Example of distroless images:
+`gcr.io/distroless/python3` for Python applications.
+`gcr.io/distroless/java` for Java applications.
+`gcr.io/distroless/nginx` for Nginx.
+`gcr.io/distroless/base` for generic applications.
+
 [Google Distroless github] (https://github.com/GoogleContainerTools/distroless)
