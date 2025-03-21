@@ -1,6 +1,6 @@
 ## Docker Notes
 
-### 1. What is Docker?
+### 1.Docker
 #### Docker is a containerization platform used to develop, ship, and run applications inside containers. Containers are lightweight, portable, and isolated environments that allow you to run an application with all of its dependencies bundled together. Docker ensures that your application will run the same regardless of where it's deployed, providing consistency across multiple environments.
 
 ### Key Concepts:
