@@ -336,6 +336,7 @@ docker run -p 5000:5000 my-python-app
 #### This will start the container, and it will be listening on port 5000
 
 
+#### Difference between `CMD` & `ENTRYPOINT`
 |Feature           |CMD	                                                    |ENTRYPOINT                                            |
 |------------------|--------------------------------------------------------|------------------------------------------------------|
 |Purpose	       |Default command to run in the container	                |Defines the main command to run                       |
