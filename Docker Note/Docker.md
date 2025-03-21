@@ -502,8 +502,8 @@ FROM alpine:latest
 COPY --from=builder /app/myapp /bin/myapp
 CMD ["/bin/myapp"]
 ```
-### 1.Best Practices for Multi-Stage Builds
-#### Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
+### Best Practices for Multi-Stage Builds
+#### 1.Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
 
 #### 2.Use Smaller Base Images for Runtime: Always use the smallest possible image for the final image, such as `alpine` or `slim` variants, to minimize the image size.
 
