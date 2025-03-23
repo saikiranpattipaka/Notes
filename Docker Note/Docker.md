@@ -643,6 +643,8 @@ CMD ["/app/app.py"]
 
 #### Docker provides two primary ways to manage data persistence for containers: bind mounts and volumes. Both methods allow data to persist beyond the lifecycle of a container, but they function differently. Below are detailed notes on each, explaining the key differences, use cases, and how to work with them.
 
+![alt text](image-3.png)
+
 #### 1. Docker Bind Mounts : A bind mount is a way to mount a specific file or directory from the host machine into a container. The file or directory exists on the host machine, and Docker uses it directly as if it were inside the container.
 
 ### Key Characteristics:
