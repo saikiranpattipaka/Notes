@@ -645,12 +645,9 @@ CMD ["/app/app.py"]
 
 #### 1. Docker Bind Mounts : A bind mount is a way to mount a specific file or directory from the host machine into a container. The file or directory exists on the host machine, and Docker uses it directly as if it were inside the container.
 
-#### Key Characteristics:
-
+### Key Characteristics:
 #### Host-based paths: You specify an absolute path on the host system to mount inside the container.
-
 #### Direct mapping: Any changes made in the mounted file or directory on the host are immediately reflected inside the container and vice versa.
-
 #### No Docker management: Bind mounts are not managed by Docker. They depend on the host's filesystem, and Docker doesn't track their lifecycle.
 
 #### Syntax to create a bind mount:
@@ -668,32 +665,24 @@ docker run -v /home/user/data:/app/data my-container
 #### Any changes to files in /home/user/data will be reflected in /app/data inside the container.
 
 ### Advantages of Bind Mounts:
-
 #### Direct file access: Useful when you need to directly interact with the files on the host (e.g., for development purposes).
-
 #### Flexible paths: You can mount any directory or file from the host to the container.
 
 ### Disadvantages of Bind Mounts:
 #### No Docker management: Since bind mounts depend directly on the host filesystem, Docker cannot manage their lifecycle, and the host paths could be accidentally altered.
-
 #### Security concerns: Bind mounts may expose the container to accidental or malicious modifications from the host system.
-
 #### Host dependency: Bind mounts are dependent on the host's operating system. This makes them less portable than volumes.
 
 ### When to use bind mounts:
 #### For development environments where you need to modify code on the host and see the changes reflected in real-time inside the container.
-
 #### When you need access to host-specific files (e.g., configuration files) inside the container.
 
 ### 2. Docker Volumes: A volume is a more Docker-friendly method of storing persistent data. Volumes are managed by Docker and are stored outside the container’s filesystem, allowing data to persist across container restarts, rebuilds, and deletions.
 
 ### Key Characteristics:
 #### Docker-managed: Volumes are fully managed by Docker. You can create, inspect, and remove them using Docker CLI commands.
-
 #### Independent of host filesystem: Docker volumes are stored in a special directory on the host (usually /var/lib/docker/volumes/), but they are abstracted away from the host's filesystem.
-
 #### Portability: Volumes can be easily moved between Docker hosts (using Docker's docker save and docker load or through Docker Swarm).
-
 #### Backups: Volumes can be backed up, restored, and even shared among multiple containers.
 
 ### Syntax to create a volume:
@@ -714,23 +703,17 @@ docker run -v my_volume:/app/data my-container
 
 ### Advantages of Volumes:
 #### Docker-managed lifecycle: Volumes are created and managed by Docker, making them easier to work with in a consistent manner.
-
 #### Persistence across container restarts: Data stored in volumes persists even after the container is removed.
-
 #### Isolation: Volumes are isolated from the host system's file structure, reducing security risks.
-
 #### Easier backups and restores: Volumes can be backed up or restored separately from containers.
 
 ### Disadvantages of Volumes:
 #### Less flexibility: You cannot directly access the volume files on the host unless you specifically mount them, making it harder to interact with the data unless the volume is used by a container.
-
 #### Not as flexible as bind mounts for host interaction: If you need to access or edit files directly on the host system, volumes may not be ideal.
 
 ### When to use volumes:
 #### For production environments where data persistence is essential, and you want Docker to manage storage for you.
-
 ### When you need data to persist across container rebuilds, restarts, or when you need to migrate data between containers.
-
 #### For databases or any stateful services that require durable storage independent of the container lifecycle.
 
 ### Comparison: Bind Mounts vs Volumes
@@ -769,6 +752,6 @@ docker volume prune
 ### This command will remove all unused volumes, freeing up disk space.
 
 
-#### Bind Mounts are more suitable when you need direct interaction with the host's filesystem, especially for development and testing.
+##### Bind Mounts are more suitable when you need direct interaction with the host's filesystem, especially for development and testing.
 
-#### Volumes are more suitable for production use, providing better data persistence, isolation, and management by Docker.
+##### Volumes are more suitable for production use, providing better data persistence, isolation, and management by Docker.
