@@ -11,7 +11,7 @@
 #### Docker Hub: A public registry where Docker images are stored and shared
 
 ### Docker Architecture
-![alt text](Multi stage Build.png)
+![alt text](<Docker Architecture.png>)
 
 ### container 
 #### A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
@@ -35,7 +35,7 @@
 ### Containers are light weight
 #### Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
 
-![alt text](Docker vs VM.png)
+![alt text](<Docker vs VM.png>)
 
 ### 2. Core Concepts in Docker
 
@@ -309,7 +309,7 @@ docker run -p 5000:5000 my-python-app
 ### Multi-Stage Docker Build
 #### A multi-stage Docker build is a technique that allows you to create smaller, more efficient Docker images by using multiple `FROM` statements in a single Dockerfile. Each `FROM` defines a new stage in the build process, and this method is especially useful for reducing the final image size by separating the build and runtime environments.
 
-![alt text](Multi stage Build.png)
+![alt text](<Multi stage Build.png>)
 
 ### Key Benefits of Multi-Stage Builds:
 #### Smaller Image Sizes: You can reduce the size of the final image by only copying the necessary artifacts from earlier stages, leaving behind development tools and dependencies used only for building the app.
