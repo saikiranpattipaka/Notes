@@ -1121,8 +1121,8 @@ services:
       retries: 3
 ```
 ### Best Practices
-##### Use Named Volumes: For persistent data, use named volumes instead of bind mounts to ensure data is preserved even if containers are removed.
-##### Use .env Files for Sensitive Data: Keep environment variables, especially sensitive data, in .env files for better security and flexibility.
+Use Named Volumes: For persistent data, use named volumes instead of bind mounts to ensure data is preserved even if containers are removed.
+Use .env Files for Sensitive Data: Keep environment variables, especially sensitive data, in .env files for better security and flexibility.
 ##### Define Explicit Networks: Always define networks explicitly to avoid potential issues with the default bridge network.
 ##### Use a .dockerignore File: This prevents unnecessary files (such as .git, node_modules, etc.) from being copied into your Docker image.
 ##### Minimize Image Size: Use smaller base images like alpine to reduce the size of your Docker image.
