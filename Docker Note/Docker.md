@@ -568,7 +568,7 @@ CMD ["/app/app.py"]
 #### `gcr.io/distroless/nginx` for Nginx.
 #### `gcr.io/distroless/base` for generic applications.
 
-[Google Distroless github] (https://github.com/GoogleContainerTools/distroless)
+[Github] (https://github.com/GoogleContainerTools/distroless)
 
 #### Docker provides two primary ways to manage data persistence for containers: bind mounts and volumes. Both methods allow data to persist beyond the lifecycle of a container, but they function differently. Below are detailed notes on each, explaining the key differences, use cases, and how to work with them.
 
