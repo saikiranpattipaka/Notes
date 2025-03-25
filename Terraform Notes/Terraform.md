@@ -114,8 +114,8 @@ resource "aws_instance" "example" {
 
 #### Types of provisioners:
 
-#### `local-exec`: Runs a command locally on the machine running Terraform.
-#### `remote-exec`: Runs a command on the remote resource (e.g., EC2 instance).
+#### `local-exec` Runs a command locally on the machine running Terraform.
+#### `remote-exec` Runs a command on the remote resource (e.g., EC2 instance).
 #### `file` is used to copy files or directories from the local machine to the remote resource. It allows you to upload configuration files, scripts, or other assets to the remote server.
 #### `chef` provisioner allows you to run Chef recipes on the remote machine. It integrates Terraform with Chef, a configuration management tool, to apply desired configurations.
 #### `puppet` provisioner is used to run Puppet manifests on the remote resource. Similar to Chef, it allows Terraform to work with Puppet to manage configurations.
