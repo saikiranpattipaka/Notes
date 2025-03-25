@@ -934,3 +934,202 @@ docker network disconnect <network_name> <container_name_or_id>
 
 #### Monitor Network Traffic: Use tools like docker network inspect to monitor and debug network issues between containers.
 
+### Docker Compose
+#### Docker Compose is a tool for defining and running multi-container Docker applications. You define all of your app's services (like databases, backend, frontend, etc.) in a docker-compose.yml file, and then you can use a single command to build and start all the services.
+
+### Benefits of Using Docker Compose
+#### Multi-Container Management: You can define multiple services that are interdependent in one configuration file.
+#### Easy to Scale: Docker Compose allows you to scale services up or down with a simple command.
+#### Environment Configuration: You can set environment variables, build configuration, volumes, networks, and other settings for containers.
+#### Reusability and Consistency: Once defined, you can easily recreate the environment across different machines or environments.
+#### Isolation: It helps you isolate services in containers to avoid dependency conflicts.
+
+### Core Concepts in Docker Compose
+#### 1. docker-compose.yml File
+#### This is the heart of Docker Compose. It’s a YAML file that defines the services, networks, volumes, and other configurations needed to run your application.
+#### 2. Services
+#### A service is simply a container in Docker Compose. Each service in a docker-compose.yml file is mapped to a Docker container.
+#### 3. Networks
+#### Docker Compose automatically creates a network for each project, but you can also define custom networks in the docker-compose.yml file.
+#### 4. Volumes
+#### Volumes are used to persist data from containers. They can be shared across services or used to store database data, logs, or configurations.
+
+### Basic Structure of a docker-compose.yml File
+#### A docker-compose.yml file typically has three key sections:
+#### Version: Specifies the version of Docker Compose to use.
+#### Services: Lists the containers/services that will run.
+#### Volumes and Networks: Configuration for shared volumes and networks.
+```
+version: '3'
+services:
+  web:
+    image: nginx
+    ports:
+      - "80:80"
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: example
+```
+
+#### Version: The version of the Compose file syntax.
+#### Services: Lists the containers to run (e.g., web, db).
+#### Ports: Defines port mappings between the host and the container.
+#### Environment: Defines environment variables like passwords.
+
+### Docker Compose Commands
+#### docker-compose up: Builds, (re)creates, and starts the services defined in the docker-compose.yml file.
+`docker-compose up`
+
+#### docker-compose down: Stops and removes the containers and networks defined in docker-compose.yml.
+`docker-compose down`
+
+#### docker-compose build: Builds images as defined in the docker-compose.yml file.
+`docker-compose build`
+
+#### docker-compose ps: Lists all running services.
+`docker-compose ps`
+
+#### docker-compose logs: Displays the logs from all containers.
+`docker-compose logs`
+
+#### docker-compose exec: Executes a command in a running service container.
+`docker-compose exec web bash`
+
+
+### Key Elements of docker-compose.yml
+#### 1. Version
+#### Defines the version of the Docker Compose file syntax to use. Common versions are 3, 3.1, 3.8, etc.
+```
+version: '3.8'
+```
+#### 2. Services
+#### Defines the application services (containers). Each service can include properties such as:
+#### build: Defines the build context if you want to build an image.
+#### image: Specifies the image to use.
+#### ports: Exposes container ports to the host.
+#### volumes: Mounts directories or files from the host into the container.
+#### environment: Set environment variables.
+```
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: example
+```
+
+### 3. Volumes
+#### Volumes are used to persist data or share data between containers. Volumes can be declared globally or per-service.
+```
+volumes:
+  db_data:
+    driver: local
+```
+
+### 4. Networks
+#### By default, Docker Compose creates a network for each project, but you can define custom networks as well.
+```
+networks:
+  front_end:
+    driver: bridge
+```
+### 5. Depends_on
+#### The depends_on keyword expresses the dependency between services. It ensures that a service waits for another service to start before it starts.
+```
+services:
+  web:
+    image: nginx
+    depends_on:
+      - db
+```
+
+### Example of a Multi-Container Application
+#### Here’s an example of a simple multi-container application with a web frontend and a database.
+```
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    networks:
+      - webnet
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: secret
+    networks:
+      - webnet
+  redis:
+    image: redis:latest
+    networks:
+      - webnet
+networks:
+  webnet:
+```
+#### In this example:
+#### web is a frontend service running an NGINX container.
+#### db is a PostgreSQL container with a password set for the database.
+#### redis is a Redis container used for caching or other data storage purposes.
+#### All services are connected to a custom network called webnet.
+
+### Docker Compose in Development vs. Production
+#### While Docker Compose is often used for local development environments, it can also be useful for staging or production systems. However, for production, you may need additional configurations such as:
+#### Scaling: You can scale services to run more containers for load balancing.
+#### Environment-specific Configurations: Use different docker-compose.override.yml files for different environments (development, staging, production).
+
+#### Example of scaling a service:
+```
+docker-compose up --scale web=3
+```
+#### This command will scale the web service to 3 containers.
+
+### Advanced Docker Compose Features
+#### 1. Extending Docker Compose Files
+#### You can extend your docker-compose.yml by using a docker-compose.override.yml file. This is useful when you want to have different configurations for development and production.
+
+
+### docker-compose.override.yml
+```
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - NODE_ENV=development
+```
+#### 2. Using Build Context
+#### You can build custom images for your services from a Dockerfile using the build property in the Compose file.
+```
+services:
+  web:
+    build: ./web
+```
+#### 3. Health Checks
+#### Health checks can be added to ensure the services are running correctly. Docker Compose can wait for a service to become healthy before starting dependent services.
+```
+services:
+  web:
+    image: nginx
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      retries: 3
+```
+### Best Practices
+#### Use Named Volumes: For persistent data, use named volumes instead of bind mounts to ensure data is preserved even if containers are removed.
+#### Use .env Files for Sensitive Data: Keep environment variables, especially sensitive data, in .env files for better security and flexibility.
+#### Define Explicit Networks: Always define networks explicitly to avoid potential issues with the default bridge network.
+#### Use a .dockerignore File: This prevents unnecessary files (such as .git, node_modules, etc.) from being copied into your Docker image.
+#### Minimize Image Size: Use smaller base images like alpine to reduce the size of your Docker image.
+#### Use Multi-stage Builds: Multi-stage builds allow you to use different images for building and running the application, reducing the final image size.
+#### Keep Containers Stateless: Aim to keep containers stateless by using external storage for data persistence and separating stateful services.
+#### Security: Regularly update Docker images to get the latest security patches. Avoid running containers as the root user if possible.
+
+#### Refer Github for Examples
+[Github](https://github.com/docker/awesome-compose)
+
