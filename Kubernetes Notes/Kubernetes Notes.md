@@ -76,8 +76,8 @@
      - Makes decisions based on resource requests, node selectors, taints, tolerations, etc.
 
   d) kube-controller-manager
-    - Role: The `kube-controller-manager` is a set of controllers that regulate the state of the cluster. It watches the state of resources and makes changes to bring the cluster to the desired state.
-    - Responsibilities:
+   - Role: The `kube-controller-manager` is a set of controllers that regulate the state of the cluster. It watches the state of resources and makes changes to bring the cluster to the desired state.
+   - Responsibilities:
      - Node Controller: Handles node status, watches for node failures.
      - Replication Controller: Ensures the specified number of pod replicas are running.
      - Deployment Controller: Ensures deployments are running as specified.
@@ -108,11 +108,11 @@
     - Supports both iptables and IPVS-based routing for load balancing.
 
   c) Container Runtime
-    - Role: The container runtime is responsible for running containers on the node. Kubernetes supports several container runtimes, such as Docker, containerd, or CRI-O.
-    - Responsibilities:
-      - Pulls container images from registries.
-      - Creates and runs containers from images.
-      - Reports container status to the kubelet.
+   - Role: The container runtime is responsible for running containers on the node. Kubernetes supports several container runtimes, such as Docker, containerd, or CRI-O.
+   - Responsibilities:
+    - Pulls container images from registries.
+    - Creates and runs containers from images.
+    - Reports container status to the kubelet.
 
 ### 3. Kubernetes Objects
 #### Kubernetes uses a set of API objects to represent the cluster's desired state. These objects allow users to describe the system’s behavior, including how containers should be run, scaled, and connected. Some key Kubernetes objects are:
