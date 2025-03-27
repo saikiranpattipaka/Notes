@@ -60,7 +60,7 @@
   - Validates and configures data for the API objects (e.g., pods, deployments).
   - Acts as the gateway to the entire cluster.
 
- - b) etcd
+  b) etcd
   - Role: `etcd` is a distributed key-value store that is used to store all of Kubernetes' configuration data, cluster state, and metadata.
   - Responsibilities:
     - Stores the configuration and state of the cluster, such as the configuration of nodes, pods, and other resources.
@@ -68,14 +68,14 @@
     - Serves as the source of truth for the cluster state.
   - Note: `etcd` is a critical component for cluster availability. Losing access to etcd can cause issues with the cluster, as it cannot function without it.
 
- - c) kube-scheduler
+  c) kube-scheduler
    - Role: The `kube-scheduler` is responsible for selecting which node an unscheduled pod should run on, based on various scheduling policies and available resources.
    - Responsibilities:
      - Monitors the state of the cluster for unscheduled pods.
      - Uses available resources and constraints (like CPU, memory, and affinity rules) to decide where to place the pod.
      - Makes decisions based on resource requests, node selectors, taints, tolerations, etc.
 
- - d) kube-controller-manager
+   d) kube-controller-manager
     - Role: The `kube-controller-manager` is a set of controllers that regulate the state of the cluster. It watches the state of resources and makes changes to bring the cluster to the desired state.
     - Responsibilities:
       - Node Controller: Handles node status, watches for node failures.
@@ -84,7 +84,7 @@
       - Job Controller: Manages the execution of batch jobs.
       - EndPoint Controller: Ensures the correct Endpoints are associated with services.
 
- - e) cloud-controller-manager
+  e) cloud-controller-manager
    - Role: The `cloud-controller-manager` allows Kubernetes to interact with the cloud provider’s API (AWS, GCP, etc.) to manage infrastructure resources.
    - Responsibilities:
      - Manages cloud resources like load balancers, storage, and network configurations.
@@ -93,21 +93,21 @@
 ### 2. Node Components
 #### Each node in the Kubernetes cluster runs several key components that allow it to interact with the control plane and run workloads. These node components are:
 
- - a) kubelet
+  a) kubelet
    - Role: The `kubelet` is the primary agent that runs on each node. It ensures the containers (pods) are running as expected.
    - Responsibilities:
      - Continuously monitors the state of the node and reports back to the master (API server).
      - Manages the lifecycle of containers on the node.
      - Ensures the containers are running as per the desired state defined by the control plane (e.g., pods defined by deployments).
 
- - b) kube-proxy
+  b) kube-proxy
    - Role: The `kube-proxy` manages network rules on nodes. It enables communication between pods across different nodes and ensures services are exposed properly.
    - Responsibilities:
     - Manages and routes traffic for services (load balancing).
     - Implements the Kubernetes Service concept, which helps expose pods to other pods or external traffic.
     - Supports both iptables and IPVS-based routing for load balancing.
 
- - c) Container Runtime
+  c) Container Runtime
     - Role: The container runtime is responsible for running containers on the node. Kubernetes supports several container runtimes, such as Docker, containerd, or CRI-O.
     - Responsibilities:
      - Pulls container images from registries.
