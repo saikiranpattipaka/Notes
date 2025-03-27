@@ -75,7 +75,7 @@
      - Uses available resources and constraints (like CPU, memory, and affinity rules) to decide where to place the pod.
      - Makes decisions based on resource requests, node selectors, taints, tolerations, etc.
 
-   d) kube-controller-manager
+  d) kube-controller-manager
     - Role: The `kube-controller-manager` is a set of controllers that regulate the state of the cluster. It watches the state of resources and makes changes to bring the cluster to the desired state.
     - Responsibilities:
       - Node Controller: Handles node status, watches for node failures.
@@ -107,7 +107,7 @@
     - Implements the Kubernetes Service concept, which helps expose pods to other pods or external traffic.
     - Supports both iptables and IPVS-based routing for load balancing.
 
- c) Container Runtime
+  c) Container Runtime
     - Role: The container runtime is responsible for running containers on the node. Kubernetes supports several container runtimes, such as Docker, containerd, or CRI-O.
     - Responsibilities:
      - Pulls container images from registries.
