@@ -48,7 +48,7 @@
  - Master Components (Control Plane)
  - Node Components
  
-![image](https://github.com/user-attachments/assets/d75c192b-dfc4-4180-bfaa-9caea43bed6c)
+![K8S Architecture](https://github.com/user-attachments/assets/d75c192b-dfc4-4180-bfaa-9caea43bed6c)
 
 ### 1. Master Components (Control Plane)
 #### The Control Plane is responsible for managing the overall state of the Kubernetes cluster. The control plane makes decisions about scheduling, managing the cluster’s state, and responding to events in the cluster (e.g., deploying a new pod). The main master components include:
