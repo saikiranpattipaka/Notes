@@ -107,7 +107,7 @@
     - Implements the Kubernetes Service concept, which helps expose pods to other pods or external traffic.
     - Supports both iptables and IPVS-based routing for load balancing.
 
-  c) Container Runtime
+ c) Container Runtime
     - Role: The container runtime is responsible for running containers on the node. Kubernetes supports several container runtimes, such as Docker, containerd, or CRI-O.
     - Responsibilities:
      - Pulls container images from registries.
