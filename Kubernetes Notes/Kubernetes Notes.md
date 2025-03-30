@@ -286,9 +286,9 @@ kubectl get pods --all-namespaces
 #### Kubernetes lifecycle management refers to the set of processes, tools, and practices used to manage the entire lifecycle of a Kubernetes cluster, including setup, maintenance, scaling, monitoring, and decommissioning. A proper lifecycle management strategy helps ensure smooth and reliable operation of Kubernetes clusters in production.
 
 #### Tools for Kubernetes Lifecycle Management
-#### 1.eksctl:
+#### 1. eksctl:
 - A command-line tool designed by AWS to simplify the creation, management, and deletion of Amazon EKS clusters. It helps manage EKS clusters with ease and is the recommended tool for managing AWS-based Kubernetes clusters.
-#### 2.Kops (Kubernetes Operations):
+#### 2. Kops (Kubernetes Operations):
 - What it is: Kops is an open-source tool that helps with the creation, management, and operation of Kubernetes clusters. It is particularly useful for running Kubernetes on AWS but also works on other cloud platforms like GCP, and even on-premise infrastructure.
 - Use case: Kops provides a way to automate the deployment and lifecycle management of Kubernetes clusters on AWS, including provisioning infrastructure like EC2 instances, load balancers, and VPCs.
 
@@ -302,11 +302,11 @@ kubectl get pods --all-namespaces
 - Cluster Deletion: Safely decommissioning and deleting a cluster.
 
 #### Kops Commands for Kubernetes Cluster Installation
-#### Pre-Requisites:
+##### Pre-Requisites:
 #### Before using `kops`, ensure you have:
-#### AWS CLI configured.
-#### kubectl installed.
-#### Terraform (if required for some features).
+##### AWS CLI configured.
+##### kubectl installed.
+##### Terraform (if required for some features).
 
 #### 1. Install Kops:
 #### For Linux:
