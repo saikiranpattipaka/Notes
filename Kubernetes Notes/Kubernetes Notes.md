@@ -428,8 +428,8 @@ spec:
   - containerPort: The port on which the container will listen.
 
 #### Pod Lifecycle:
-##### 1.Pending: The Pod is created, but Kubernetes has not yet scheduled it to a node.
-##### 2.Running: The Pod is running on a node.
-##### 3.Succeeded: The containers in the Pod have successfully completed.
-##### 4.Failed: The containers in the Pod failed to start or completed unsuccessfully.
-##### 5.Unknown: The status of the Pod could not be determined.
+- 1.Pending: The Pod is created, but Kubernetes has not yet scheduled it to a node.
+- 2.Running: The Pod is running on a node.
+- 3.Succeeded: The containers in the Pod have successfully completed.
+- 4.Failed: The containers in the Pod failed to start or completed unsuccessfully.
+- 5.Unknown: The status of the Pod could not be determined.
