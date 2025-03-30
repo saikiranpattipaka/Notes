@@ -157,10 +157,10 @@ e) Namespace
 
 #### To install Kubernetes (K8s) on an AWS EC2 Ubuntu instance, you will need to follow a series of steps. Here’s a simple guide to get you started with Kubernetes on EC2:
 
-### Prerequisites:
-#### AWS EC2 instance with Ubuntu - Ensure that your EC2 instance is running an Ubuntu operating system.
-#### SSH Access to your EC2 instance.
-#### Sudo access to install and configure required tools.
+Prerequisites:
+AWS EC2 instance with Ubuntu - Ensure that your EC2 instance is running an Ubuntu operating system.
+SSH Access to your EC2 instance.
+Sudo access to install and configure required tools.
 
 ### Step-by-Step Guide:
 #### 1. Update the System
