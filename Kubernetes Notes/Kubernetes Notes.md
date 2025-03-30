@@ -526,3 +526,6 @@ kubectl delete service nginx-service
 
 ##### 3. StatefulSet:
 - StatefulSets are used for applications that require stable identities, persistent storage, and ordered deployment and scaling (e.g., databases).
+
+### Refer Kubernetes Doc for Commands
+[Kubernetes cheat sheet](https://kubernetes.io/docs/reference/kubectl/quick-reference/)
