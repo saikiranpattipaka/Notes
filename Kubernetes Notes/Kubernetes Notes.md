@@ -303,69 +303,69 @@ kubectl get pods --all-namespaces
 
 #### Kops Commands for Kubernetes Cluster Installation
 ##### Pre-Requisites:
-#### Before using `kops`, ensure you have:
-##### AWS CLI configured.
-##### kubectl installed.
-##### Terraform (if required for some features).
+Before using `kops`, ensure you have:
+AWS CLI configured.
+kubectl installed.
+Terraform (if required for some features).
 
-#### 1. Install Kops:
-#### For Linux:
+##### 1. Install Kops:
+##### For Linux:
 ```
 curl -LO https://github.com/kubernetes/kops/releases/download/v1.26.0/kops-linux-amd64
 chmod +x kops-linux-amd64
 mv kops-linux-amd64 /usr/local/bin/kops
 ```
-#### 2. Install Kubectl:
+##### 2. Install Kubectl:
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.26.0/bin/linux/amd64/kubectl
 chmod +x kubectl
 mv kubectl /usr/local/bin/kubectl
 ```
-#### 3. Set up an S3 Bucket for Kops State Store:
-#### Kops requires an S3 bucket to store the state of your Kubernetes cluster.
+##### 3. Set up an S3 Bucket for Kops State Store:
+##### Kops requires an S3 bucket to store the state of your Kubernetes cluster.
 ```
 aws s3 mb s3://my-kops-state-store
 ```
-#### 4. Configure Environment Variables:
-#### Set environment variables to specify your region and state store.
+##### 4. Configure Environment Variables:
+##### Set environment variables to specify your region and state store.
 ```
 export KOPS_STATE_STORE=s3://my-kops-state-store
 export NAME=mycluster.k8s.local
 ```
-#### 5. Create Cluster Configuration:
-#### You can create a cluster using the following command:
+##### 5. Create Cluster Configuration:
+##### You can create a cluster using the following command:
 ```
 kops create cluster --name $NAME --zones us-west-2a,us-west-2b --node-count 3 --node-size t2.medium --master-size t2.medium --dns-zone mydomain.com
 ```
 
-#### 6. Update Cluster:
-#### To apply changes after cluster creation or if you have edited configuration files, use:
+##### 6. Update Cluster:
+##### To apply changes after cluster creation or if you have edited configuration files, use:
 ```
 kops update cluster --name $NAME --yes
 ```
-#### 7. Validate Cluster:
-#### Once the cluster is created, validate that it's running correctly:
+##### 7. Validate Cluster:
+##### Once the cluster is created, validate that it's running correctly:
 ```
 kops validate cluster
 ```
-#### 8. Export Kubeconfig:
-#### Configure `kubectl` to access the new Kubernetes cluster:
+##### 8. Export Kubeconfig:
+##### Configure `kubectl` to access the new Kubernetes cluster:
 ```
 kops export kubecfg --name $NAME
 ```
-#### 9. Scale Node Groups:
-#### If you want to scale the number of worker nodes:
+##### 9. Scale Node Groups:
+##### If you want to scale the number of worker nodes:
 ```
 kops edit ig --name $NAME nodes
 kops update cluster --name $NAME --yes
 ```
-#### 10. Upgrade Cluster Version:
-#### To upgrade Kubernetes or other components:
+##### 10. Upgrade Cluster Version:
+##### To upgrade Kubernetes or other components:
 ```
 kops upgrade cluster --name $NAME --yes
 ```
-#### 11. Delete Cluster:
-#### To delete a Kubernetes cluster managed by `kops`, use:
+##### 11. Delete Cluster:
+##### To delete a Kubernetes cluster managed by `kops`, use:
 ```
 kops delete cluster --name $NAME --yes
 ```
@@ -374,9 +374,4 @@ kops delete cluster --name $NAME --yes
 - Monitoring: Integrate tools like Prometheus, Grafana, or AWS CloudWatch for monitoring Kubernetes clusters.
 - CI/CD: Kubernetes distributions often integrate with continuous integration/continuous deployment pipelines to facilitate automated testing and deployment of applications.
 
-### Kubernetes Cluster Installation Summary
-#### 1. Choose a tool: Use eksctl for EKS or kops for custom or AWS-based Kubernetes clusters.
-#### 2. Set up your environment: Configure necessary AWS credentials, and tools like kubectl.
-#### 3. Create a Cluster: Run the appropriate commands to create your cluster.
-#### 4. Validate and Manage: Use tools to validate and manage your cluster, and apply ongoing updates as needed.
-#### 5. Monitoring and Scaling: Configure auto-scaling and integrate monitoring tools to keep track of performance.
+
