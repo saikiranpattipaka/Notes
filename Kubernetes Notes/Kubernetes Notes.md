@@ -524,6 +524,122 @@ kubectl delete service nginx-service
 ##### 2. ReplicaSet:
 - A ReplicaSet ensures that a specified number of Pod replicas are running at any given time. Deployments use ReplicaSets to manage Pods.
 
+
+### Deployment
+A Deployment in Kubernetes is a higher-level API object that manages the lifecycle of Pods and ReplicaSets. It provides features like:
+- Declarative updates to Pods (rolling updates and rollbacks)
+- Scaling applications easily
+- Self-healing (recreating Pods if they fail)
+- Version control for updates with rollbacks
+
+Key Features:
+- Rollouts & Rollbacks
+- Zero Downtime Deployments
+- Automated Scaling
+- Declarative Management (you declare the desired state, and Kubernetes makes it happen)
+
+#### ReplicaSet
+A ReplicaSet ensures that a specified number of pod replicas are running at any given time. If a pod fails, the ReplicaSet automatically creates a new one to maintain the desired count.
+- Main Role: Maintain the desired number of Pods.
+- Dependency: Deployments automatically create and manage ReplicaSets.
+
+Key Features:
+- Ensures high availability
+- Manages Pod replication
+- Handles Pod failures gracefully
+
+#### How Deployments and ReplicaSets Work Together
+Deployment → ReplicaSet → Pods
+- When you create a Deployment, Kubernetes automatically creates a ReplicaSet.
+- The ReplicaSet manages the Pods (creates, deletes, and maintains the desired count).
+- When updating a Deployment, Kubernetes creates a new ReplicaSet with the updated configuration and gradually transitions Pods.
+
+### Deployment YAML Example
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+spec:
+  replicas: 3  # Desired number of Pods
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: my-app:1.0
+        ports:
+        - containerPort: 80
+```
+Explanation:
+- `replicas`: 3: Ensures 3 Pods are running.(Number of Pods)
+- `selector`: Matches Pods with the label `app: my-app`.(Determines which Pods the Deployment manages)
+- `template`: Defines the Pod spec (containers, ports, etc.).
+
+
+#### Deployment Strategies
+1. Rolling Update (default):
+- Gradually replaces old Pods with new ones.
+- Zero downtime during updates.
+
+2. Recreate:
+- Deletes all old Pods before creating new ones.
+- Not ideal for zero-downtime apps.
+
+3. Blue/Green & Canary Deployments: (advanced)
+- Manage traffic between old and new versions during updates.
+
+### Managing Deployments
+- Create a Deployment:
+```
+kubectl apply -f deployment.yaml
+```
+- Check Deployment Status:
+```
+kubectl get deployments
+kubectl describe deployment my-app-deployment
+```
+- Scale Up/Down:
+```
+kubectl scale deployment my-app-deployment --replicas=5
+```
+- Rolling Back to Previous Version:
+```
+kubectl rollout undo deployment my-app-deployment
+```
+- Monitor Rollouts:
+```
+kubectl rollout status deployment my-app-deployment
+```
+### ReplicaSet YAML Example
+```
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-app-replicaset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: my-app:1.0
+        ports:
+        - containerPort: 80
+```
+Note: You usually don’t create ReplicaSets manually because Deployments handle them for you.
+
 ##### 3. StatefulSet:
 - StatefulSets are used for applications that require stable identities, persistent storage, and ordered deployment and scaling (e.g., databases).
 
