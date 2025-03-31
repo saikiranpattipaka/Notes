@@ -948,8 +948,9 @@ spec:
 |Load Balancing	     |Internal (Kube-Proxy), External (LoadBalancer, Ingress)   |
 |Networking	         |Flat Pod Network, Service Network, Node Network           |
 |Security	           |Network Policies, RBAC                                    |
+|Ingress	            |Advanced HTTP/S routing, SSL termination                  |
 
-##### KubeShark
+#### KubeShark
 KubeShark is a tool designed to help with observability and debugging of Kubernetes environments. It is primarily used for monitoring and analyzing network traffic in Kubernetes clusters. Here’s a more detailed look at its use cases:
 
 1. Network Traffic Monitoring: KubeShark allows users to capture and analyze network traffic between pods in a Kubernetes cluster. This is particularly useful for troubleshooting networking issues, understanding the flow of traffic, and detecting anomalies within the cluster.
@@ -961,4 +962,4 @@ KubeShark is a tool designed to help with observability and debugging of Kuberne
 
 In short, KubeShark helps Kubernetes operators and developers understand and manage network traffic in a microservices-based architecture, which is essential for troubleshooting, optimizing performance, and ensuring security.
 
-|Ingress	            |Advanced HTTP/S routing, SSL termination                  |
+
