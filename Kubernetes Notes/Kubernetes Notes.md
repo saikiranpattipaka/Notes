@@ -948,4 +948,17 @@ spec:
 |Load Balancing	     |Internal (Kube-Proxy), External (LoadBalancer, Ingress)   |
 |Networking	         |Flat Pod Network, Service Network, Node Network           |
 |Security	           |Network Policies, RBAC                                    |
+
+##### KubeShark
+KubeShark is a tool designed to help with observability and debugging of Kubernetes environments. It is primarily used for monitoring and analyzing network traffic in Kubernetes clusters. Here’s a more detailed look at its use cases:
+
+1. Network Traffic Monitoring: KubeShark allows users to capture and analyze network traffic between pods in a Kubernetes cluster. This is particularly useful for troubleshooting networking issues, understanding the flow of traffic, and detecting anomalies within the cluster.
+2. Real-time Monitoring: It provides real-time insights into network activity, allowing you to observe the behavior of microservices and their communication patterns.
+3. Distributed Tracing: KubeShark can be used for tracing requests as they travel across multiple services or pods, helping identify performance bottlenecks and any issues related to latency or failures.
+4. Simplifying Debugging: With KubeShark, you can quickly diagnose networking-related problems like misconfigured services, failed connections, or unexpected behaviors without needing to manually inspect each individual pod’s logs or network configuration.
+5. Visualization: It can visualize the network flows in the cluster, which helps in understanding the traffic between services and how data is moving within the cluster. This can aid in security auditing and performance monitoring.
+6. Integration with Other Tools: KubeShark can integrate with other observability tools, like Prometheus, Grafana, or Jaeger, to provide a more holistic view of the cluster's performance and health.
+
+In short, KubeShark helps Kubernetes operators and developers understand and manage network traffic in a microservices-based architecture, which is essential for troubleshooting, optimizing performance, and ensuring security.
+
 |Ingress	            |Advanced HTTP/S routing, SSL termination                  |
