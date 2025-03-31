@@ -760,3 +760,183 @@ spec:
         - containerPort: 80
 ```
 Note: You usually don’t create ReplicaSets manually because Deployments handle them for you.
+
+### Kubernetes Services
+A Kubernetes Service is an abstraction that defines a logical set of Pods and a policy to access them. It enables communication between different Pods, both inside and outside the cluster.
+
+#### Key Concepts:
+- Service: A stable endpoint (IP address & DNS name) to access Pods.
+- Pod: Temporary; IPs can change. Services ensure stable access.
+- ClusterIP (default): Accessible within the cluster.
+- NodePort: Exposes the service on a static port on each node.
+- LoadBalancer: Provisions an external load balancer (cloud-specific).
+- ExternalName: Maps to an external DNS name.
+
+### Service Types
+1. ClusterIP (default)
+ - Accessible only within the cluster.
+ - Stable IP, DNS name.
+ - Example: Internal API services.
+
+2. NodePort
+ - Exposes the service on a port on each node (e.g., `30000–32767`).
+ - Access via NodeIP:NodePort.
+ - Example: Dev/test environments.
+
+3. LoadBalancer
+ - Provisions an external load balancer (cloud provider-dependent).
+ - Public IP for external access.
+ - Example: Production web apps.
+
+4. ExternalName
+ - Maps the service to an external DNS name.
+ - No proxying; DNS-based service discovery.
+
+### Service YAML Example
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+```
+- `selector`: Matches Pods with `app: my-app`.
+- `port`: Service port.
+- `targetPort`: Pod port.
+
+### Service Discovery
+Service Discovery allows Pods to discover and communicate with each other automatically.
+
+#### How It Works:
+1. DNS-Based Discovery:
+ - Kubernetes automatically creates DNS records for services (e.g., `my-service.default.svc.cluster.local`).
+ - Pods can use DNS to access services.
+
+2. Environment Variables:
+ - Kubernetes injects environment variables into Pods for each Service (e.g.,` MY_SERVICE_SERVICE_HOST`, `MY_SERVICE_SERVICE_PORT`).
+ - Deprecated in favor of DNS-based discovery.
+
+#### Example: DNS-Based Discovery
+```
+curl http://my-service.default.svc.cluster.local:80
+```
+- `my-servic`e: Service name.
+- `default`: Namespace (can vary).
+- `svc.cluster.local`: Default cluster DNS suffix.
+
+### Load Balancing
+Kubernetes handles Load Balancing at multiple levels.
+
+#### Types of Load Balancing:
+1. Internal Load Balancing (Cluster-Level)
+ - Kube-Proxy: Uses iptables or IPVS for internal load balancing.
+ - Distributes traffic across Pods.
+
+2. External Load Balancing (Outside the Cluster)
+ - LoadBalancer Service Type: Provisions external load balancers in cloud environments (AWS ELB, GCP Load Balancer).
+ - Ingress Controllers: Manage HTTP/S traffic, providing advanced routing, SSL termination, etc.
+
+#### Kube-Proxy Load Balancing
+- Mode 1: iptables-based (default)
+- Mode 2: IPVS (better performance for large clusters)
+
+How it works:
+- For ClusterIP services, Kube-Proxy routes traffic to Pods using iptables rules.
+- For NodePort/LoadBalancer, traffic is forwarded to the correct Pod via Kube-Proxy.
+
+#### Load Balancer YAML Example (Cloud-based)
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-loadbalancer
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+```
+- Automatically provisions an external load balancer in supported cloud environments.
+
+#### Kubernetes Networking
+Kubernetes networking is the foundation for communication within and outside the cluster.
+
+### Key Networking Components:
+1. Pod-to-Pod Communication
+- All Pods can communicate without NAT (thanks to the flat networking model).
+- Each Pod has a unique IP.
+
+2. Pod-to-Service Communication
+- Services abstract Pod IPs with stable IPs/DNS.
+
+3. External Communication
+- Services like LoadBalancer and Ingress expose applications to external traffic.
+
+#### Networking Model in Kubernetes
+- Pod Network: Flat IP space for Pods (e.g., 10.0.0.0/16).
+- Service Network: Separate CIDR (e.g., 10.96.0.0/12).
+- Node Network: Each node has an IP in the cluster.
+
+#### Network Policies (Security)
+Network Policies control traffic between Pods.
+- Allow/Deny Rules: Specify which Pods can talk to each other.
+- Labels & Selectors: Define rules based on labels.
+
+#### Example: Network Policy
+```
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-app-traffic
+spec:
+  podSelector:
+    matchLabels:
+      app: my-app
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: frontend
+```
+- Only Pods with role: frontend can send traffic to Pods with app: my-app.
+
+#### Ingress (Advanced Routing)
+- Ingress Controller: Manages HTTP/S traffic routing.
+- Supports:
+  - SSL termination
+  - Path-based routing
+  - Host-based routing
+
+##### Example: Ingress Resource
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-service
+            port:
+              number: 80
+
+```
