@@ -940,3 +940,11 @@ spec:
               number: 80
 
 ```
+|Aspect	             |Details                                                   |
+|--------------------|----------------------------------------------------------|
+|Service Types       |ClusterIP, NodePort, LoadBalancer, ExternalName           |
+|Service Discovery   |DNS (default), Environment Variables                      |
+|Load Balancing	     |Internal (Kube-Proxy), External (LoadBalancer, Ingress)   |
+|Networking	         |Flat Pod Network, Service Network, Node Network           |
+|Security	           |Network Policies, RBAC                                    |
+|Ingress	            |Advanced HTTP/S routing, SSL termination                  |
