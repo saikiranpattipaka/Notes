@@ -166,8 +166,8 @@ Drift detection refers to identifying changes that occur outside Terraform's con
 ```
 terraform plan
 ```
-#### Terraform will show you any differences between the current infrastructure and the desired state.
-#### Drift Detection is a key feature in maintaining the desired state over time.
+Terraform will show you any differences between the current infrastructure and the desired state.
+Drift Detection is a key feature in maintaining the desired state over time.
 
 ### Additional Concepts
 #### a. Outputs
@@ -179,4 +179,4 @@ output "instance_ip" {
 ```
 
 ### b. Dependencies and Ordering
-#### Terraform automatically determines dependencies between resources by analyzing their references. For example, if `resource A` refers to `resource B`, Terraform will ensure that `resource B` is created before `resource A`.
+Terraform automatically determines dependencies between resources by analyzing their references. For example, if `resource A` refers to `resource B`, Terraform will ensure that `resource B` is created before `resource A`.
