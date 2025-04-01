@@ -1,22 +1,16 @@
 ## Docker Notes
 
 ### 1. Docker
-#### Docker is a containerization platform used to develop, ship, and run applications inside containers. Containers are lightweight, portable, and isolated environments that allow you to run an application with all of its dependencies bundled together. Docker ensures that your application will run the same regardless of where it's deployed, providing consistency across multiple environments.
+Docker is a containerization platform used to develop, ship, and run applications inside containers. Containers are lightweight, portable, and isolated environments that allow you to run an application with all of its dependencies bundled together. Docker ensures that your application will run the same regardless of where it's deployed, providing consistency across multiple environments.
 
-### Key Concepts:
-#### Container: A lightweight, standalone, executable package that includes everything needed to run a piece of software, including the code, runtime, libraries, and dependencies.
-#### Image: A snapshot of a container. It's a read-only template that defines the container’s environment.
-#### Dockerfile: A script containing a series of instructions on how to build a Docker image.
-#### Docker Engine: The core component that runs containers.
-#### Docker Hub: A public registry where Docker images are stored and shared
 
 ### Docker Architecture
 ![alt text](<Docker Architecture.png>)
 
 ### Container 
-#### A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
+A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
-#### A container is a bundle of Application, Application libraries required to run your application and the minimum system dependencies
+A container is a bundle of Application, Application libraries required to run your application and the minimum system dependencies
 
 ### Docker vs Virtual Machines (VMs)
 |Feature	       |Virtual Machines (VMs)	                |Docker (Containers)                                |
@@ -33,19 +27,19 @@
 
 
 ### Containers are light weight
-#### Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
+Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
 
 ![alt text](<Docker vs VM.png>)
 
 ### 2. Core Concepts in Docker
-
-#### Container: A container is a lightweight, standalone, and executable package that includes everything needed to run a piece of software (code, runtime, libraries, and dependencies). Containers are isolated from each other and from the host system.
-#### Image: An image is a read-only template used to create containers. It includes the application code, libraries, dependencies, and the runtime needed for the container. Images are stored in a Docker registry (e.g., Docker Hub).
-#### Dockerfile: A Dockerfile is a text document that contains instructions on how to build a Docker image. It specifies the base image, the necessary dependencies, and commands that should be executed to set up the container.
-#### Docker Daemon: The Docker daemon (dockerd) is responsible for managing Docker containers and images. It listens for API requests and is the background service that runs on a host machine.
-#### Docker Client: The Docker client (docker) is the command-line tool or API used to interact with Docker. It sends commands to the Docker daemon, such as starting, stopping, and managing containers.
-#### Docker Registry: A Docker registry is a place where Docker images are stored. Docker Hub is the default public registry, but private registries can be created as well.
-#### Docker Compose: Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to use a docker-compose.yml file to configure the application’s services, networks, and volumes.
+- Container: A container is a lightweight, standalone, and executable package that includes everything needed to run a piece of software (code, runtime, libraries, and dependencies). Containers are isolated from each other and from the host system.
+- Image: An image is a read-only template used to create containers. It includes the application code, libraries, dependencies, and the runtime needed for the container. Images are stored in a Docker registry (e.g., Docker Hub).
+- Dockerfile: A Dockerfile is a text document that contains instructions on how to build a Docker image. It specifies the base image, the necessary dependencies, and commands that should be executed to set up the container.
+- Docker Daemon: The Docker daemon (dockerd) is responsible for managing Docker containers and images. It listens for API requests and is the background service that runs on a host machine.
+- Docker Client: The Docker client (docker) is the command-line tool or API used to interact with Docker. It sends commands to the Docker daemon, such as starting, stopping, and managing containers.
+- Docker Registry(Docker Hub): A Docker registry is a place where Docker images are stored. Docker Hub is the default public registry, but private registries can be created as well.
+- Docker Engine: The core component that runs containers.
+- Docker Compose: Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to use a docker-compose.yml file to configure the application’s services, networks, and volumes.
 
 ### Docker Desktop
 #### Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and share containerized applications and microservices. Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
