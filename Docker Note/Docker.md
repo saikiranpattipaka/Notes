@@ -42,17 +42,17 @@ Containers are lightweight because they use a technology called containerization
 - Docker Compose: Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to use a docker-compose.yml file to configure the application’s services, networks, and volumes.
 
 ### Docker Desktop
-#### Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and share containerized applications and microservices. Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
+Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and share containerized applications and microservices. Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
 
 ### 3. Advantages of Docker
-#### Portability: Docker containers can run on any platform that supports Docker, making it easy to move applications between development, testing, and production environments.
-#### Isolation: Each container runs in its own isolated environment, preventing conflicts between applications and making it easier to manage dependencies.
-#### Consistency: Docker ensures that an application behaves the same across different environments by encapsulating all dependencies.
-#### Resource Efficiency: Containers share the host OS kernel, which makes them more lightweight and faster than virtual machines (VMs).
-#### Version Control and Reusability: Docker images can be versioned, making it easy to roll back or update applications. You can reuse base images to simplify configuration.
-#### Scalability: Docker works well in microservices architectures and supports horizontal scaling, making it easier to manage distributed systems.
+- Portability: Docker containers can run on any platform that supports Docker, making it easy to move applications between development, testing, and production environments.
+- Isolation: Each container runs in its own isolated environment, preventing conflicts between applications and making it easier to manage dependencies.
+- Consistency: Docker ensures that an application behaves the same across different environments by encapsulating all dependencies.
+- Resource Efficiency: Containers share the host OS kernel, which makes them more lightweight and faster than virtual machines (VMs).
+- Version Control and Reusability: Docker images can be versioned, making it easy to roll back or update applications. You can reuse base images to simplify configuration.
+- Scalability: Docker works well in microservices architectures and supports horizontal scaling, making it easier to manage distributed systems.
 
-### Files and Folders in containers base images
+##### Files and Folders in containers base images
 ```
 /bin: contains binary executable files, such as the ls, cp, and ps commands.
 /sbin: contains system binary executable files, such as the init and shutdown commands.
@@ -63,36 +63,36 @@ Containers are lightweight because they use a technology called containerization
 /root: is the home directory of the root user.
 ```
 
-### Files and Folders that containers use from host operating system
-#### The host's file system: Docker containers can access the host file system using bind mounts, which allow the container to read and write files in the host file system.
-#### Networking stack: The host's networking stack is used to provide network connectivity to the container. Docker containers can be connected to the host's network directly or through a virtual network.
-#### System calls: The host's kernel handles system calls from the container, which is how the container accesses the host's resources, such as CPU, memory, and I/O.
-#### Namespaces: Docker containers use Linux namespaces to create isolated environments for the container's processes. Namespaces provide isolation for resources such as the file system, process ID, and network.
-#### Control groups (cgroups): Docker containers use cgroups to limit and control the amount of resources, such as CPU, memory, and I/O, that a container can access.
+##### Files and Folders that containers use from host operating system
+- The host's file system: Docker containers can access the host file system using bind mounts, which allow the container to read and write files in the host file system.
+- Networking stack: The host's networking stack is used to provide network connectivity to the container. Docker containers can be connected to the host's network directly or through a virtual network.
+- System calls: The host's kernel handles system calls from the container, which is how the container accesses the host's resources, such as CPU, memory, and I/O.
+- Namespaces: Docker containers use Linux namespaces to create isolated environments for the container's processes. Namespaces provide isolation for resources such as the file system, process ID, and network.
+- Control groups (cgroups): Docker containers use cgroups to limit and control the amount of resources, such as CPU, memory, and I/O, that a container can access.
     
 ### 4. How Docker Works
-#### Docker works by using the host machine’s operating system to create isolated environments for containers. It uses OS-level virtualization to create these containers. Unlike virtual machines (VMs), which run a full operating system on top of a hypervisor, containers share the host system's OS kernel but run isolated processes.
-#### Docker Engine: The Docker engine is the core part of Docker. It consists of three components:
-#### Docker Daemon (Server)
-#### Docker API
-#### Docker CLI (Client)
-#### Namespaces: Docker uses namespaces to provide isolation for containers. Namespaces allow processes in containers to have their own view of system resources, such as processes, network, and storage.
-#### Control Groups (cgroups): Docker uses cgroups to limit the amount of resources (such as CPU, memory, and disk) available to each container, ensuring efficient resource usage.
+Docker works by using the host machine’s operating system to create isolated environments for containers. It uses OS-level virtualization to create these containers. Unlike virtual machines (VMs), which run a full operating system on top of a hypervisor, containers share the host system's OS kernel but run isolated processes.
+- Docker Engine: The Docker engine is the core part of Docker. It consists of three components:
+- Docker Daemon (Server)
+- Docker API
+- Docker CLI (Client)
+- Namespaces: Docker uses namespaces to provide isolation for containers. Namespaces allow processes in containers to have their own view of system resources, such as processes, network, and storage.
+- Control Groups (cgroups): Docker uses cgroups to limit the amount of resources (such as CPU, memory, and disk) available to each container, ensuring efficient resource usage.
 
 ### 5. Basic Docker Commands
-#### docker --version: Check the installed Docker version.
-#### docker pull <image>: Pull an image from a registry (e.g., Docker Hub).
-#### docker build -t <image_name> .: Build a Docker image from a Dockerfile in the current directory.
-#### docker run <image_name>: Create and start a container from an image.
-#### docker ps: List running containers.
-#### docker ps -a: List all containers (including stopped).
-#### docker stop <container_id>: Stop a running container.
-#### docker start <container_id>: Start a stopped container.
-#### docker restart <container_id>: Restart a container.
-#### docker exec -it <container_id> bash: Access the container’s shell for interactive commands.
-#### docker rm <container_id>: Remove a container.
-#### docker iamges : Verify Docker image is created.
-#### docker rmi <image_name>: Remove a Docker image.
+- docker --version: Check the installed Docker version.
+- docker pull <image>: Pull an image from a registry (e.g., Docker Hub).
+- docker build -t <image_name> .: Build a Docker image from a Dockerfile in the current directory.
+- docker run <image_name>: Create and start a container from an image.
+- docker ps: List running containers.
+- docker ps -a: List all containers (including stopped).
+- docker stop <container_id>: Stop a running container.
+- docker start <container_id>: Start a stopped container.
+- docker restart <container_id>: Restart a container.
+- docker exec -it <container_id> bash: Access the container’s shell for interactive commands.
+- docker rm <container_id>: Remove a container.
+- docker iamges : Verify Docker image is created.
+- docker rmi <image_name>: Remove a Docker image.
 
 ```
 # Update the package repository
@@ -140,118 +140,118 @@ docker tag my-first-image yourusername/my-first-image
 docker push yourusername/my-first-image
 ```
 
-#### A Dockerfile is a text document containing a set of instructions on how to build a Docker image. Docker images are used to create containers, which are lightweight, portable, and executable software packages that contain everything needed to run an application (including the code, libraries, environment variables, and dependencies). Dockerfiles are the blueprint for creating these images.
+A Dockerfile is a text document containing a set of instructions on how to build a Docker image. Docker images are used to create containers, which are lightweight, portable, and executable software packages that contain everything needed to run an application (including the code, libraries, environment variables, and dependencies). Dockerfiles are the blueprint for creating these images.
 
 ### Components of a Dockerfile
-#### Below is a detailed explanation of common Dockerfile instructions:
+Below is a detailed explanation of common Dockerfile instructions:
 
 #### 1. FROM
-#### The `FROM` instruction defines the base image for your Docker image. This is the starting point of your Docker image and dictates the environment in which your app will run.
+The `FROM` instruction defines the base image for your Docker image. This is the starting point of your Docker image and dictates the environment in which your app will run.
 ```
 FROM python:3.9-slim
 ```
-#### In this case, the base image is the official Python 3.9 image, and `slim` indicates a smaller version of the image.
+In this case, the base image is the official Python 3.9 image, and `slim` indicates a smaller version of the image.
 
 #### 2. LABEL
-#### The `LABEL` instruction is used to add metadata to your image, such as the author, version, or description. This can help with identification and organization.
+The `LABEL` instruction is used to add metadata to your image, such as the author, version, or description. This can help with identification and organization.
 ```
 LABEL maintainer="youremail@example.com"
 ```
 #### 3. RUN
-#### The RUN instruction is used to execute commands during the image build process, such as installing software packages or setting up your application environment. These commands are run on top of the base image.
+The RUN instruction is used to execute commands during the image build process, such as installing software packages or setting up your application environment. These commands are run on top of the base image.
 
 ```
 RUN apt-get update && apt-get install -y curl
 ```
-#### This will update the package list and install `curl`.
+This will update the package list and install `curl`.
 
 #### 4. COPY
-#### The `COPY` instruction copies files or directories from your local machine (or build context) into the Docker image.
+The `COPY` instruction copies files or directories from your local machine (or build context) into the Docker image.
 
 ```
 COPY . /app
 ```
-#### This copies the entire contents of the current directory on your local machine to the /app directory inside the Docker image.
+This copies the entire contents of the current directory on your local machine to the /app directory inside the Docker image.
 
 #### 5. ADD
-#### The `ADD` instruction is similar to `COPY`, but it has some additional features:
-#### It can handle URLs to download files.
-#### It can extract TAR archives automatically.
+The `ADD` instruction is similar to `COPY`, but it has some additional features:
+- It can handle URLs to download files.
+- It can extract TAR archives automatically.
 ```
 ADD https://example.com/somefile.tar.gz /app/
 ```
-#### This will download `somefile.tar.gz` from the URL and extract it to `/app/`.
+This will download `somefile.tar.gz` from the URL and extract it to `/app/`.
 
 #### 6. WORKDIR
-#### The `WORKDIR` instruction sets the working directory for any `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` instructions that follow it. If the directory doesn't exist, Docker will create it.
+The `WORKDIR` instruction sets the working directory for any `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` instructions that follow it. If the directory doesn't exist, Docker will create it.
 
 ```
 WORKDIR /app
 ```
-#### This sets the working directory to `/app`.
+This sets the working directory to `/app`.
 
 #### 7. ENV
-#### The ENV instruction sets environment variables in the Docker image. These variables can be accessed later in the image or container.
+The ENV instruction sets environment variables in the Docker image. These variables can be accessed later in the image or container.
 ```
 ENV APP_ENV=production
 ```
-#### This sets an environment variable `APP_ENV` to `production`.
+This sets an environment variable `APP_ENV` to `production`.
 
 #### 8. EXPOSE
-#### The `EXPOSE` instruction informs Docker that the container listens on the specified network ports at runtime. It doesn’t publish the port, it just documents it for people using the image.
+The `EXPOSE` instruction informs Docker that the container listens on the specified network ports at runtime. It doesn’t publish the port, it just documents it for people using the image.
 ```
 EXPOSE 8080
 ```
-#### This tells Docker that the application inside the container will listen on port 8080.
+This tells Docker that the application inside the container will listen on port 8080.
 
 #### 9. CMD
-#### The `CMD` instruction specifies the default command to run when a container starts. There can only be one `CMD` in a Dockerfile. If there are multiple `CMD` instructions, only the last one will take effect.
+The `CMD` instruction specifies the default command to run when a container starts. There can only be one `CMD` in a Dockerfile. If there are multiple `CMD` instructions, only the last one will take effect.
 ```
 CMD ["python", "app.py"]
 ```
-#### This command will run the `app.py` file using the `python` interpreter when the container starts.
+This command will run the `app.py` file using the `python` interpreter when the container starts.
 
 #### 10. ENTRYPOINT
-#### The `ENTRYPOINT` instruction defines a command that will always run when the container starts. It can be overridden by `CMD`, but if both are used together, `ENTRYPOINT` is the primary command.
+The `ENTRYPOINT` instruction defines a command that will always run when the container starts. It can be overridden by `CMD`, but if both are used together, `ENTRYPOINT` is the primary command.
 
 ```
 ENTRYPOINT ["python", "app.py"]
 ```
-#### This sets python app.py as the entrypoint of the container.
+This sets python app.py as the entrypoint of the container.
 
 #### 11. VOLUME
-#### The `VOLUME` instruction creates a mount point with a specific path in the container that can be linked to a directory on the host system.
+The `VOLUME` instruction creates a mount point with a specific path in the container that can be linked to a directory on the host system.
 ```
 VOLUME ["/data"]
 ```
 #### This creates a mount point at /data inside the container.
 
 #### 12. USER
-#### The `USER` instruction sets the user name or UID (user ID) to use when running the container. By default, containers run as the root user, but you can specify a non-root user for security reasons.
+The `USER` instruction sets the user name or UID (user ID) to use when running the container. By default, containers run as the root user, but you can specify a non-root user for security reasons.
 
 ```
 USER appuser
 ```
-#### This makes `appuser` the user under which the container runs.
+This makes `appuser` the user under which the container runs.
 
 #### 13. ARG
-#### The `ARG` instruction defines build-time variables that can be passed to the Docker build process. They can be used to customize the build process.
+The `ARG` instruction defines build-time variables that can be passed to the Docker build process. They can be used to customize the build process.
 
 ```
 ARG version=1.0
 ```
-#### This defines a build-time variable version with a default value of 1.0.
+This defines a build-time variable version with a default value of 1.0.
 
 #### 14. SHELL
-#### The `SHELL` instruction allows you to specify a custom shell to use during the execution of `RUN` instructions.
+The `SHELL` instruction allows you to specify a custom shell to use during the execution of `RUN` instructions.
 
 ```
 SHELL ["/bin/bash", "-c"]
 ```
-#### This makes the bash shell the default shell for all RUN instructions.
+This makes the bash shell the default shell for all RUN instructions.
 
 ### Example Dockerfile
-#### Here’s an example of a Dockerfile for a Python application:
+Here’s an example of a Dockerfile for a Python application:
 ```
 # Set the base image
 FROM python:3.9-slim
