@@ -46,15 +46,15 @@ module "vpc" {
 
 ### 3. Terraform Commands
 Here are the key commands used in Terraform:
-`terraform init`: Initializes the working directory by downloading provider plugins and initializing the backend.
-`terraform plan`: Creates an execution plan, showing what changes Terraform will make to the infrastructure.
-`terraform apply`: Applies the changes defined in the execution plan to the infrastructure.
-`terraform destroy`: Destroys the infrastructure managed by Terraform.
-`terraform validate`: Validates the syntax and correctness of the configuration files.
-`terraform fmt`: Formats Terraform configuration files in a canonical style.
-`terraform show`: Shows the current state or an execution plan of the infrastructure.
-`terraform state`: Manages the Terraform state file (e.g., list, show, pull, push).
-`terraform output`: Displays the outputs defined in the Terraform configuration.
+- `terraform init`: Initializes the working directory by downloading provider plugins and initializing the backend.
+- `terraform plan`: Creates an execution plan, showing what changes Terraform will make to the infrastructure.
+- `terraform apply`: Applies the changes defined in the execution plan to the infrastructure.
+- `terraform destroy`: Destroys the infrastructure managed by Terraform.
+- `terraform validate`: Validates the syntax and correctness of the configuration files.
+- `terraform fmt`: Formats Terraform configuration files in a canonical style.
+- `terraform show`: Shows the current state or an execution plan of the infrastructure.
+- `terraform state`: Manages the Terraform state file (e.g., list, show, pull, push).
+- `terraform output`: Displays the outputs defined in the Terraform configuration.
 
 ### 4. Variables
 Variables allow you to parametrize your Terraform configurations, making them more reusable and flexible.
