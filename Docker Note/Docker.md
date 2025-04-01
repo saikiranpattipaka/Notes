@@ -1136,33 +1136,33 @@ When you build a Docker image, Docker processes each instruction in the Dockerfi
 - 4. Rebuilding Layers: If you modify any instruction that comes earlier in the Dockerfile, Docker will need to rebuild all subsequent layers. For example, if you change the RUN command early in the Dockerfile, all layers that come after it will be rebuilt, even if those later layers didn’t change.
 
 ### Best Practices for Docker Layers
-#### 1. Minimize the Number of Layers: While each instruction in a Dockerfile creates a layer, you should combine commands where possible to reduce the total number of layers. For example, you can combine multiple `RUN` commands into a single `RUN` statement.
+1. Minimize the Number of Layers: While each instruction in a Dockerfile creates a layer, you should combine commands where possible to reduce the total number of layers. For example, you can combine multiple `RUN` commands into a single `RUN` statement.
 #### Example:
 ```
 RUN apt-get update && apt-get install -y curl vim
 ```
-#### This approach reduces the number of layers compared to:
+This approach reduces the number of layers compared to:
 ```
 RUN apt-get update
 RUN apt-get install -y curl
 RUN apt-get install -y vim
 ```
-#### 2.  Order Your Dockerfile Instructions Efficiently: Docker caches layers, so it’s important to put commands that change frequently at the bottom of the Dockerfile and the ones that are more static near the top. This way, Docker can reuse more layers and only rebuild the layers that are affected by changes.
+2.  Order Your Dockerfile Instructions Efficiently: Docker caches layers, so it’s important to put commands that change frequently at the bottom of the Dockerfile and the ones that are more static near the top. This way, Docker can reuse more layers and only rebuild the layers that are affected by changes.
 #### Example:
-#### - Place `COPY . /app` near the end because it often changes during development.
-#### - Place `RUN apt-get install` commands earlier, as dependencies are less likely to change.
-#### 3. Use `.dockerignore`: Use a `.dockerignore` file to prevent unnecessary files (e.g., build artifacts, source code files) from being added to the image, which would create additional layers. This can also help reduce the size of the image.
-#### 4. Clean Up After Installation: If you're installing software or packages, make sure to clean up any unnecessary files in the same `RUN` command to reduce the layer size. For example, deleting package caches after installing packages can save space:
+- Place `COPY . /app` near the end because it often changes during development.
+- Place `RUN apt-get install` commands earlier, as dependencies are less likely to change.
+3. Use `.dockerignore`: Use a `.dockerignore` file to prevent unnecessary files (e.g., build artifacts, source code files) from being added to the image, which would create additional layers. This can also help reduce the size of the image.
+ 4. Clean Up After Installation: If you're installing software or packages, make sure to clean up any unnecessary files in the same `RUN` command to reduce the layer size. For example, deleting package caches after installing packages can save space:
 ```
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 ```
 
 ### Viewing Docker Layers
-#### You can inspect the layers of a Docker image using the `docker history` command, which shows how the image was built and how much space each layer occupies.
+You can inspect the layers of a Docker image using the `docker history` command, which shows how the image was built and how much space each layer occupies.
 ```
 docker history myimage:latest
 ```
-#### This command will display a history of the image, showing each layer, the size of each layer, and the command that created it.
+This command will display a history of the image, showing each layer, the size of each layer, and the command that created it.
 
 ### Layer Caching and Performance
 - Cache Efficiency: Docker's layer cache significantly speeds up builds by reusing layers that haven't changed. However, if a layer is modified, Docker will invalidate the cache for that layer and all subsequent layers.
