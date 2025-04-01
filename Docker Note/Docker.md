@@ -1104,36 +1104,36 @@ RUN apt-get install -y curl
 COPY . /app
 ```
 #### Each of the following instructions creates a layer:
-#### 1. FROM ubuntu:20.04: This is the base layer, which is the official u`buntu:20.04` image.
-#### 2. RUN apt-get update: This creates a new layer that contains the updates made to the system's package list.
-#### 3. RUN apt-get install -y curl: This creates another layer that installs `curl`.
-#### 4. COPY . /app: This creates a layer with the files copied from the host machine to the /app directory in the image.
-#### These layers are stacked on top of the base image (`ubuntu:20.04`) to create the final image.
+1. FROM ubuntu:20.04: This is the base layer, which is the official u`buntu:20.04` image.
+2. RUN apt-get update: This creates a new layer that contains the updates made to the system's package list.
+3. RUN apt-get install -y curl: This creates another layer that installs `curl`.
+4. COPY . /app: This creates a layer with the files copied from the host machine to the /app directory in the image.
+These layers are stacked on top of the base image (`ubuntu:20.04`) to create the final image.
 
 ### Types of Docker Layers
-#### 1. Base Image Layer: This is the first layer in a Docker image, created by the `FROM` instruction. It's the starting point, typically based on an existing image (like `ubuntu`, `node`, `alpine`, etc.).
-#### 2. Intermediate Layers: These layers are created by each subsequent instruction in the Dockerfile (like `RUN`, `COPY`, `ADD`, etc.). Each command results in a new layer that contains the state of the file system after that command is executed.
-#### Final Layer: The last layer represents the state of the image after all commands in the Dockerfile are executed. This is the fully built image that is tagged and can be run in a container.
+1. Base Image Layer: This is the first layer in a Docker image, created by the `FROM` instruction. It's the starting point, typically based on an existing image (like `ubuntu`, `node`, `alpine`, etc.).
+2. Intermediate Layers: These layers are created by each subsequent instruction in the Dockerfile (like `RUN`, `COPY`, `ADD`, etc.). Each command results in a new layer that contains the state of the file system after that command is executed.
+Final Layer: The last layer represents the state of the image after all commands in the Dockerfile are executed. This is the fully built image that is tagged and can be run in a container.
 
 ### Characteristics of Docker Layers
-#### 1. Read-Only: Layers are immutable (read-only). Once a layer is created, it cannot be changed. However, new layers can be added on top of an existing one, each modifying or adding to the image.
-#### 2. Layer Caching: Docker uses caching to avoid rebuilding layers unnecessarily. If a layer hasn’t changed, Docker can reuse the cached version of that layer from a previous build. This is especially useful in CI/CD pipelines, as it speeds up the build process.
-#### 3. Layer Reusability: Docker layers are cached and stored locally (on your machine) or remotely (in Docker registries). If a layer is reused in another image, Docker will simply reference the cached layer instead of rebuilding it from scratch. This makes builds faster and saves disk space.
-#### 4. Union File System (UFS): Docker uses a technology called a union file system (such as `OverlayFS` or `AUFS`) to merge the layers together into a single image. The union file system allows Docker to combine multiple layers into one cohesive file system. This is why the layers appear as part of a single image but remain isolated and separate in the underlying system.
+1. Read-Only: Layers are immutable (read-only). Once a layer is created, it cannot be changed. However, new layers can be added on top of an existing one, each modifying or adding to the image.
+2. Layer Caching: Docker uses caching to avoid rebuilding layers unnecessarily. If a layer hasn’t changed, Docker can reuse the cached version of that layer from a previous build. This is especially useful in CI/CD pipelines, as it speeds up the build process.
+3. Layer Reusability: Docker layers are cached and stored locally (on your machine) or remotely (in Docker registries). If a layer is reused in another image, Docker will simply reference the cached layer instead of rebuilding it from scratch. This makes builds faster and saves disk space.
+4. Union File System (UFS): Docker uses a technology called a union file system (such as `OverlayFS` or `AUFS`) to merge the layers together into a single image. The union file system allows Docker to combine multiple layers into one cohesive file system. This is why the layers appear as part of a single image but remain isolated and separate in the underlying system.
 
 ### Docker Image Layer Creation Process
 When you build a Docker image, Docker processes each instruction in the Dockerfile in the following way:
-- 1. FROM: Docker checks if the base image is already present on the local system. If it is, the base image layer is reused. If not, Docker pulls it from the registry.
-- 2. RUN, COPY, ADD, etc.: These instructions result in new layers being added. For example:
+1. FROM: Docker checks if the base image is already present on the local system. If it is, the base image layer is reused. If not, Docker pulls it from the registry.
+2. RUN, COPY, ADD, etc.: These instructions result in new layers being added. For example:
   - RUN: Executes a command in a new layer, such as installing software. The changes made (e.g., new packages installed) are recorded in that layer.
   - COPY/ADD: Copies files from the host machine to the image and creates a layer with those files.
-- 3. Commit: After each command, Docker commits the changes to a new layer. Docker then caches the layer so it can reuse it in future builds if the command hasn’t changed.
+3. Commit: After each command, Docker commits the changes to a new layer. Docker then caches the layer so it can reuse it in future builds if the command hasn’t changed.
 
 ### How Layers Impact Docker Images
-- 1. Layer Size: Each layer increases the overall size of the Docker image. The size of an image is the sum of the sizes of all the layers that make it up. Thus, it's important to minimize the number of layers and the size of each layer.
-- 2. Image Efficiency: The fewer layers you have, the smaller the image size. However, you should aim to balance between optimizing for fewer layers and keeping your image maintainable and understandable. Too few layers can lead to a monolithic and hard-to-maintain image, while too many layers can unnecessarily increase the image size.
-- 3. Caching Mechanism: Docker will reuse layers that haven't changed between builds, making subsequent builds much faster. This is especially useful during iterative development or continuous integration, as it allows you to take advantage of cached layers and avoid rebuilding the entire image each time.
-- 4. Rebuilding Layers: If you modify any instruction that comes earlier in the Dockerfile, Docker will need to rebuild all subsequent layers. For example, if you change the RUN command early in the Dockerfile, all layers that come after it will be rebuilt, even if those later layers didn’t change.
+1. Layer Size: Each layer increases the overall size of the Docker image. The size of an image is the sum of the sizes of all the layers that make it up. Thus, it's important to minimize the number of layers and the size of each layer.
+2. Image Efficiency: The fewer layers you have, the smaller the image size. However, you should aim to balance between optimizing for fewer layers and keeping your image maintainable and understandable. Too few layers can lead to a monolithic and hard-to-maintain image, while too many layers can unnecessarily increase the image size.
+3. Caching Mechanism: Docker will reuse layers that haven't changed between builds, making subsequent builds much faster. This is especially useful during iterative development or continuous integration, as it allows you to take advantage of cached layers and avoid rebuilding the entire image each time.
+4. Rebuilding Layers: If you modify any instruction that comes earlier in the Dockerfile, Docker will need to rebuild all subsequent layers. For example, if you change the RUN command early in the Dockerfile, all layers that come after it will be rebuilt, even if those later layers didn’t change.
 
 ### Best Practices for Docker Layers
 1. Minimize the Number of Layers: While each instruction in a Dockerfile creates a layer, you should combine commands where possible to reduce the total number of layers. For example, you can combine multiple `RUN` commands into a single `RUN` statement.
