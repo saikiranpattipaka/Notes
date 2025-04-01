@@ -100,9 +100,9 @@ resource "aws_instance" "example" {
 Terraform uses a state file (`terraform.tfstate`) to keep track of the infrastructure that it manages. The state file contains metadata, resource IDs, and other information about the infrastructure’s current state.
 
 #### State File Operations:
-`terraform state list`: Lists all resources tracked in the state file.
-`terraform state show`: Displays detailed information about a specific resource in the state file.
-`terraform state pull`: Fetches the current state from the remote backend.
+- `terraform state list`: Lists all resources tracked in the state file.
+- `terraform state show`: Displays detailed information about a specific resource in the state file.
+- `terraform state pull`: Fetches the current state from the remote backend.
 
 Remote backends (e.g., S3, Azure Blob Storage) can store the state file for team collaboration and to ensure the state is persistent across runs.
 State Locking: To prevent concurrent writes to the state file, Terraform supports state locking when using remote backends (e.g., DynamoDB for AWS).
@@ -111,12 +111,12 @@ State Locking: To prevent concurrent writes to the state file, Terraform support
 Provisioners are used to execute scripts or configuration management tasks on your resources after they are created. They are typically used for bootstrapping or post-deployment tasks.
 
 #### Types of provisioners:
-`local-exec` Runs a command locally on the machine running Terraform.
-`remote-exec` Runs a command on the remote resource (e.g., EC2 instance).
-`file` is used to copy files or directories from the local machine to the remote resource. It allows you to upload configuration files, scripts, or other assets to the remote server.
-`chef` provisioner allows you to run Chef recipes on the remote machine. It integrates Terraform with Chef, a configuration management tool, to apply desired configurations.
-`puppet` provisioner is used to run Puppet manifests on the remote resource. Similar to Chef, it allows Terraform to work with Puppet to manage configurations.
-`ansible` provisioner allows Terraform to run Ansible playbooks on the remote resource, integrating Ansible’s configuration management capabilities.
+- `local-exec` Runs a command locally on the machine running Terraform.
+- `remote-exec` Runs a command on the remote resource (e.g., EC2 instance).
+- `file` is used to copy files or directories from the local machine to the remote resource. It allows you to upload configuration files, scripts, or other assets to the remote server.
+- `chef` provisioner allows you to run Chef recipes on the remote machine. It integrates Terraform with Chef, a configuration management tool, to apply desired configurations.
+- `puppet` provisioner is used to run Puppet manifests on the remote resource. Similar to Chef, it allows Terraform to work with Puppet to manage configurations.
+- `ansible` provisioner allows Terraform to run Ansible playbooks on the remote resource, integrating Ansible’s configuration management capabilities.
 
 #### Example of remote-exec provisioner:
 ```
@@ -135,9 +135,9 @@ resource "aws_instance" "example" {
 
 ### 8. Workspaces
 Workspaces allow you to manage multiple environments (e.g., development, staging, production) with the same configuration files. Each workspace has its own state file.
-Switch workspace: `terraform workspace select <workspace_name>`
-List workspaces: `terraform workspace list`
-Create workspace: `terraform workspace new <workspace_name>`
+- Switch workspace: `terraform workspace select <workspace_name>`
+- List workspaces: `terraform workspace list`
+- Create workspace: `terraform workspace new <workspace_name>`
 
 ### 9. Vault Integration (Secret Management)
 Terraform integrates with HashiCorp Vault to manage secrets, such as API keys, passwords, and certificates. Vault can store and provide sensitive data securely.
