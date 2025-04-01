@@ -451,10 +451,10 @@ COPY --from=builder /app/myapp /bin/myapp
 CMD ["/bin/myapp"]
 ```
 ### Best Practices for Multi-Stage Builds
-1.Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
-2.Use Smaller Base Images for Runtime: Always use the smallest possible image for the final image, such as `alpine` or `slim` variants, to minimize the image size.
-3.Copy Only Necessary Files: Avoid copying unnecessary files (e.g., .`git`, `tests`, build directories) into the Docker image.
-4.Use Caching to Speed Up Builds: Docker caches layers to avoid redoing work. Organize your Dockerfile so that the build dependencies (like installing dependencies or building the project) happen early in the Dockerfile. This way, Docker can reuse layers if the dependencies haven't changed.
+- 1.Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
+- 2.Use Smaller Base Images for Runtime: Always use the smallest possible image for the final image, such as `alpine` or `slim` variants, to minimize the image size.
+- 3.Copy Only Necessary Files: Avoid copying unnecessary files (e.g., .`git`, `tests`, build directories) into the Docker image.
+- 4.Use Caching to Speed Up Builds: Docker caches layers to avoid redoing work. Organize your Dockerfile so that the build dependencies (like installing dependencies or building the project) happen early in the Dockerfile. This way, Docker can reuse layers if the dependencies haven't changed.
 - Multi-stage Docker builds are an excellent way to optimize your Docker images by reducing their size, making the build process cleaner, and separating concerns between building and running the application. It is especially useful in scenarios where you need a specific build environment (e.g., full SDKs, compilers, etc.) but want to keep the final image as small and secure as possible. By following best practices like using smaller base images and only copying necessary files, you can significantly improve the efficiency of your Docker images.
 
 #### Distroless Docker Image
