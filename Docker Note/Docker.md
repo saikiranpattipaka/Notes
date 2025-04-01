@@ -1,18 +1,18 @@
 ## Docker Notes
 
-### 1. Docker
+#### 1. Docker
 Docker is a containerization platform used to develop, ship, and run applications inside containers. Containers are lightweight, portable, and isolated environments that allow you to run an application with all of its dependencies bundled together. Docker ensures that your application will run the same regardless of where it's deployed, providing consistency across multiple environments.
 
 
-### Docker Architecture
+#### Docker Architecture
 ![alt text](<Docker Architecture.png>)
 
-### Container 
+#### Container 
 A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
 A container is a bundle of Application, Application libraries required to run your application and the minimum system dependencies
 
-### Docker vs Virtual Machines (VMs)
+#### Docker vs Virtual Machines (VMs)
 |Feature	       |Virtual Machines (VMs)	                |Docker (Containers)                                |
 |------------------|----------------------------------------|---------------------------------------------------|
 |Isolation	       |Full isolation, separate OS	            |Process-level isolation, shared kernel             |
@@ -26,12 +26,12 @@ A container is a bundle of Application, Application libraries required to run yo
 
 
 
-### Containers are light weight
+#### Containers are light weight
 Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
 
 ![alt text](<Docker vs VM.png>)
 
-### 2. Core Concepts in Docker
+#### 2. Core Concepts in Docker
 - Container: A container is a lightweight, standalone, and executable package that includes everything needed to run a piece of software (code, runtime, libraries, and dependencies). Containers are isolated from each other and from the host system.
 - Image: An image is a read-only template used to create containers. It includes the application code, libraries, dependencies, and the runtime needed for the container. Images are stored in a Docker registry (e.g., Docker Hub).
 - Dockerfile: A Dockerfile is a text document that contains instructions on how to build a Docker image. It specifies the base image, the necessary dependencies, and commands that should be executed to set up the container.
@@ -41,10 +41,10 @@ Containers are lightweight because they use a technology called containerization
 - Docker Engine: The core component that runs containers.
 - Docker Compose: Docker Compose is a tool for defining and running multi-container Docker applications. It allows you to use a docker-compose.yml file to configure the application’s services, networks, and volumes.
 
-### Docker Desktop
+#### Docker Desktop
 Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and share containerized applications and microservices. Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
 
-### 3. Advantages of Docker
+#### 3. Advantages of Docker
 - Portability: Docker containers can run on any platform that supports Docker, making it easy to move applications between development, testing, and production environments.
 - Isolation: Each container runs in its own isolated environment, preventing conflicts between applications and making it easier to manage dependencies.
 - Consistency: Docker ensures that an application behaves the same across different environments by encapsulating all dependencies.
@@ -124,18 +124,18 @@ docker --version
 sudo usermod -aG docker $USER #ubuntu/windows
 
 ```
-#### After running these commands, you may need to log out and back in (or restart the EC2 instance) for the Docker group changes to take effect
+##### After running these commands, you may need to log out and back in (or restart the EC2 instance) for the Docker group changes to take effect
 
-### Push Your Docker Image to Docker Hub
-#### Login to Docker Hub from your EC2 instance:
+#### Push Your Docker Image to Docker Hub
+Login to Docker Hub from your EC2 instance:
 ```
 docker login
 ```
-#### Tag your image (replace yourusername with your Docker Hub username):
+Tag your image (replace yourusername with your Docker Hub username):
 ```
 docker tag my-first-image yourusername/my-first-image
 ```
-#### Push your image
+Push your image
 ```
 docker push yourusername/my-first-image
 ```
@@ -250,7 +250,7 @@ SHELL ["/bin/bash", "-c"]
 ```
 This makes the bash shell the default shell for all RUN instructions.
 
-### Example Dockerfile
+#### Example Dockerfile
 Here’s an example of a Dockerfile for a Python application:
 ```
 # Set the base image
@@ -279,19 +279,20 @@ EXPOSE 5000
 CMD ["python", "app.py"]
 ```
 
-### How to Build and Run a Dockerfile
-#### 1.Build the Docker image: Run this command in the directory where the Dockerfile is located:
+#### How to Build and Run a Dockerfile
+1.Build the Docker image: Run this command in the directory where the Dockerfile is located:
 ```
 docker build -t my-python-app .
 ```
-#### 2.Run a container from the image: Run this command to start a container from the built image:
+2.Run a container from the image: Run this command to start a container from the built image:
 
 ```
 docker run -p 5000:5000 my-python-app
 ```
-#### This will start the container, and it will be listening on port 5000
+This will start the container, and it will be listening on port 5000
 
-#### Difference between `CMD` & `ENTRYPOINT`
+##### Difference between `CMD` & `ENTRYPOINT`
+
 |Feature           |CMD	                                                    |ENTRYPOINT                                            |
 |------------------|--------------------------------------------------------|------------------------------------------------------|
 |Purpose	       |Default command to run in the container	                |Defines the main command to run                       |
@@ -300,12 +301,12 @@ docker run -p 5000:5000 my-python-app
 |Syntax	           |CMD ["executable", "param1"]                            |ENTRYPOINT ["executable", "param1"]                   |
 
 
-### Multi-Stage Docker Build
+#### Multi-Stage Docker Build
 A multi-stage Docker build is a technique that allows you to create smaller, more efficient Docker images by using multiple `FROM` statements in a single Dockerfile. Each `FROM` defines a new stage in the build process, and this method is especially useful for reducing the final image size by separating the build and runtime environments.
 
 ![alt text](<Multi stage Build.png>)
 
-### Key Benefits of Multi-Stage Builds:
+#### Key Benefits of Multi-Stage Builds:
 - Smaller Image Sizes: You can reduce the size of the final image by only copying the necessary artifacts from earlier stages, leaving behind development tools and dependencies used only for building the app.
 - Cleaner Dockerfiles: Helps in organizing and structuring the build process in a clear and maintainable manner.
 - Faster Builds: It allows the reuse of intermediate stages and layers, which can speed up the build process when only a small part of the Dockerfile changes.
@@ -334,8 +335,8 @@ Here, the first stage builds the application and the second stage creates the ru
 #### Detailed Example
 #### Let's break down a real-world example using a Go application.
 
-#### 1. Stage 1: Build Stage
-#### The first stage is used to build the Go binary. It uses a Golang image, installs dependencies, and builds the app.
+1. Stage 1: Build Stage
+The first stage is used to build the Go binary. It uses a Golang image, installs dependencies, and builds the app.
 ```
 # Stage 1: Build the Go binary
 FROM golang:1.18 AS builder
@@ -355,8 +356,8 @@ COPY . .
 # Build the Go app
 RUN go build -o /go/bin/app
 ```
-#### 2. Stage 2: Final Image (Runtime Stage)
-#### The second stage creates a final image for running the application. It starts with a minimal base image (e.g., `alpine`), copies the compiled binary from the builder stage, and sets the command to run the application.
+2. Stage 2: Final Image (Runtime Stage)
+The second stage creates a final image for running the application. It starts with a minimal base image (e.g., `alpine`), copies the compiled binary from the builder stage, and sets the command to run the application.
 ```
 # Stage 2: Create the runtime image
 FROM alpine:latest
@@ -373,21 +374,22 @@ EXPOSE 8080
 # Command to run the application
 CMD ["app"]
 ```
-#### 3. Building the Image
-#### Once the multi-stage Dockerfile is ready, you can build the Docker image with the following command:
+3. Building the Image
+Once the multi-stage Dockerfile is ready, you can build the Docker image with the following command:
 ```
 docker build -t my-go-app .
 ```
-#### This command will execute the instructions in the Dockerfile, but only the final image will be used to create the container, keeping the image size small because it only contains the necessary runtime components.
+This command will execute the instructions in the Dockerfile, but only the final image will be used to create the container, keeping the image size small because it only contains the necessary runtime components.
 
-#### 4. Why Multi-Stage Builds Work Well in This Case
+4. Why Multi-Stage Builds Work Well in This Case
 - Build Efficiency: The Go compiler and build tools (`golang:1.18`) are used only in the first stage to build the application and are not included in the final image.
 - Final Image Optimization: The final image is based on `alpine`, which is a much smaller image, and contains only the compiled binary (`app`) and the necessary runtime dependencies (`ca-certificates`).
 - Reduced Docker Image Size: The final image will be significantly smaller than a traditional single-stage image, which might have included unnecessary build tools, libraries, and other dependencies.
 
-Advanced Features of Multi-Stage Builds
 
-#### 1. Named Stages
+#### Advanced Features of Multi-Stage Builds
+
+1. Named Stages
 You can assign names to each stage in the Dockerfile for easier reference. This allows you to selectively copy artifacts between stages.
 ```
 FROM node:14 AS build
@@ -400,9 +402,9 @@ WORKDIR /app
 COPY --from=build /app /app
 CMD ["node", "app.js"]
 ```
-#### Here, the first stage is named `build`, and we copy files from that stage using `--from=build`.
+Here, the first stage is named `build`, and we copy files from that stage using `--from=build`.
 
-#### 2. Using Different Base Images for Different Stages
+2. Using Different Base Images for Different Stages
 Each stage can use a different base image. This is particularly useful for optimizing both the build and runtime environments.
 ```
 # Stage 1: Build the app using a large image with build tools
@@ -417,9 +419,9 @@ WORKDIR /app
 COPY --from=builder /app /app
 CMD ["python", "app.py"]
 ```
-#### In this example, `python:3.9` (a larger image) is used in the build stage, while `python:3.9-slim` (a smaller image) is used in the runtime stage.
+In this example, `python:3.9` (a larger image) is used in the build stage, while `python:3.9-slim` (a smaller image) is used in the runtime stage.
 
-#### 3. Minimizing Final Image Size by Using Scratch
+3. Minimizing Final Image Size by Using Scratch
 If your application doesn’t require any base operating system (for example, you’re building a static binary), you can use scratch as the final base image, which is an empty image.
 ```
 FROM golang:1.18 AS builder
@@ -431,9 +433,9 @@ FROM scratch
 COPY --from=builder /go/bin/app /app
 CMD ["/app"]
 ```
-#### Here, the final image contains only the app binary and no OS dependencies.
+Here, the final image contains only the app binary and no OS dependencies.
 
-#### 4. Optimizing Build Context
+4. Optimizing Build Context
 In multi-stage builds, each stage has its own set of files, which can help reduce the amount of unnecessary files being included in each stage. For instance, you might copy only the required files to the build context in each stage rather than copying the entire repository.
 ```
 # Stage 1: Only copy the necessary files for building the app
@@ -449,17 +451,17 @@ COPY --from=builder /app/myapp /bin/myapp
 CMD ["/bin/myapp"]
 ```
 ### Best Practices for Multi-Stage Builds
-- 1.Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
-- 2.Use Smaller Base Images for Runtime: Always use the smallest possible image for the final image, such as `alpine` or `slim` variants, to minimize the image size.
-- 3.Copy Only Necessary Files: Avoid copying unnecessary files (e.g., .`git`, `tests`, build directories) into the Docker image.
-- 4.Use Caching to Speed Up Builds: Docker caches layers to avoid redoing work. Organize your Dockerfile so that the build dependencies (like installing dependencies or building the project) happen early in the Dockerfile. This way, Docker can reuse layers if the dependencies haven't changed.
+1.Keep Build and Runtime Environments Separate: Only include the necessary components (e.g., compiled binaries or minimal runtime dependencies) in the final image.
+2.Use Smaller Base Images for Runtime: Always use the smallest possible image for the final image, such as `alpine` or `slim` variants, to minimize the image size.
+3.Copy Only Necessary Files: Avoid copying unnecessary files (e.g., .`git`, `tests`, build directories) into the Docker image.
+4.Use Caching to Speed Up Builds: Docker caches layers to avoid redoing work. Organize your Dockerfile so that the build dependencies (like installing dependencies or building the project) happen early in the Dockerfile. This way, Docker can reuse layers if the dependencies haven't changed.
 - Multi-stage Docker builds are an excellent way to optimize your Docker images by reducing their size, making the build process cleaner, and separating concerns between building and running the application. It is especially useful in scenarios where you need a specific build environment (e.g., full SDKs, compilers, etc.) but want to keep the final image as small and secure as possible. By following best practices like using smaller base images and only copying necessary files, you can significantly improve the efficiency of your Docker images.
 
-### Distroless Docker Image
+#### Distroless Docker Image
 A Distroless Docker image is an image that contains only the application and its dependencies, without any unnecessary additional files or a full operating system (OS). This approach minimizes the size and surface area of the image, leading to better security, performance, and maintainability. The concept of "Distroless" was introduced by Google to create minimal Docker images that focus purely on the application runtime environment.
 #### The key idea is to remove everything that is not strictly necessary for running the application. This includes eliminating package managers, shells, and even standard libraries that are not needed by the application.
 
-### Use of Distroless Images
+#### Use of Distroless Images
 ##### 1.Security:
 - Distroless images have fewer components, which reduces the attack surface.
 - Without package managers, shells, or debugging tools, there is less opportunity for an attacker to exploit the container.
@@ -479,7 +481,7 @@ A Distroless Docker image is an image that contains only the application and its
 
 ### Distroless Example
 In traditional Dockerfiles, we often start with a full operating system image, like `ubuntu` or `alpine`, and then install the application and its dependencies. With distroless images, you go even further by using an image that is distilled to only contain the essentials.
-#### Example: Python Application with Distroless
+- Example: Python Application with Distroless
 #### Standard Dockerfile Using a Full Base Image (e.g., `python`):
 ```
 # Use an official Python image as the base image
@@ -500,9 +502,9 @@ EXPOSE 8080
 # Run the application
 CMD ["python", "app.py"]
 ```
-#### This Dockerfile uses the full Python image (`python:3.9-slim`) to build the application, which includes not only the Python runtime but also a lot of unnecessary files and libraries that are not required for production.
+This Dockerfile uses the full Python image (`python:3.9-slim`) to build the application, which includes not only the Python runtime but also a lot of unnecessary files and libraries that are not required for production.
 
-### 2.Distroless Dockerfile Example:
+2.Distroless Dockerfile Example:
 ```
 # Stage 1: Build the application using a full image
 FROM python:3.9-slim AS builder
@@ -522,15 +524,15 @@ CMD ["/app/app.py"]
 
 #### Explanation of the Example:
 #### 1.Stage 1 - Builder:
-#### In the first stage (`builder`), we use a fuller image (`python:3.9-slim`) to install the dependencies and set up the application.
-#### This allows us to install everything we need (including Python libraries and system dependencies) without worrying about the size of the final image.
+- In the first stage (`builder`), we use a fuller image (`python:3.9-slim`) to install the dependencies and set up the application.
+- This allows us to install everything we need (including Python libraries and system dependencies) without worrying about the size of the final image.
 
 #### Stage 2 - Distroless:
-#### In the second stage, we switch to the Distroless Python image (gcr.io/distroless/python3), which only includes the Python runtime and libraries necessary to run the app.
-#### This is the image that will be used for production, and it does not include package managers, shells, or any unnecessary binaries.
+- In the second stage, we switch to the Distroless Python image (gcr.io/distroless/python3), which only includes the Python runtime and libraries necessary to run the app.
+- This is the image that will be used for production, and it does not include package managers, shells, or any unnecessary binaries.
 
 #### 3.COPY --from=builder:
-#### We copy the compiled app and dependencies from the first stage to the distroless final image. The result is a clean, minimal image that contains only the Python runtime and the application itself.
+- We copy the compiled app and dependencies from the first stage to the distroless final image. The result is a clean, minimal image that contains only the Python runtime and the application itself.
 
 #### Advantages of Using Distroless Images
 ##### 1.Smaller Image Sizes:
@@ -581,9 +583,9 @@ docker run -v /path/to/host/folder:/path/in/container my-container
 docker run -v /home/user/data:/app/data my-container
 ```
 #### In this example:
-#### /home/user/data is a directory on the host machine.
-#### /app/data is the directory inside the container.
-#### Any changes to files in /home/user/data will be reflected in /app/data inside the container.
+- /home/user/data is a directory on the host machine.
+- /app/data is the directory inside the container.
+- Any changes to files in /home/user/data will be reflected in /app/data inside the container.
 
 ### Advantages of Bind Mounts:
 - Direct file access: Useful when you need to directly interact with the files on the host (e.g., for development purposes).
@@ -614,9 +616,9 @@ docker run -v volume_name:/path/in/container my-container
 docker run -v my_volume:/app/data my-container
 ```
 #### In this example:
-#### my_volume is a Docker volume.
-#### /app/data is a directory inside the container where the volume will be mounted.
-#### The volume my_volume will store data persistently, independent of the container's lifecycle.
+- my_volume is a Docker volume.
+- /app/data is a directory inside the container where the volume will be mounted.
+- The volume my_volume will store data persistently, independent of the container's lifecycle.
 
 ### Advantages of Volumes:
 - Docker-managed lifecycle: Volumes are created and managed by Docker, making them easier to work with in a consistent manner.
@@ -633,7 +635,8 @@ docker run -v my_volume:/app/data my-container
 - When you need data to persist across container rebuilds, restarts, or when you need to migrate data between containers.
 - For databases or any stateful services that require durable storage independent of the container lifecycle.
 
-### Comparison: Bind Mounts vs Volumes
+#### Comparison: Bind Mounts vs Volumes
+
 |Feature	     |Bind Mounts                               |Volumes                                                                     |
 |----------------|------------------------------------------|----------------------------------------------------------------------------|
 |Location      	 |Path on host machine	                    |Managed by Docker, stored in `/var/lib/docker/volumes/` (or custom location)|
@@ -645,34 +648,34 @@ docker run -v my_volume:/app/data my-container
 |Access	         |Can be used for direct host interaction	|Cannot be accessed directly from the host without mounting                  |
 |Use case	     |Development, direct host file access  	|Production, persistent storage, databases                                   |
 
-### Managing Volumes: Docker CLI Commands
-#### Creating a volume:
+#### Managing Volumes: Docker CLI Commands
+Creating a volume:
 ```
 docker volume create my_volume
 ```
-#### Listing volumes:
+Listing volumes:
 ```
 docker volume ls
 ```
-#### Inspecting a volume:
+Inspecting a volume:
 ```
 docker volume inspect my_volume
 ```
-#### Removing a volume:
+Removing a volume:
 ```
 docker volume rm my_volume
 ```
-#### Pruning unused volumes:
+Pruning unused volumes:
 ```
 docker volume prune
 ```
-### This command will remove all unused volumes, freeing up disk space.
+This command will remove all unused volumes, freeing up disk space.
 
 
 - Bind Mounts are more suitable when you need direct interaction with the host's filesystem, especially for development and testing.
 - Volumes are more suitable for production use, providing better data persistence, isolation, and management by Docker.
 
-### Docker Networking
+#### Docker Networking
 Docker provides a powerful way to isolate and manage applications through containers. Networking is a crucial aspect of containers, allowing them to communicate with each other and with the outside world. Docker networking enables you to define and control how containers interact with each other and with the host system. Below are detailed notes on Docker networking, including concepts, types of networks, and use cases.
 
 ### 1. Key Concepts of Docker Networking
@@ -682,84 +685,82 @@ Docker provides a powerful way to isolate and manage applications through contai
 - Bridge: A network bridge is a software device that allows containers to communicate with each other and with the host machine.
 - Port Mapping: Docker allows the mapping of container ports to host machine ports so that external systems can access containerized applications.
 
-### 2. Types of Docker Networks
-#### Docker supports several types of networks, each serving different use cases. The four main network drivers are:
-### a. Bridge Network (default)
-#### Use Case: The default network for containers when no specific network is specified.
-#### How It Works:
-#### When a container is run without specifying a network, it connects to the default bridge network.
-#### Containers connected to the same bridge network can communicate with each other using IP addresses.
-#### External traffic can be routed to containers via port mapping (host ports mapped to container ports).
+#### 2. Types of Docker Networks
+Docker supports several types of networks, each serving different use cases. The four main network drivers are:
+
+#### a. Bridge Network (default)
+- Use Case: The default network for containers when no specific network is specified.
+- How It Works:
+- When a container is run without specifying a network, it connects to the default bridge network.
+- Containers connected to the same bridge network can communicate with each other using IP addresses.
+- External traffic can be routed to containers via port mapping (host ports mapped to container ports).
 
 #### Advantages:
-#### Simplicity: It works out of the box without needing extra configuration.
-#### Network Isolation: Containers can communicate with each other but are isolated from the host network.
+- Simplicity: It works out of the box without needing extra configuration.
+- Network Isolation: Containers can communicate with each other but are isolated from the host network.
 
 #### Limitations:
-#### It’s not suitable for large-scale, complex applications where inter-container communication needs to be fine-tuned.
+- It’s not suitable for large-scale, complex applications where inter-container communication needs to be fine-tuned.
 
 ### b. Host Network
-#### Use Case: When containers need to share the host’s network stack directly.
-#### How It Works:
-#### Containers use the host's networking interface instead of having their own network namespace.
-#### The container shares the host's IP address and port range.
-#### This network driver allows containers to bind directly to host ports and makes the container network faster (no virtual network interface).
+- Use Case: When containers need to share the host’s network stack directly.
+- How It Works:
+- Containers use the host's networking interface instead of having their own network namespace.
+- The container shares the host's IP address and port range.
+- This network driver allows containers to bind directly to host ports and makes the container network faster (no virtual network interface).
 
 #### Advantages:
-#### Performance: The network performance is slightly faster because there is no network translation between the container and the host.
-#### Simple Communication: Useful when the container needs full access to the host’s network resources.
+- Performance: The network performance is slightly faster because there is no network translation between the container and the host.
+- Simple Communication: Useful when the container needs full access to the host’s network resources.
 
 #### Limitations:
-#### Limited Isolation: Containers using the host network are less isolated from the host system and other containers.
-#### Port Conflicts: Containers can’t bind to the same port as the host.
+- Limited Isolation: Containers using the host network are less isolated from the host system and other containers.
+- Port Conflicts: Containers can’t bind to the same port as the host.
 
 ### c. None Network
-#### Use Case: When you don’t need any networking for the container.
-
-#### How It Works:
-#### Containers connected to the none network are isolated from all networks. These containers can’t reach the external network or other containers.
-#### Typically used in scenarios where containers don't require network access (e.g., for specific isolated tasks).
+Use Case: When you don’t need any networking for the container.
+- How It Works:
+- Containers connected to the none network are isolated from all networks. These containers can’t reach the external network or other containers.
+- Typically used in scenarios where containers don't require network access (e.g., for specific isolated tasks).
 
 #### Advantages:
-#### Maximum isolation from other containers and networks.
+Maximum isolation from other containers and networks.
 
 #### Limitations:
-#### No networking capabilities unless explicitly configured.
+No networking capabilities unless explicitly configured.
 
 ### d. Overlay Network
-#### Use Case: Multi-host communication (when containers are spread across multiple hosts).
-
-#### How It Works:
-#### Containers on different Docker hosts can communicate over an overlay network by using a swarm cluster.
-#### Overlay networks abstract the underlying network infrastructure, allowing containers to communicate across different physical hosts.
-#### This type of network is crucial in a Docker Swarm or Kubernetes environment for orchestrated container deployments.
+- Use Case: Multi-host communication (when containers are spread across multiple hosts).
+- How It Works:
+- Containers on different Docker hosts can communicate over an overlay network by using a swarm cluster.
+- Overlay networks abstract the underlying network infrastructure, allowing containers to communicate across different physical hosts.
+- This type of network is crucial in a Docker Swarm or Kubernetes environment for orchestrated container deployments.
 
 #### Advantages:
-#### Cross-host communication: Containers can communicate seamlessly across multiple machines.
-#### Easy configuration in multi-host deployments, especially for distributed systems.
+- Cross-host communication: Containers can communicate seamlessly across multiple machines.
+- Easy configuration in multi-host deployments, especially for distributed systems.
 
 #### Limitations:
-#### Slightly more complex than bridge networks.
-#### May introduce slight latency due to the encapsulation of traffic between hosts.
+- Slightly more complex than bridge networks.
+- May introduce slight latency due to the encapsulation of traffic between hosts.
 
 ### e. Macvlan Network
-#### Use Case: When containers need to appear as physical devices on the network.
+- Use Case: When containers need to appear as physical devices on the network.
+- How It Works:
+- The container gets its own MAC address and IP address, appearing as a unique device on the physical network.
+- This can be used when containers need direct access to the network or to bypass NAT (Network Address Translation).
 
-#### How It Works:
-#### The container gets its own MAC address and IP address, appearing as a unique device on the physical network.
-#### This can be used when containers need direct access to the network or to bypass NAT (Network Address Translation).
+##### Advantages:
+- Containers appear as separate hosts on the network, making them ideal for legacy systems or when you need containers to interact with other systems as if they were independent hosts.
+- Useful in environments where networking is restricted to specific MAC addresses or IP addresses.
 
-#### Advantages:
-#### Containers appear as separate hosts on the network, making them ideal for legacy systems or when you need containers to interact with other systems as if they were independent hosts.
-#### Useful in environments where networking is restricted to specific MAC addresses or IP addresses.
-
-#### Limitations:
-#### Requires extra configuration and understanding of the physical network.
-#### May not be suitable for all environments (e.g., cloud-based or virtualized environments).
+##### Limitations:
+- Requires extra configuration and understanding of the physical network.
+- May not be suitable for all environments (e.g., cloud-based or virtualized environments).
 
 
 ### 3. Docker Networking Commands
-#### Here are some essential Docker commands related to networking:
+Here are some essential Docker commands related to networking:
 
 #### View Networks:
 ```
@@ -848,22 +849,17 @@ services:
 - Environment: Defines environment variables like passwords.
 
 ### Docker Compose Commands
-#### docker-compose up: Builds, (re)creates, and starts the services defined in the docker-compose.yml file.
+docker-compose up: Builds, (re)creates, and starts the services defined in the docker-compose.yml file.
 `docker-compose up`
-
-#### docker-compose down: Stops and removes the containers and networks defined in docker-compose.yml.
+docker-compose down: Stops and removes the containers and networks defined in docker-compose.yml.
 `docker-compose down`
-
-#### docker-compose build: Builds images as defined in the docker-compose.yml file.
+docker-compose build: Builds images as defined in the docker-compose.yml file.
 `docker-compose build`
-
-#### docker-compose ps: Lists all running services.
+docker-compose ps: Lists all running services.
 `docker-compose ps`
-
-#### docker-compose logs: Displays the logs from all containers.
+docker-compose logs: Displays the logs from all containers.
 `docker-compose logs`
-
-#### docker-compose exec: Executes a command in a running service container.
+docker-compose exec: Executes a command in a running service container.
 `docker-compose exec web bash`
 
 
@@ -917,7 +913,7 @@ services:
       - db
 ```
 ### Example of a Multi-Container Application
-#### Here’s an example of a simple multi-container application with a web frontend and a database.
+Here’s an example of a simple multi-container application with a web frontend and a database.
 ```
 version: '3'
 services:
@@ -947,9 +943,9 @@ networks:
 - All services are connected to a custom network called webnet.
 
 ### Docker Compose in Development vs. Production
-#### While Docker Compose is often used for local development environments, it can also be useful for staging or production systems. However, for production, you may need additional configurations such as:
-#### Scaling: You can scale services to run more containers for load balancing.
-#### Environment-specific Configurations: Use different docker-compose.override.yml files for different environments (development, staging, production).
+- While Docker Compose is often used for local development environments, it can also be useful for staging or production systems. However, for production, you may need additional configurations such as:
+- Scaling: You can scale services to run more containers for load balancing.
+- Environment-specific Configurations: Use different docker-compose.override.yml files for different environments (development, staging, production).
 
 #### Example of scaling a service:
 ```
@@ -1052,7 +1048,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t my-multi-arch-image .
 #### `.`: Refers to the Docker context (usually the current directory).
 
 #### 4. Push Multi-Architecture Images to Docker Hub
-#### Once you have the image built for multiple platforms, you can push it to Docker Hub or other registries. Ensure you're logged into Docker Hub (or another registry) before pushing:
+Once you have the image built for multiple platforms, you can push it to Docker Hub or other registries. Ensure you're logged into Docker Hub (or another registry) before pushing:
 ```
 docker buildx build --platform linux/amd64,linux/arm64 -t myusername/my-multi-arch-image:latest --push .
 ```
@@ -1088,13 +1084,13 @@ docker buildx build --platform linux/amd64,linux/arm64 -t myusername/myapp:lates
 #### Build failures: These could occur if your dependencies don't support cross-compilation or if you're trying to build for an unsupported platform.
 
 
-#### Multi-architecture Docker builds are a powerful feature that enables the creation of images that can run seamlessly across various platforms and architectures. By leveraging Docker Buildx, cross-compiling for multiple architectures has become easier, allowing developers to create more flexible and portable containerized applications.
+Multi-architecture Docker builds are a powerful feature that enables the creation of images that can run seamlessly across various platforms and architectures. By leveraging Docker Buildx, cross-compiling for multiple architectures has become easier, allowing developers to create more flexible and portable containerized applications.
 
 
 #### In Docker, a layer is a fundamental concept used in the creation and management of Docker images. Layers are essentially incremental changes that make up a Docker image. Understanding layers is crucial to optimizing Docker images for speed, size, and efficiency. Here’s a detailed breakdown of Docker layers:
 
 ### What Are Docker Layers?
-#### Each Docker image is made up of a series of layers. These layers represent different instructions or steps in the Dockerfile (the file that contains the set of instructions to build a Docker image). When you build a Docker image, Docker creates a new layer for each instruction in the Dockerfile that modifies the image. These layers are stacked on top of each other to form the final image.
+Each Docker image is made up of a series of layers. These layers represent different instructions or steps in the Dockerfile (the file that contains the set of instructions to build a Docker image). When you build a Docker image, Docker creates a new layer for each instruction in the Dockerfile that modifies the image. These layers are stacked on top of each other to form the final image.
 
 #### For example, consider this simple Dockerfile:
 ```
