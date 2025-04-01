@@ -79,9 +79,9 @@ resource "aws_instance" "example" {
 ```
 
 #### Passing variables can be done via:
-`-var` flag in the command line
-`terraform.tfvars` file
-Environment variables (e.g., `TF_VAR_region`)
+- `-var` flag in the command line
+- `terraform.tfvars` file
+- Environment variables (e.g., `TF_VAR_region`)
 
 ### 5. Conditions
 You can use conditions (like `count`, `for_each`, `if-else`) in Terraform to create dynamic infrastructure.
