@@ -1165,9 +1165,9 @@ docker history myimage:latest
 #### This command will display a history of the image, showing each layer, the size of each layer, and the command that created it.
 
 ### Layer Caching and Performance
-#### - Cache Efficiency: Docker's layer cache significantly speeds up builds by reusing layers that haven't changed. However, if a layer is modified, Docker will invalidate the cache for that layer and all subsequent layers.
+- Cache Efficiency: Docker's layer cache significantly speeds up builds by reusing layers that haven't changed. However, if a layer is modified, Docker will invalidate the cache for that layer and all subsequent layers.
 
-#### - Clean Build: To force Docker to ignore the cache and build everything from scratch, you can use the --no-cache flag with docker build:
+- Clean Build: To force Docker to ignore the cache and build everything from scratch, you can use the --no-cache flag with docker build:
 ```
 docker build --no-cache -t myimage .
 ```
