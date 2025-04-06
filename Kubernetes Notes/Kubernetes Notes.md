@@ -1497,3 +1497,182 @@ Custom resources can help automate and manage application-specific configuration
 - Custom resources can be used to represent various stages or tasks in a CI/CD pipeline and trigger specific actions like deployments, tests, or monitoring.
 4. Custom Workloads:
 - You can create custom resource types to represent specific workloads or resources (e.g., virtual machines, special databases) that are not native to Kubernetes.
+
+### Kubernetes ConfigMap:
+A ConfigMap is a Kubernetes API object used to store non-sensitive configuration data in key-value pairs. ConfigMaps are typically used for storing configuration files, command-line arguments, environment variables, or other settings that applications can consume.
+
+#### Purpose:
+- To separate configuration from application code, allowing the application to be more portable and easier to manage across different environments (development, staging, production).
+- ConfigMaps provide a way to inject configuration into Pods at runtime.
+
+#### Usage:
+1. Storing Configuration Data: ConfigMaps store data that can be consumed by Pods, either as environment variables or by mounting the ConfigMap as files.
+2. Injection into Pods: Configuration can be injected into Pods as environment variables or volume mounts (files).
+3. Environment Variables: You can inject the data in a ConfigMap into a container as environment variables, which the application can read at runtime.
+4. File Mounting: A ConfigMap can also be mounted as a file inside a container. Each key in the ConfigMap is represented as a file, with the content of the value as the file content.
+
+#### Creating a ConfigMap:
+1. From literal values:
+```
+kubectl create configmap my-config --from-literal=key1=value1 --from-literal=key2=value2
+```
+2. From a file:
+```
+kubectl create configmap my-config --from-file=config-file.txt
+```
+3. From a directory:
+```
+kubectl create configmap my-config --from-file=/path/to/directory
+```
+4. From a YAML file:
+You can also define a ConfigMap using YAML. Example:
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  key1: value1
+  key2: value2
+```
+Then apply it:
+```
+kubectl apply -f configmap.yaml
+```
+#### Using ConfigMap in Pods:
+1. As environment variables:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    envFrom:
+    - configMapRef:
+        name: my-config
+```
+2. As a volume mount:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: my-config
+```
+#### Advantages of ConfigMap:
+- Easy to manage configuration changes without needing to rebuild or redeploy your application.
+- Supports versioning of configuration.
+- Enables easy modification of environment-specific configurations.
+
+
+### Kubernetes Secrets:
+A Secret is similar to a ConfigMap, but it is specifically designed to store sensitive data such as passwords, OAuth tokens, SSH keys, or any other sensitive information. Secrets are encoded in base64 to avoid exposing plain text but are not encrypted by default.
+
+#### Purpose:
+- To store and manage sensitive information, such as passwords, access tokens, and private keys, securely.
+- Secrets can be mounted into Pods as environment variables or volumes, or they can be accessed by applications to authenticate or connect to services.
+
+#### Creating a Secret:
+1. From literal values:
+```
+kubectl create secret generic my-secret --from-literal=password=myPassword123 --from-literal=token=myToken
+```
+2. From a file:
+```
+kubectl create secret generic my-secret --from-file=ssh-key=./ssh/id_rsa
+```
+3. From a directory:
+```
+kubectl create secret generic my-secret --from-file=/path/to/secret-files
+```
+4. From a YAML file:
+You can define a Secret using YAML:
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  password: bXlQYXNzd29yZDEyMw==  # base64 encoded password
+```
+Then apply it:
+```
+kubectl apply -f secret.yaml
+```
+### Accessing Secrets in Pods:
+1. As environment variables:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-example-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    env:
+    - name: SECRET_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: my-secret
+          key: password
+```
+2. As a volume mount:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-example-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    volumeMounts:
+    - name: secret-volume
+      mountPath: /etc/secret
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: my-secret
+```
+#### Secret Types:
+- Opaque (default): The data is arbitrary and not tied to any specific type.
+- dockerconfigjson: Used to store Docker configuration, such as credentials for Docker registries.
+- kubernetes.io/service-account-token: Used to store service account token data.
+- kubernetes.io/basic-auth: Stores credentials for basic HTTP authentication.
+- kubernetes.io/ssh-auth: Stores SSH private keys for authentication.
+- kubernetes.io/tls: Stores TLS certificates and private keys.
+
+#### Security Considerations:
+- Base64 encoding is not encryption; it only makes the data unreadable without decoding. Base64 encoded data can be easily decoded back to its original format.
+- Kubernetes Secrets can be encrypted at rest using features like KMS (Key Management Service) in cloud environments.
+- By default, Secrets are stored in etcd, which should be secured and encrypted.
+
+#### Advantages of Secrets:
+- Secrets are better suited for sensitive data, with Kubernetes providing mechanisms to manage and control access to them.
+- Secrets can be encoded, but you should also encrypt them to protect against potential leaks.
+- Secrets can be accessed programmatically, and Kubernetes allows access control via RBAC to limit which Pods can access specific Secrets.
+
+
+#### Comparison between ConfigMap and Secret
+|Feature	      |ConfigMap	                             |Secret                                                 |
+|--------------|---------------------------------------|-------------------------------------------------------|
+|Purpose	      |Store non-sensitive configuration data |Store sensitive information (passwords, tokens, etc.)  |
+|Data Encoding |Plain text	                            |Base64 encoded                                         |
+|Use Case	     |Configuration for apps                 |Authentication, authorization, and sensitive data      |
+|Security	     |No encryption	                         |Can be encrypted at rest (but not by default)          |
+|Access Control|Through RBAC and environment variables |Through RBAC, environment variables, or volumes        |
