@@ -962,4 +962,208 @@ KubeShark is a tool designed to help with observability and debugging of Kuberne
 
 In short, KubeShark helps Kubernetes operators and developers understand and manage network traffic in a microservices-based architecture, which is essential for troubleshooting, optimizing performance, and ensuring security.
 
+#### Kubernetes Ingress
+An Ingress is a collection of rules that allow inbound connections to reach the cluster services. It provides HTTP/S routing functionality, including:
+- Routing based on hostnames.
+- Routing based on URL paths.
+- SSL/TLS termination.
+- URL path rewrites.
+- External DNS management.
+- Load balancing.
 
+Ingress allows you to configure a single entry point (URL or domain) to manage all your services, avoiding the need for separate LoadBalancer or NodePort services for each service exposed to the outside world.
+
+#### Ingress Resource Definition
+The Ingress resource defines the rules and configurations for how external traffic should be routed to services in your cluster. The Ingress resource can be customized to meet specific needs, such as SSL configuration, URL rewrites, etc.
+
+Basic Ingress Example
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: app1-service
+            port:
+              number: 80
+      - path: /app2
+        pathType: Prefix
+        backend:
+          service:
+            name: app2-service
+            port:
+              number: 80
+```
+In this example:
+- Requests to `http://example.com/app1` will be forwarded to the `app1-service` on port 80.
+- Requests to `http://example.com/app2` will be forwarded to the `app2-service` on port 80.
+
+Key Components of an Ingress Resource:
+1. Host: The domain name (e.g., `example.com`) that the Ingress will match.
+2. Path: The URL path (e.g., `/app1`) that triggers the rule.
+3. PathType: Specifies how the path should be matched (`Prefix`, `Exact`, or `ImplementationSpecific`).
+4. Backend: The Kubernetes Service that should handle the request.
+
+#### Ingress Controllers
+An Ingress Controller is a Kubernetes resource that implements the rules defined in the Ingress resource. The controller typically acts as a reverse proxy, load balancer, or ingress gateway, forwarding requests to the correct services based on Ingress rules.
+
+Ingress controllers are implemented by different providers:
+- NGINX Ingress Controller: One of the most popular Ingress controllers, typically used for managing HTTP(S) traffic, supports SSL termination, load balancing, and many other features.
+- Traefik Ingress Controller: A modern ingress controller with dynamic reconfiguration and easy integration with containerized services.
+- HAProxy Ingress Controller: Known for its high-performance capabilities, especially in complex routing scenarios.
+- Istio (Envoy) Ingress Controller: A more advanced option that integrates with service meshes like Istio.
+
+
+#### Ingress Path Types
+Ingress has three types of path matching that help define how URLs should be routed:
+
+1. Prefix (default): Matches any path that starts with the specified path prefix.
+- For example, /app1 will match /app1, /app1/xyz, and /app1abc.
+
+2. Exact: Matches the exact path.
+- For example, /app1 will only match /app1 and nothing else (not /app1/xyz).
+3. ImplementationSpecific: Path matching behavior depends on the Ingress controller implementation.
+
+Example of Using Path Type:
+```
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /images
+        pathType: Exact
+        backend:
+          service:
+            name: image-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
+```
+In this case:
+- `/images` will exactly match requests to `/images`.
+- `/api` will match requests to `/api`,` /api/xyz`, and `/api/anything`.
+
+#### TLS/SSL with Ingress
+Kubernetes Ingress supports TLS termination. TLS termination means that the Ingress controller decrypts incoming HTTPS traffic and forwards it to the backend services over HTTP.
+
+Steps to Enable TLS in Ingress:
+1. Create a TLS Secret: You need a TLS certificate and its private key stored in a Kubernetes Secret. You can generate a secret using `kubectl`.
+
+Example:
+```
+kubectl create secret tls my-tls-secret --cert=path/to/cert.crt --key=path/to/cert.key
+```
+2. Use the TLS Secret in an Ingress: You can then reference the TLS secret in the Ingress definition to enable HTTPS.
+
+Example:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  tls:
+  - hosts:
+    - example.com
+    secretName: my-tls-secret
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: app1-service
+            port:
+              number: 80
+```
+This Ingress resource ensures that:
+- Traffic to `https://example.com/app1` will be handled with SSL termination.
+- The traffic will be forwarded to the `app1-service` on HTTP (port 80).
+
+#### Ingress Annotations
+Annotations are used in Ingress resources to provide specific configuration options to the Ingress controller.
+
+Some common annotations include:
+- nginx.ingress.kubernetes.io/rewrite-target: Specifies the target path for URL path rewrites.
+```
+nginx.ingress.kubernetes.io/rewrite-target: /
+```
+- nginx.ingress.kubernetes.io/ssl-redirect: Controls whether HTTP traffic should be redirected to HTTPS.
+```
+nginx.ingress.kubernetes.io/ssl-redirect: "true"
+```
+- nginx.ingress.kubernetes.io/proxy-body-size: Specifies the maximum allowed size for the request body.
+```
+nginx.ingress.kubernetes.io/proxy-body-size: "8m"
+```
+- nginx.ingress.kubernetes.io/force-ssl-redirect: Forces all HTTP requests to be redirected to HTTPS.
+```
+nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+```
+#### Advanced Features of Ingress
+1. Path Rewriting: Ingress can rewrite paths as they are forwarded to the backend services, often used when the backend service is expecting different paths than those used externally.
+
+Example of path rewrite:
+```
+nginx.ingress.kubernetes.io/rewrite-target: /newpath/
+```
+2. Multiple Hosts: You can have multiple host definitions within the same Ingress resource, allowing routing based on the hostname.
+
+Example:
+```
+spec:
+  rules:
+  - host: app1.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: app1-service
+            port:
+              number: 80
+  - host: app2.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: app2-service
+            port:
+              number: 80
+```              
+3. Rate Limiting: Some Ingress controllers (like NGINX) support rate limiting of incoming requests.
+
+#### Best Practices for Using Ingress
+- Use HTTPS: Always use TLS to encrypt traffic to and from your Kubernetes cluster. Avoid exposing services over HTTP without TLS, especially in production environments.
+- Limit Ingress Annotations: While annotations offer flexibility, limit their use to only what's necessary to avoid complexity and ensure maintainability.
+- Leverage Load Balancing: Use Ingress controllers for load balancing and high availability, ensuring that traffic is spread evenly across your services.
+- Custom Domains: Use custom domain names (e.g., app1.example.com) for more meaningful and manageable URL structures.
+
+#### Troubleshooting Ingress
+- Check the Ingress Controller Logs: Inspect the logs of your Ingress controller to diagnose issues with routing and configuration.
+```
+kubectl logs <nginx-ingress-controller-pod> -n ingress-nginx
+```
+- Verify Ingress Resource: Ensure that the Ingress resource is correctly defined and applied.
+```
+kubectl describe ingress my-ingress
+```
+- Inspect Service Health: Make sure the target services behind the Ingress are running and healthy.
