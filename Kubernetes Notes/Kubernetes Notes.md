@@ -1676,3 +1676,148 @@ spec:
 |Use Case	     |Configuration for apps                 |Authentication, authorization, and sensitive data      |
 |Security	     |No encryption	                         |Can be encrypted at rest (but not by default)          |
 |Access Control|Through RBAC and environment variables |Through RBAC, environment variables, or volumes        |
+
+
+### Kubernetes Monitoring
+Kubernetes monitoring involves tracking the health and performance of the Kubernetes clusters, nodes, containers, and applications running inside the cluster. It helps in identifying issues, optimizing performance, ensuring high availability, and maintaining the overall stability of the system.
+
+Monitoring Kubernetes effectively requires a combination of tools and techniques to monitor:
+- Cluster health (nodes, control plane)
+- Application performance (pods, containers, services)
+- Resource usage (CPU, memory, disk, network)
+- Logs and events (for troubleshooting)
+
+#### Key Components of Kubernetes Monitoring
+- Control Plane: The set of components responsible for the overall management of the cluster, such as the Kubernetes API server, scheduler, controller manager, etc.
+- Nodes: The physical or virtual machines on which the workloads run.
+- Pods and Containers: The smallest deployable units in Kubernetes.
+- Cluster-wide Metrics: Metrics like resource usage, pod status, node conditions, etc.
+- Application Metrics: Specific to the applications running in the cluster (e.g., request latency, error rates).
+- Logs: Logs from Kubernetes components, application logs, and event logs.
+
+#### Monitoring Metrics in Kubernetes
+Kubernetes provides various types of metrics that can help you monitor the health of the system and the applications running within it:
+
+a. Cluster Metrics:
+- Node Metrics: CPU usage, memory usage, disk usage, and network traffic for each node.
+- Pod Metrics: CPU and memory usage for individual pods.
+- Cluster Utilization: Number of running pods, available resources, and pod resource requests/limits.
+
+b. Application Metrics:
+Request Latency: Time taken by the application to process a request.
+- Error Rates: Number of errors encountered by the application.
+- Request Count: Total number of requests or transactions processed by the app.
+- Service Availability: Uptime and response time of the services deployed.
+
+c. Health Metrics:
+- Pod Readiness and Liveness: The health of pods, whether they are healthy (ready) or not.
+- Container Restarts: Number of times a container has been restarted.
+
+d. Cluster Health Metrics:
+- Control Plane Health: API server status, etcd health, and scheduler availability.
+- Node Status: Whether nodes are in a ready state or not.
+- Pod and Container Status: Pod and container lifecycle status (running, pending, failed, etc.).
+
+#### Popular Tools for Kubernetes Monitoring
+a. Prometheus:
+- Prometheus is one of the most widely used open-source tools for monitoring Kubernetes clusters.
+- It collects metrics from Kubernetes components, nodes, and applications.
+- Prometheus uses a pull-based model to scrape data from endpoints exposed by Kubernetes components, containers, and applications.
+- Prometheus + Grafana is a popular combination to visualize metrics.
+
+Key features of Prometheus:
+- Metric scraping with a flexible query language (`PromQL`).
+- Automatic discovery of Kubernetes targets (pods, nodes).
+- Data storage and long-term retention.
+- Alerting via Prometheus Alertmanager.
+
+How to integrate Prometheus with Kubernetes:
+- Install Prometheus using Helm or K8s manifests.
+- Use the Prometheus Operator for easy setup and management.
+- Set up ServiceMonitor to monitor specific services.
+
+b. Grafana:
+- Grafana is a visualization tool that integrates well with Prometheus.
+- It allows you to create dashboards for monitoring Kubernetes metrics.
+- Commonly used to visualize Prometheus metrics, but can also be used with other data sources.
+- Pre-configured dashboards for Kubernetes monitoring are available in Grafana.
+
+Setting up Grafana with Kubernetes:
+- Install Grafana using Helm or manifests.
+- Integrate Grafana with Prometheus as a data source.
+- Use built-in Kubernetes dashboards or create custom dashboards.
+
+c. Kubernetes Metrics Server:
+- The Metrics Server is a lightweight aggregator of resource usage data in Kubernetes.
+- It collects metrics like CPU and memory usage for nodes and pods and is used by other components like the Horizontal Pod Autoscaler (HPA).
+- It does not store data but provides a way to get metrics for real-time queries.
+
+How to install and use Metrics Server:
+- Install via Helm or K8s manifests.
+- Use `kubectl top` command to view resource usage.
+- Metrics Server is essential for scaling and resource management.
+
+d. Kube-State-Metrics:
+- Kube-State-Metrics exposes metrics related to the state of Kubernetes resources (deployments, statefulsets, nodes, etc.).
+- It provides more detailed metrics on the status of Kubernetes objects (e.g., the number of available replicas in a deployment).
+- Often used in combination with Prometheus for more comprehensive cluster monitoring.
+
+How to install and use Kube-State-Metrics:
+- Install via Helm or manifests.
+- Integrate with Prometheus for collection of resource state metrics.
+
+e. Elastic Stack (ELK):
+- The Elastic Stack (Elasticsearch, Logstash, Kibana) is commonly used for logging, but it can also be used for monitoring.
+- Filebeat can be installed as a DaemonSet to collect logs from nodes and containers, which are then sent to Elasticsearch.
+- Kibana is used to visualize logs and metrics collected by Elasticsearch.
+
+f. Datadog:
+- Datadog is a commercial monitoring solution that provides full-stack observability for Kubernetes.
+- It can monitor the Kubernetes cluster, containers, and applications in real-time.
+- It offers integration with other tools and cloud providers, giving a unified monitoring experience.
+
+g. New Relic:
+- New Relic provides comprehensive monitoring for Kubernetes, offering infrastructure monitoring, APM (Application Performance Monitoring), and real-time observability.
+- It integrates seamlessly with Kubernetes and provides visual dashboards for monitoring.
+
+#### Kubernetes Monitoring Strategies
+a. Collecting Metrics:
+- Use Prometheus to scrape metrics from your Kubernetes cluster.
+- Ensure that the Kubernetes API server, nodes, pods, and services are exposed as endpoints that Prometheus can scrape.
+- Consider using Prometheus exporters to collect specific metrics from services or infrastructure outside of Kubernetes.
+
+b. Setting up Alerts:
+- Use Prometheus Alertmanager to create alerts based on your metrics.
+- Common alerting scenarios include:
+ - High CPU or memory usage.
+ - Pod restarts or container crashes.
+ - Node down or unresponsive.
+ - Application-specific errors or latency.
+
+c. Visualizing Metrics:
+- Grafana is the best choice for visualizing Prometheus data, providing intuitive dashboards.
+- Use pre-configured dashboards or create custom ones that meet your operational requirements.
+- Set up dashboards for Kubernetes-specific metrics (e.g., node health, pod status) as well as application-level metrics.
+
+d. Logging and Troubleshooting:
+- Use Centralized Logging systems like Elasticsearch or Fluentd to aggregate logs from all containers and Kubernetes components.
+- Integrate Prometheus and Grafana with log aggregation systems for more comprehensive monitoring.
+- Monitor logs for errors, warnings, and critical events.
+
+e. Autoscaling and Resource Management:
+- Use the Horizontal Pod Autoscaler (HPA) with metrics from the Metrics Server to scale applications based on CPU and memory usage.
+- Set resource limits and requests for pods to ensure efficient resource allocation.
+- Use the Vertical Pod Autoscaler (VPA) for automatic resource adjustment for containers.
+
+f. Observability and Tracing:
+- Implement Distributed Tracing (e.g., using Jaeger or OpenTelemetry) to trace requests across multiple services within the Kubernetes cluster.
+- Distributed tracing helps to identify bottlenecks, latency issues, and performance problems in microservices architectures.
+
+#### Best Practices for Kubernetes Monitoring
+- Centralized Monitoring: Use tools like Prometheus and Grafana for centralized metrics collection and visualization.
+- Alerting: Set up appropriate alerting for resource consumption (CPU, memory), application errors, and critical failures (e.g., nodes or pods crashing).
+- Log Aggregation: Use Elasticsearch, Fluentd, or other logging tools to aggregate logs from containers, nodes, and Kubernetes components.
+- Autoscaling: Configure HPA and VPA to automatically adjust resources as required.
+- Security Monitoring: Monitor cluster access and ensure that proper RBAC permissions are set up for all components.
+- Regular Health Checks: Use liveness and readiness probes to ensure that applications and pods are healthy.
+- Capacity Planning: Continuously monitor resource usage to ensure that your cluster can handle growing workloads.
