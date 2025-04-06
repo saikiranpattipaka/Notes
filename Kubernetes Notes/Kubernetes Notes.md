@@ -1167,3 +1167,191 @@ kubectl logs <nginx-ingress-controller-pod> -n ingress-nginx
 kubectl describe ingress my-ingress
 ```
 - Inspect Service Health: Make sure the target services behind the Ingress are running and healthy.
+
+### Kubernetes RBAC (Role-Based Access Control)
+Kubernetes RBAC (Role-Based Access Control) is a method for regulating access to resources within a Kubernetes cluster based on the roles of individual users or services. With RBAC, you can define who can perform what actions on which resources in the cluster, thus enhancing security and controlling access.
+
+RBAC uses the concept of Roles and RoleBindings to allow or deny actions, providing fine-grained access control to the Kubernetes API resources.
+
+1. Core Concepts of Kubernetes RBAC
+RBAC in Kubernetes involves the following key components:
+
+1.1. Roles
+A Role defines a set of permissions within a namespace or across the entire cluster. It specifies what resources can be accessed and what operations (verbs) are allowed on those resources.
+
+There are two types of roles:
+- Role: Defines permissions within a specific namespace.
+- ClusterRole: Defines permissions across the entire cluster.
+
+1.2. RoleBindings
+A RoleBinding grants the permissions defined in a Role to a user or set of users within a specific namespace. The binding associates a Role or ClusterRole with a user, group, or service account.
+
+There are two types of bindings:
+- RoleBinding: Grants the permissions of a Role within a specific namespace.
+- ClusterRoleBinding: Grants the permissions of a ClusterRole across the entire cluster.
+
+1.3. Verbs (Actions)
+Verbs represent the actions that can be performed on resources. Some of the most common verbs are:
+- get: Retrieve a resource.
+- list: List resources.
+- create: Create a new resource.
+- update: Modify an existing resource.
+- delete: Remove a resource.
+- watch: Watch resources for changes.
+- patch: Apply partial changes to a resource.
+
+1.4. Resources
+Resources are the objects or entities on which operations can be performed. Examples of resources include:
+- pods
+- deployments
+- services
+- secrets
+- namespaces
+
+1.5. Namespaces
+RBAC can be configured to apply within specific namespaces or globally to the entire cluster. The Role is namespace-scoped, while ClusterRole applies to the entire cluster.
+
+2. RBAC Policies
+RBAC policies are created using Role and ClusterRole resources, which define the permissions for users or groups, and RoleBinding or ClusterRoleBinding, which specify who receives these permissions.
+
+2.1. Role Definition
+A Role defines a set of permissions in a particular namespace. Here is an example of a Role that grants read-only access to Pods in the default namespace:
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- verbs: ["get", "list"]
+  apiGroups: [""]
+  resources: ["pods"]
+```
+In this example:
+- verbs: `get`, `list` — The user can read information about pods.
+- resources: `pods` — The user is allowed to interact with pod resources.
+- apiGroups: `""` refers to the core Kubernetes API group (used for resources like pods, services, etc.).
+
+2.2. ClusterRole Definition
+A ClusterRole defines permissions at the cluster level, affecting resources across all namespaces. For instance, a ClusterRole that grants read-only access to all Pods in the cluster:
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-pod-reader
+rules:
+- verbs: ["get", "list"]
+  apiGroups: [""]
+  resources: ["pods"]
+```
+This ClusterRole grants read-only access to Pods across all namespaces in the cluster.
+
+2.3. RoleBinding Definition
+A RoleBinding assigns a Role to a user, group, or service account within a specific namespace.
+
+Example of a RoleBinding for assigning the `pod-reader` role to a user named `jane` in the `default` namespace:
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods-binding
+  namespace: default
+subjects:
+- kind: User
+  name: jane
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+In this example:
+- subjects: Specifies the user jane to whom the role is granted.
+- roleRef: Refers to the pod-reader role in the default namespace.
+
+2.4. ClusterRoleBinding Definition
+A ClusterRoleBinding binds a ClusterRole to a user, service account, or group across the entire cluster.
+
+Example of a ClusterRoleBinding for assigning the `cluster-pod-reader` ClusterRole to a service account named `read-only-sa` in the default namespace:
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: read-cluster-pods-binding
+subjects:
+- kind: ServiceAccount
+  name: read-only-sa
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+In this example:
+- subjects: Specifies the `read-only-sa` service account to which the role is bound.
+- roleRef: Refers to the `cluster-pod-reader` ClusterRole.
+
+3. RBAC Use Cases
+3.1. Namespace-Based Access Control
+If you want to limit access to resources within a specific namespace, use Role and RoleBinding.
+- Role for read-only access to Pods within a namespace.
+- RoleBinding to bind the Role to a user or service account.
+
+3.2. Cluster-Wide Access Control
+To grant permissions to resources across the entire cluster (such as managing nodes or creating namespaces), use ClusterRole and ClusterRoleBinding.
+- ClusterRole for full control of resources across all namespaces.
+- ClusterRoleBinding to assign cluster-wide permissions to users or service accounts.
+
+3.3. Service Accounts and Pod Security
+RBAC is often used to define access for Service Accounts within Pods. For example, you might create a ServiceAccount that a pod will use to access the Kubernetes API, and then define roles and bindings to control what the pod can access.
+
+4. Advanced RBAC Features
+4.1. Aggregated ClusterRoles
+You can combine multiple ClusterRoles into a single role. This is done by creating a new ClusterRole and referring to other existing ClusterRoles.
+
+Example of aggregating multiple ClusterRoles:
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: full-access
+rules:
+  - kind: ClusterRole
+    name: admin
+  - kind: ClusterRole
+    name: edit
+```
+This new `full-access` role aggregates the `admin` and `edit` ClusterRoles.
+
+4.2. RBAC with Groups
+RBAC allows you to assign roles to groups (e.g., Active Directory groups). This is useful for managing access at scale.
+
+Example with a group:
+```
+subjects:
+- kind: Group
+  name: developers
+  apiGroup: rbac.authorization.k8s.io
+```
+This binds a role to the developers group.
+
+5. Best Practices for RBAC
+- Principle of Least Privilege: Always assign only the minimal permissions necessary for a user or service to perform their tasks.
+- Use Namespaces: Where possible, define RBAC rules within namespaces to limit the scope of permissions.
+- Service Accounts for Applications: Assign service accounts to your applications and bind roles to those service accounts rather than using default service accounts.
+- Regular Auditing: Regularly audit roles and role bindings to ensure that permissions are aligned with actual needs and security policies.
+- ClusterRoles for Global Access: Use ClusterRoles only when you need permissions across the entire cluster.
+- Manage Group Permissions: Instead of assigning roles to individual users, assign roles to groups for easier management and scalability.
+
+6. Troubleshooting RBAC Issues
+- kubectl auth can-i: Use this command to check whether a user has permission to perform a specific action.
+```
+kubectl auth can-i get pods --as=jane --namespace=default
+```
+- Audit Logs: Kubernetes has built-in audit logging that can help trace permission issues.
+- Describe Role/RoleBinding: Use `kubectl describe` to inspect roles and bindings:
+```
+kubectl describe role pod-reader --namespace=default
+kubectl describe rolebinding read-pods-binding --namespace=default
+```
