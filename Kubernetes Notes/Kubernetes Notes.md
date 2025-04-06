@@ -1355,3 +1355,145 @@ kubectl auth can-i get pods --as=jane --namespace=default
 kubectl describe role pod-reader --namespace=default
 kubectl describe rolebinding read-pods-binding --namespace=default
 ```
+
+### Kubernetes Custom Resources (CR)
+Kubernetes (K8s) allows users to extend its functionality by defining custom resources. A Custom Resource (CR) is an extension of the Kubernetes API that allows you to define your own object types. These resources allow you to store and manage your application's state in the Kubernetes API server and build custom controllers to manage the lifecycle of your application.
+
+#### Key Concepts
+1. Custom Resource Definitions (CRD):
+- Custom Resource Definition (CRD) is the schema or blueprint that defines the structure of a custom resource.
+- CRDs allow you to create and manage custom resources in your Kubernetes cluster.
+- Once a CRD is created, Kubernetes will automatically manage the API group and versioning for your custom resources.
+
+2. Custom Resources (CR):
+- A Custom Resource (CR) is an instance of a custom resource type that is created based on the CRD.
+- CRDs define the API schema, and CRs are the actual instances of the resources defined by the CRD.
+- Custom resources behave similarly to native Kubernetes resources (like Pods, Services, etc.).
+
+3. Controller:
+- A Controller is an application that watches the state of the custom resource and takes appropriate actions based on that state.
+- Controllers are usually written to reconcile the desired state (described in the custom resource) with the current state of the system.
+
+#### Benefits of Custom Resources
+- Extensibility: You can define resources that are specific to your application.
+- Declarative Management: Use the same declarative YAML approach as other Kubernetes resources.
+- Automated Lifecycle Management: Custom resources can be managed by custom controllers to automatically update, create, or delete resources based on the state of the custom resource.
+- Standardized API: CRDs leverage Kubernetes' API server to expose resources, so users can interact with them in a familiar way using kubectl.
+
+#### Steps to Define and Use a Custom Resource
+1. Define a Custom Resource Definition (CRD)
+A CRD specifies the schema for your custom resource and enables Kubernetes to manage your custom objects.
+```
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: myresources.example.com
+spec:
+  group: example.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                replicas:
+                  type: integer
+                image:
+                  type: string
+  scope: Namespaced
+  names:
+    plural: myresources
+    singular: myresource
+    kind: MyResource
+    shortNames:
+      - mr
+```
+In this example:
+- `group` is the API group of your custom resource.
+- `versions` specifies the version of the custom resource (e.g., v1).
+- `scope: Namespaced` indicates that the custom resource is namespace-scoped.
+- `names` defines the plural, singular, and kind of the custom resource.
+- `openAPIV3Schema` defines the structure of the resource, including fields like `spec.replicas` and `spec.image`.
+
+2. Create a Custom Resource
+Once the CRD is created, you can create custom resources (CRs) of that type.
+```
+yaml
+Copy
+apiVersion: example.com/v1
+kind: MyResource
+metadata:
+  name: myresource-instance
+spec:
+  replicas: 3
+  image: nginx
+```
+- `apiVersion: example.com/v1` refers to the custom API version defined in the CRD.
+- `kind: MyResource` matches the kind defined in the CRD.
+- `spec` contains the actual data for the resource, in this case, the number of replicas and the image name.
+
+3. Apply the CRD and Custom Resource
+To create the CRD, run:
+```
+kubectl apply -f crd.yaml
+```
+To create the custom resource, run:
+```
+kubectl apply -f custom-resource.yaml
+```
+4. Create a Controller for the Custom Resource
+A custom controller is responsible for interacting with the custom resource. It listens for changes to the resource and then takes actions like creating, updating, or deleting other Kubernetes resources.
+- Custom controllers can be built using the Operator SDK or by writing your own controller in a programming language like Go, Python, or Java.
+- The controller watches the Kubernetes API for changes in the custom resource and performs actions accordingly.
+
+Example: A custom controller might watch the custom resource `MyResource` and automatically create the specified number of replicas of a Pod running the defined image.
+
+5. Interact with Custom Resources
+Once a CRD and custom resource are defined, you can manage your custom resource with `kubectl`.
+
+- List custom resources:
+```
+kubectl get myresources
+```
+- Get details of a custom resource:
+```
+kubectl describe myresource myresource-instance
+```
+- Delete a custom resource:
+```
+kubectl delete myresource myresource-instance
+```
+6. Use Custom Resources in your Application
+Custom resources can help automate and manage application-specific configurations. For example:
+- Stateful Applications: You can define a custom resource to manage a stateful application and automatically handle replicas, failover, backups, etc.
+- Third-Party Integrations: Use CRDs to represent integration with third-party services, like database clusters or message queues, and manage them through Kubernetes.
+
+#### Advanced Topics
+1. Validation and Schema Enforcement:
+- The CRD schema can enforce validation on custom resources (e.g., require that certain fields are non-empty, have specific values, etc.) by defining the schema in `openAPIV3Schema` within the CRD.
+- You can use regular expressions or specific types (like `string`, `integer`, `boolean`, etc.) to enforce constraints.
+2. Subresources in Custom Resources:
+- You can define subresources for your custom resources, such as `status` or `scale`.
+- For example, `status` is often used to store the current state of the resource (e.g., `replicas`), while `scale` can be used to modify the number of replicas of the resource.
+3. Multiple Versions:
+- You can define multiple versions of the same custom resource within a CRD.
+- Kubernetes supports versioning of CRDs, and you can introduce breaking changes by defining new versions while still supporting old versions for backward compatibility.
+4. API Aggregation Layer:
+- The CRD API is part of the Kubernetes API aggregation layer. It allows third-party APIs to be available in a seamless manner alongside native Kubernetes resources.
+5. Helm and Custom Resources:
+- Helm can be used to deploy custom resources and their associated CRDs. You can package your CRDs and resources in Helm charts and deploy them in a Kubernetes cluster.
+
+#### Example Use Cases for Custom Resources
+1. Kubernetes Operators:
+- Kubernetes Operators are a popular use case for CRDs. They extend Kubernetes to manage complex, stateful applications by managing the lifecycle of the application based on custom resources.
+2. Infrastructure as Code:
+- You can use CRDs to represent infrastructure resources, such as load balancers, databases, or queues, and manage them declaratively in Kubernetes.
+3. CI/CD Pipelines:
+- Custom resources can be used to represent various stages or tasks in a CI/CD pipeline and trigger specific actions like deployments, tests, or monitoring.
+4. Custom Workloads:
+- You can create custom resource types to represent specific workloads or resources (e.g., virtual machines, special databases) that are not native to Kubernetes.
