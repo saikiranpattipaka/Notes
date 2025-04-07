@@ -1846,7 +1846,7 @@ Mitigation
 
 ### EKS Cluster Upgrade Process
 🔑 1. Prerequisites Before Upgrading EKS
-✅ 1.1 Cluster Preparation
+ ✅ 1.1 Cluster Preparation
 - Cordon Control Plane and Nodes:
 Prevent new workloads from being scheduled during the upgrade.
 ```
