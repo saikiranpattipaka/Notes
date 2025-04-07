@@ -1780,3 +1780,210 @@ f. Observability and Tracing:
 - Security Monitoring: Monitor cluster access and ensure that proper RBAC permissions are set up for all components.
 - Regular Health Checks: Use liveness and readiness probes to ensure that applications and pods are healthy.
 - Capacity Planning: Continuously monitor resource usage to ensure that your cluster can handle growing workloads.
+
+### Real time problems with Kubernetes (K8s) in a production environment
+
+1. Resource Quota Limits
+Resource quotas control the amount of CPU, memory, and other resources that can be used by pods within a namespace.
+
+Real-Time Problems:
+- Unexpected Pod Failures: Pods may be evicted or fail to schedule if they exceed the quota.
+- Resource Starvation: High-priority pods might get starved of resources due to strict quotas set for other namespaces.
+- Complexity in Scaling: Quotas can make horizontal scaling tricky because new pods might not get scheduled if the quota is exhausted.
+
+Example:
+You’ve set a quota of 8 CPUs for a namespace, but a spike in traffic requires more. Even if the nodes have capacity, new pods won’t start because the quota limits are hit.
+
+Mitigation 
+- Set realistic quotas based on usage patterns.
+- Use monitoring tools (like Prometheus) to track resource usage.
+
+
+2. Limits for Pods (CPU & Memory Requests/Limits)
+Kubernetes allows setting resource requests (minimum) and limits (maximum) for CPU and memory per pod.
+
+Real-Time Problems:
+- CPU Throttling: If the CPU limit is too low, pods get throttled, causing performance degradation.
+- Memory OOM Kills: If memory limits are set too tight, the pod may get killed when it exceeds the limit, even if the node has free memory.
+- Inefficient Resource Utilization: Overly conservative limits can lead to underutilized cluster resources.
+
+Example:
+A pod is running a heavy computation task. You’ve set a CPU limit of 500m (0.5 CPU), but the workload needs 1 CPU. The pod keeps getting throttled, leading to slow performance.
+
+Mitigation 
+- Fine-tune CPU and memory requests/limits based on load testing.
+- Use Horizontal Pod Autoscaler (HPA) for dynamic scaling.
+
+3. Upgrades (Cluster & Application)
+Upgrading Kubernetes versions, node OS, or applications.
+
+Real-Time Problems:
+- Downtime During Upgrades: If rolling updates aren’t configured properly, there could be service interruptions.
+- API Compatibility Issues: Applications relying on deprecated APIs may fail after an upgrade.
+- Stateful Set Challenges: Upgrading stateful applications can be tricky, especially when handling data persistence.
+
+Example:
+Upgrading the Kubernetes control plane from v1.24 to v1.25 causes a disruption because a custom resource definition (CRD) was deprecated in the new version, causing certain pods to crash.
+
+Mitigation 
+- Test upgrades in staging environments first.
+- Use blue-green deployments or canary releases for apps.
+
+4. OOM Killed (Out of Memory)
+When a container uses more memory than its limit, the Linux OOM Killer terminates it to free up memory.
+
+Real-Time Problems:
+- Pod Crashes: The pod is terminated abruptly, causing potential data loss or service disruption.
+- Unpredictable Failures: OOM kills can happen without clear warnings, making it hard to debug.
+- Impact on Dependent Services: If a critical pod is killed, it may cascade failures to other services depending on it.
+
+Example:
+A pod with a 512Mi memory limit starts processing large datasets. It consumes 700Mi, triggers an OOM kill, and the service becomes unavailable until the pod restarts.
+
+Mitigation 
+- Analyze OOM kill logs (`kubectl describe pod <pod-name>`) to identify the issue.
+- Adjust memory limits or optimize the application to handle peak loads better.
+
+### EKS Cluster Upgrade Process
+🔑 1. Prerequisites Before Upgrading EKS
+✅ 1.1 Cluster Preparation
+- Cordon Control Plane and Nodes:
+Prevent new workloads from being scheduled during the upgrade.
+```
+kubectl cordon <node-name>
+```
+- Drain Nodes (Optional):
+Safely evict pods before the upgrade.
+```
+kubectl drain <node-name> --ignore-daemonsets --delete-local-data
+```
+- Verify Cluster Status:
+Ensure nodes and pods are healthy.
+```
+kubectl get nodes
+kubectl get pods --all-namespaces
+```
+✅ 1.2 Review Cluster Configuration
+- Node Group & Auto Scaling:
+Ensure the node group is configured with the latest AMI and proper scaling policies.
+- Kubelet Version Compatibility:
+Check if kubelet versions are compatible with the EKS control plane.
+```
+kubectl get nodes -o wide
+```
+✅ 1.3 Lower Environment Testing (Staging/Dev)
+- Test in Lower Environments:
+Always perform the upgrade in a staging or development environment before production.
+- Backup Configurations:
+Backup cluster data, manifests, and critical configurations.
+
+✅ 1.4 Cluster Auto-Scaler Setup
+- Ensure Auto-Scaler Is Configured:
+Verify that Cluster Autoscaler is installed and configured correctly.
+```
+kubectl get deployment -n kube-system cluster-autoscaler
+```
+- Adjust Auto-Scaler for Upgrade:
+Make sure the auto-scaler is not aggressively terminating nodes during the upgrade.
+
+✅ 1.5 Networking Requirements
+- 5 Available IP Subnets:
+Ensure at least 5 available IP subnets for control plane, nodes, and load balancers.
+- Security Group Rules:
+Confirm security groups allow traffic for control plane and node communication.
+
+🔄 2. EKS Upgrade Process
+2.1 Upgrade the Control Plane
+Using AWS CLI:
+```
+aws eks update-cluster-version \
+  --region <region> \
+  --name <cluster-name> \
+  --kubernetes-version <new-version>
+```
+Using AWS Console:
+1. Go to the EKS console.
+2. Select your cluster → Update.
+3. Choose the new Kubernetes version.
+
+2.2 Upgrade Node Groups
+Using eksctl:
+```
+eksctl upgrade nodegroup \
+  --name <node-group-name> \
+  --cluster <cluster-name> \
+  --region <region>
+```
+AWS Console Steps:
+1. Go to EKS → Select cluster → Compute tab.
+2. Choose node group → Update now.
+
+2.3 Upgrade Add-ons
+Using eksctl:
+```
+eksctl utils update-kube-proxy \
+  --cluster <cluster-name> \
+  --region <region>
+
+eksctl utils update-aws-node \
+  --cluster <cluster-name> \
+  --region <region>
+
+eksctl utils update-coredns \
+  --cluster <cluster-name> \
+  --region <region>
+```
+Console Steps:
+1. Navigate to Add-ons in your cluster.
+2. Select each add-on (e.g., `kube-proxy`, `aws-node`, `coredns`) → Update now.
+
+2.4 Upgrade Cluster Autoscaler (If Applicable)
+1. Verify Cluster Autoscaler Deployment:
+```
+kubectl -n kube-system get deployment cluster-autoscaler
+```
+2. Update Image Version (if needed):
+```
+kubectl -n kube-system set image deployment/cluster-autoscaler \
+  cluster-autoscaler=registry.k8s.io/autoscaling/cluster-autoscaler:v1.30.0
+```
+🔍 3. Post-Upgrade Validation
+3.1 Check Node & Pod Status:
+```
+kubectl get nodes
+kubectl get pods --all-namespaces
+```
+3.2 Validate Add-ons:
+```
+kubectl describe deployment -n kube-system aws-node
+kubectl describe deployment -n kube-system coredns
+kubectl describe deployment -n kube-system kube-proxy
+```
+3.3 Verify Cluster Autoscaler:
+```
+kubectl -n kube-system logs deployment/cluster-autoscaler
+```
+🔒 4. Rollback Plan (If Needed)
+Rollback Control Plane:
+```
+aws eks update-cluster-version \
+  --region <region> \
+  --name <cluster-name> \
+  --kubernetes-version <previous-version>
+```
+Rollback Node Group:
+```
+eksctl upgrade nodegroup \
+  --name <node-group-name> \
+  --cluster <cluster-name> \
+  --region <region> \
+  --version <previous-version>
+```
+⚡ 5. Best Practices for EKS Upgrades
+- Always test in lower environments first.
+- Monitor cluster performance during the upgrade.
+- Ensure sufficient IPs and network capacity.
+- Backup critical data before upgrades.
+- Keep AWS CLI, eksctl, and kubectl updated.
+
+
