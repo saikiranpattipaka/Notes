@@ -5,7 +5,10 @@ Docker is a containerization platform used to develop, ship, and run application
 
 
 #### Docker Architecture
-![alt text](<Docker Architecture.png>)
+<p align="center">
+  <img src="Images/Docker Architecture.png" width="800" height="600" />
+</p>
+
 
 #### Container 
 A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
