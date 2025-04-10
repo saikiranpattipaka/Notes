@@ -1,3 +1,7 @@
+<p align="left">
+  <img src="images/Terraform.png" alt="Logo" width="80"/>
+</p>
+
 ### 1. Terraform
 Terraform is an open-source Infrastructure as Code (IaC) tool created by HashiCorp. It allows you to define, provision, and manage infrastructure through a declarative configuration language called HCL (HashiCorp Configuration Language). It enables automation of cloud infrastructure provisioning, reducing manual intervention and enabling version-controlled infrastructure.
 
