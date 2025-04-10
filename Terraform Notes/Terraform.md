@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="images/Terraform.png" alt="Logo" width="80"/>
+  <img src="Images/Terraform.png" alt="Logo" width="80"/>
 </p>
 
 ### 1. Terraform
