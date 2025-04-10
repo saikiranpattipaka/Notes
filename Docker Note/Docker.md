@@ -8,7 +8,7 @@ Docker is a containerization platform used to develop, ship, and run application
 
 ### Docker Architecture
 <p align="center">
-  <img src="Images/Docker Architecture.png" width="800" height="500" />
+  <img src="Images/Docker Architecture.png" width="800" height="400" />
 </p>
 
 
