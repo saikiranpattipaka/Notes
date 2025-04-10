@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="Images/AWS LOGO.png" alt="Logo" width="80"/>   ### AWS
+  <img src="Images/AWS LOGO.png" alt="Logo" width="80"/>   ## AWS
 </p>
 
 
