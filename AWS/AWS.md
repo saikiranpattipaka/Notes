@@ -20,7 +20,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Global Access – Access services anytime, from anywhere.
 - Maintenance-Free – Handled by providers.
 
-###🔹Types of Cloud Computing
+### 🔹Types of Cloud Computing
 #### ☁ 1. Public Cloud
 - Owned and operated by third-party providers.
 - Example: AWS, Microsoft Azure, Google Cloud.
@@ -31,7 +31,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
-###🔹Cloud Service Models
+### 🔹Cloud Service Models
 #### 🧱 1. IaaS (Infrastructure as a Service)
 - You rent infrastructure like virtual machines, networks, storage.
 - Example: AWS EC2, Azure Virtual Machines
@@ -42,7 +42,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Ready-to-use applications delivered via the internet.
 - Example: Gmail, Microsoft 365, Dropbox
 
-###🔹Components of Cloud Computing
+### 🔹Components of Cloud Computing
 1. Compute – Virtual machines, containers, serverless computing.
 2. Storage – Object storage (S3), Block storage, File storage.
 3. Database – Managed databases (SQL/NoSQL).
@@ -50,7 +50,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 5. Security – Firewalls, encryption, identity & access management.
 6. Monitoring & Logging – Track usage, performance, alerts.
 
-###🔹Popular Cloud Providers
+### 🔹Popular Cloud Providers
 |Provider	                |Key Services                               |
 |---------------------------|-------------------------------------------|
 |AWS (Amazon Web Services)	|EC2, S3, Lambda, RDS                       |
@@ -59,7 +59,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 |IBM Cloud	                |Watson AI, IBM VPC                         |
 |Oracle Cloud	            |Autonomous Database, OCI                   |
 
-###🔹Core Concepts
+### 🔹Core Concepts
 🔹 Virtualization
 - Allows multiple virtual machines to run on a single physical machine.
 🔹 Containerization
@@ -69,7 +69,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 🔹 Auto-Scaling
 - Automatically increase/decrease resources based on traffic.
 
-###🔹Security in Cloud
+### 🔹Security in Cloud
 - 🔐 Identity & Access Management (IAM) – Controls who can access what.
 - 🔐 Encryption – Protects data at rest and in transit.
 - 🔐 Compliance – GDPR, HIPAA, ISO, etc.
