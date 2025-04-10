@@ -311,7 +311,7 @@ This will start the container, and it will be listening on port 5000
 A multi-stage Docker build is a technique that allows you to create smaller, more efficient Docker images by using multiple `FROM` statements in a single Dockerfile. Each `FROM` defines a new stage in the build process, and this method is especially useful for reducing the final image size by separating the build and runtime environments.
 
 <p align="center">
-  <img src="Images/Multi stage Build.png" width="500" height="500" />
+  <img src="Images/Multi stage Build.png" width="800" height="600" />
 </p>
 
 
