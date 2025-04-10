@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images/K8S Logo.png" alt="Logo" width="100"/>
+  <img src="Images/K8S Logo.png" alt="Logo" width="120"/>
 </p>
 
 #### Kubernetes (K8s) is a powerful platform for managing containerized applications and automating deployment, scaling, and operations of application containers across clusters of hosts. The architecture of Kubernetes is complex but can be broken down into its core components that work together to create a unified container orchestration system.
