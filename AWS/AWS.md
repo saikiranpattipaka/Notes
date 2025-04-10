@@ -21,13 +21,13 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Maintenance-Free – Handled by providers.
 
 ### 🔹Types of Cloud Computing
-☁ 1. Public Cloud
+#### ☁ 1. Public Cloud
 - Owned and operated by third-party providers.
 - Example: AWS, Microsoft Azure, Google Cloud.
-🏠 2. Private Cloud
+#### 🏠 2. Private Cloud
 - Exclusive to one organization.
 - Higher control and security.
-🌐 3. Hybrid Cloud
+#### 🌐 3. Hybrid Cloud
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
