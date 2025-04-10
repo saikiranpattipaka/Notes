@@ -1110,7 +1110,7 @@ RUN apt-get install -y curl
 COPY . /app
 ```
 #### Each of the following instructions creates a layer:
-1. FROM ubuntu:20.04: This is the base layer, which is the official u`buntu:20.04` image.
+1. FROM ubuntu:20.04: This is the base layer, which is the official `ubuntu:20.04` image.
 2. RUN apt-get update: This creates a new layer that contains the updates made to the system's package list.
 3. RUN apt-get install -y curl: This creates another layer that installs `curl`.
 4. COPY . /app: This creates a layer with the files copied from the host machine to the /app directory in the image.
