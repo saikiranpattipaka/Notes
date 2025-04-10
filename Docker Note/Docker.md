@@ -4,7 +4,7 @@
 Docker is a containerization platform used to develop, ship, and run applications inside containers. Containers are lightweight, portable, and isolated environments that allow you to run an application with all of its dependencies bundled together. Docker ensures that your application will run the same regardless of where it's deployed, providing consistency across multiple environments.
 
 
-#### Docker Architecture
+### Docker Architecture
 <p align="center">
   <img src="Images/Docker Architecture.png" width="800" height="500" />
 </p>
@@ -33,7 +33,7 @@ A container is a bundle of Application, Application libraries required to run yo
 Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
 
 <p align="center">
-  <img src="Images/Docker vs VM.png" width="800" height="600" />
+  <img src="Images/Docker vs VM.png" width="800" height="500" />
 </p>
 
 
@@ -301,9 +301,9 @@ This will start the container, and it will be listening on port 5000
 
 |Feature           |CMD	                                                    |ENTRYPOINT                                            |
 |------------------|--------------------------------------------------------|------------------------------------------------------|
-|Purpose	       |Default command to run in the container	                |Defines the main command to run                       |
-|Overridable       |Yes, can be overridden by passing a different command	|Cannot be easily overridden without --entrypoint flag |
-|Typical Use       |Set default command/arguments	                        |Set the main command (core process)                   |
+|Purpose	         |Default command to run in the container	                |Defines the main command to run                       |
+|Overridable       |Yes, can be overridden by passing a different command	  |Cannot be easily overridden without --entrypoint flag |
+|Typical Use       |Set default command/arguments	                          |Set the main command (core process)                   |
 |Syntax	           |CMD ["executable", "param1"]                            |ENTRYPOINT ["executable", "param1"]                   |
 
 
@@ -311,7 +311,7 @@ This will start the container, and it will be listening on port 5000
 A multi-stage Docker build is a technique that allows you to create smaller, more efficient Docker images by using multiple `FROM` statements in a single Dockerfile. Each `FROM` defines a new stage in the build process, and this method is especially useful for reducing the final image size by separating the build and runtime environments.
 
 <p align="center">
-  <img src="Images/Multi stage Build.png" width="800" height="600" />
+  <img src="Images/Multi stage Build.png" width="500" height="500" />
 </p>
 
 
