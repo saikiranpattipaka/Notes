@@ -7,6 +7,10 @@
  - Master Components (Control Plane)
  - Node Components
  
+ 
+<img src="Images/Kubernetes Architecture.png">
+
+
 ![K8S Architecture](https://github.com/user-attachments/assets/d75c192b-dfc4-4180-bfaa-9caea43bed6c)
 
 ### 1. Master Components (Control Plane)
