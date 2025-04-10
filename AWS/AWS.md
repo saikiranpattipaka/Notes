@@ -60,10 +60,10 @@ Like renting an apartment instead of buying a house. You use what you need and p
 |Oracle Cloud	            |Autonomous Database, OCI                   |
 
 ### 🔹Core Concepts
-🔹 Virtualization - Allows multiple virtual machines to run on a single physical machine.
-🔹 Containerization - Lightweight, portable units (e.g., Docker) to run applications.
-🔹 Serverless Computing - Run code without managing servers (e.g., AWS Lambda).
-🔹 Auto-Scaling - Automatically increase/decrease resources based on traffic.
+- 🔹 Virtualization - Allows multiple virtual machines to run on a single physical machine.
+- 🔹 Containerization - Lightweight, portable units (e.g., Docker) to run applications.
+- 🔹 Serverless Computing - Run code without managing servers (e.g., AWS Lambda).
+- 🔹 Auto-Scaling - Automatically increase/decrease resources based on traffic.
 
 ### 🔹Security in Cloud
 - 🔐 Identity & Access Management (IAM) – Controls who can access what.
