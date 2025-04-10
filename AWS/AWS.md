@@ -20,7 +20,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Global Access – Access services anytime, from anywhere.
 - Maintenance-Free – Handled by providers.
 
-### 🔹Types of Cloud Computing
+###🔹Types of Cloud Computing
 #### ☁ 1. Public Cloud
 - Owned and operated by third-party providers.
 - Example: AWS, Microsoft Azure, Google Cloud.
@@ -31,7 +31,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
-### 🔹Cloud Service Models
+###🔹Cloud Service Models
 #### 🧱 1. IaaS (Infrastructure as a Service)
 - You rent infrastructure like virtual machines, networks, storage.
 - Example: AWS EC2, Azure Virtual Machines
@@ -59,7 +59,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 |IBM Cloud	                |Watson AI, IBM VPC                         |
 |Oracle Cloud	            |Autonomous Database, OCI                   |
 
-###🔹 Core Concepts
+###🔹Core Concepts
 🔹 Virtualization
 - Allows multiple virtual machines to run on a single physical machine.
 🔹 Containerization
@@ -75,7 +75,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - 🔐 Compliance – GDPR, HIPAA, ISO, etc.
 - 🔐 Firewalls & Network ACLs – Control traffic flow.
 
-###🔹Use Cases of Cloud Computing
+### 🔹Use Cases of Cloud Computing
 - Hosting websites & applications
 - Data analytics & machine learning
 - File storage & backup
