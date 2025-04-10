@@ -1,8 +1,6 @@
-
 <p align="left">
-  <img src="AWS Cloud.png" alt="Logo" width="40"/>
+  <img src="AWS Cloud.png" alt="Logo" width="80"/>
 </p>
-
 ## AWS
 
 ### ☁️ Cloud Computing
