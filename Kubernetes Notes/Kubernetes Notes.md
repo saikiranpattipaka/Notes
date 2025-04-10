@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="Images/K8S Logo.png" alt="Logo" width="120"/>
+  <img src="Images/K8S Logo.png" alt="Logo" width="160"/>
 </p>
-
-#### Kubernetes (K8s) is a powerful platform for managing containerized applications and automating deployment, scaling, and operations of application containers across clusters of hosts. The architecture of Kubernetes is complex but can be broken down into its core components that work together to create a unified container orchestration system.
+#### Kubernetes (K8s)
+K8S is a powerful platform for managing containerized applications and automating deployment, scaling, and operations of application containers across clusters of hosts. The architecture of Kubernetes is complex but can be broken down into its core components that work together to create a unified container orchestration system.
 
 ### Kubernetes Architecture Overview
 #### At a high level, Kubernetes follows a Master-Node architecture with the master components managing the cluster, and the node components running the actual workloads (pods, containers). Kubernetes consists of the following main components:
