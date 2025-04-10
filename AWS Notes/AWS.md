@@ -1,4 +1,4 @@
-<p align="left">
+<p align="center">
   <img src="Images/AWS LOGO.png" alt="Logo" width="80"/>
 </p>
 
