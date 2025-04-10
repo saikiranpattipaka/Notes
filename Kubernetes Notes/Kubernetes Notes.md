@@ -731,8 +731,9 @@ A Kubernetes Service is an abstraction that defines a logical set of Pods and a 
 - LoadBalancer: Provisions an external load balancer (cloud-specific).
 - ExternalName: Maps to an external DNS name.
   
-
-<img src="Images/K8S Service.png" width= "800"/>
+<p align="center">
+  <img src="Images/K8S Service.png" width="800" height="600" />
+</p>
 
 ### Service Types
 1. ClusterIP (default)
