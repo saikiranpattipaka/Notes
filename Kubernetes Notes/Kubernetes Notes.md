@@ -732,7 +732,7 @@ A Kubernetes Service is an abstraction that defines a logical set of Pods and a 
 - ExternalName: Maps to an external DNS name.
   
 
-<img src="Images/K8S Service.png">
+<img src="Images/K8S Service.png" width= "200"/>
 
 ### Service Types
 1. ClusterIP (default)
