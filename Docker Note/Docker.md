@@ -11,31 +11,28 @@ Docker is a containerization platform used to develop, ship, and run application
   <img src="Images/Docker Architecture.png" width="800" height="400" />
 </p>
 
-
 #### Container 
 A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
 A container is a bundle of Application, Application libraries required to run your application and the minimum system dependencies
 
 #### Docker vs Virtual Machines (VMs)
-|Feature	       |Virtual Machines (VMs)	                |Docker (Containers)                                |
+|Feature	         |Virtual Machines (VMs)	                |Docker (Containers)                                |
 |------------------|----------------------------------------|---------------------------------------------------|
 |Isolation	       |Full isolation, separate OS	            |Process-level isolation, shared kernel             |
 |Resource Usage    |High (each VM needs full OS)            |Low (shares host OS)                               |
 |Performance       |Slower due to OS overhead               |Faster due to lightweight design                   |
-|Portability       |Less portable	                        |Highly portable across environments                |
+|Portability       |Less portable	                          |Highly portable across environments                |
 |Start Time	       |Slow (full OS boot required)            |Fast (containers start instantly)                  |
-|Security	       |Stronger (hardware-level isolation)	    |Weaker (shared kernel)                             |
+|Security	         |Stronger (hardware-level isolation)	    |Weaker (shared kernel)                             |
 |Management        |Complex at scale (hypervisor needed)    |Easier with tools like Docker Compose or Kubernetes|
-|Use Case	       |Running multiple OSes, heavy workloads  |Microservices, CI/CD pipelines, lightweight apps   |
-
-
+|Use Case	         |Running multiple OSes, heavy workloads  |Microservices, CI/CD pipelines, lightweight apps   |
 
 #### Containers are light weight
 Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
 
 <p align="center">
-  <img src="Images/Docker vs VM.png" width="800" height="500" />
+  <img src="Images/Docker vs VM.png" width="800" height="400" />
 </p>
 
 
