@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images/K8S Logo.png" alt="Logo" width="160"/>
+  <img src="Images/K8S Logo.png" alt="Logo" width="140"/>
 </p>
 
 ### Kubernetes (K8s)
