@@ -1,7 +1,7 @@
 <p align="left">
-  <img src="Images/AWS LOGO.png" alt="Logo" width="80"/>
+  <img src="Images/AWS LOGO.png" alt="Logo" width="80"/>   ### AWS
 </p>
-## AWS
+
 
 ### ☁️ Cloud Computing
 Cloud computing is the delivery of computing services—servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ("the cloud") to offer faster innovation, flexible resources, and economies of scale.
