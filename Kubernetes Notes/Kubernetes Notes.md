@@ -2211,7 +2211,9 @@ NAME             READY   STATUS             RESTARTS   AGE
 my-app-pod       0/1     ImagePullBackOff   0          2m
 ```
 ### 🚨 Common Causes of ImagePullBackOff
+
 |Cause                          |Description                               |
+|-------------------------------|------------------------------------------|
 |Incorrect image name or tag	  |Misspelled image name or non-existent tag |
 |Private container registry 	  |Missing authentication secrets            |
 |No internet/DNS issues	        |Node can't reach registry                 |
