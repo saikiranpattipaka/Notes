@@ -2281,7 +2281,7 @@ To fix:
 - Switch to another registry like GitHub Packages, ECR, or GCR.
 
 6. Node Issues
-If the node is misconfigured or lacks storage, pulling the image can fail.
+- If the node is misconfigured or lacks storage, pulling the image can fail.
 
 - Check node status:
 ```
