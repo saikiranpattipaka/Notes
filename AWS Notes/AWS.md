@@ -23,24 +23,24 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Maintenance-Free – Handled by providers.
 
 #### 🔹Types of Cloud Computing
-**☁ 1. Public Cloud**
+☁ 1. Public Cloud
 - Owned and operated by third-party providers.
 - Example: AWS, Microsoft Azure, Google Cloud.
-**🏠 2. Private Cloud**
+🏠 2. Private Cloud
 - Exclusive to one organization.
 - Higher control and security.
-**🌐 3. Hybrid Cloud**
+🌐 3. Hybrid Cloud
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
 #### 🔹Cloud Service Models
-**🧱 1. IaaS (Infrastructure as a Service)**
+🧱 1. IaaS (Infrastructure as a Service)
 - You rent infrastructure like virtual machines, networks, storage.
 - Example: AWS EC2, Azure Virtual Machines
-**🧰 2. PaaS (Platform as a Service)**
+🧰 2. PaaS (Platform as a Service)
 - You get an environment to develop, test, and deploy software.
 - Example: Google App Engine, Heroku
-**💻 3. SaaS (Software as a Service)**
+💻 3. SaaS (Software as a Service)
 - Ready-to-use applications delivered via the internet.
 - Example: Gmail, Microsoft 365, Dropbox
 
