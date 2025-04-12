@@ -2329,3 +2329,116 @@ spec:
 - If using GitOps (e.g., ArgoCD), ensure secrets are correctly synced and referenced.
 - Use `kubectl get events` to see all image pull errors in the namespace.
 - Try to pull the image manually on a local machine or directly on the node (if allowed).
+
+### CrashLoopBackOff in Kubernetes
+`CrashLoopBackOff` is a status that indicates a container in a pod is repeatedly crashing after starting. Kubernetes tries to run the container, it fails, then it retries with exponential backoff, hence the term *CrashLoopBackOff.*
+
+#### 🔁 Breakdown of the Term
+- Crash: The container terminated unexpectedly.
+- Loop: The container is restarted again and again.
+- BackOff: Kubernetes waits increasingly longer between restart attempts (e.g., 10s, 20s, 40s...).
+
+#### 📦 Example Scenario
+```
+kubectl get pods
+```
+Output:
+```
+NAME                         READY   STATUS             RESTARTS   AGE
+myapp-5d9b8b7965-7kghs       0/1     CrashLoopBackOff   5          3m
+```
+Then:
+```
+kubectl describe pod myapp-5d9b8b7965-7kghs
+```
+You'll likely see something like:
+```
+State:          Waiting
+Reason:         CrashLoopBackOff
+Last State:     Terminated
+Reason:         Error
+Exit Code:      1
+```
+
+#### 🔍 Common Causes of CrashLoopBackOff
+1. Application Errors
+- App crashes due to code bugs or runtime errors.
+- Logs will often show a traceback or error message.
+
+2. Missing or Invalid Configuration
+- Missing environment variables or config files.
+- Wrong `ConfigMap` or `Secret` references.
+
+3. Dependency Failures
+- App depends on another service (like a DB) that’s not ready or reachable.
+
+4. Readiness/Startup Probes Failing
+- K8s may kill the container if it doesn't become "ready" in time.
+- Especially problematic if you’re using `readinessProbe` or `startupProbe`.
+
+5. Wrong Command or Entrypoint
+- Container starts and exits immediately because the entrypoint command is incorrect or not long-running.
+
+6. Resource Limits
+- CPU or memory limits are too strict, causing the container to OOM (Out of Memory).
+
+#### 🧰 How to Troubleshoot CrashLoopBackOff
+✅ Step 1: Check Logs
+```
+kubectl logs <pod-name> --previous
+```
+Use `--previous` to get logs from the crashed container.
+Look for stack traces, error messages, etc.
+
+✅ Step 2: Describe the Pod
+```
+kubectl describe pod <pod-name>
+```
+This gives info about:
+- Events (e.g., failed liveness/readiness probes)
+- Last state and reason
+- Exit codes
+
+✅ Step 3: Check Container Specs in the YAML
+```
+kubectl get pod <pod-name> -o yaml
+```
+Look at:
+- `command`, `args`
+- `env`, `volumeMounts`, `image`, etc.
+
+✅ Step 4: Check Resource Requests & Limits
+```
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+```
+Too low memory limits = crash due to OOM.
+
+✅ Step 5: Test with an Interactive Pod
+You can launch a debug container to explore:
+```
+kubectl run debug --rm -it --image=busybox -- /bin/sh
+```
+Or attach to a failing pod (if it stays alive long enough):
+```
+kubectl exec -it <pod-name> -- /bin/sh
+```
+#### 🚑 Common Fixes
+|Problem	          |Solution                                           |
+|-------------------|---------------------------------------------------|
+|App exits quickly	|Add a loop or fix your app to be long-running      |
+|Missing env/config	|Add `env`, `ConfigMap`, or `Secret` references     |
+|DB not ready	      |Add readiness probes or init containers            |
+|OOM crash	        |Increase memory limit                              |
+|Failing probes	    |Adjust `readinessProbe` or `livenessProbe` timings |
+
+#### 🧠 Tips
+- Use `initContainers` to wait for dependencies.
+- Use `livenessProbe` and `readinessProbe` wisely.
+- Use a logging sidecar or centralized logging (e.g., Fluentd + Elasticsearch).
+- Keep the image entrypoint simple and reliable.
