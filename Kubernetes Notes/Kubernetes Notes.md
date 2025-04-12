@@ -2447,7 +2447,7 @@ kubectl exec -it <pod-name> -- /bin/sh
 When a pod is stuck in Pending state, it usually means it can’t be scheduled onto any node. Here's how to troubleshoot that step-by-step.
 
 🔍 Step 1: Identify the Problem
-🔎 Check Pod Status
+- 🔎 Check Pod Status
 ```
 kubectl get pods
 ```
