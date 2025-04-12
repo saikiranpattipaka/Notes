@@ -2037,7 +2037,7 @@ kubectl describe pod <pod-name> -n <namespace>
 kubectl logs <pod-name> -c <container-name> -n <namespace>
 ```
 4. Check init containers or sidecars
-- These can block the main container from starting.
+ - These can block the main container from starting.
 ```
 kubectl describe pod <pod-name>
 ```
