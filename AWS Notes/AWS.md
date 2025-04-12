@@ -35,6 +35,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
+
 #### 🔹Cloud Service Models
 🧱 1. IaaS (Infrastructure as a Service)
 - You rent infrastructure like virtual machines, networks, storage.
