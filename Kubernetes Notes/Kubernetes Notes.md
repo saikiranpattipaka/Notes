@@ -2538,12 +2538,12 @@ Taints: key=value:NoSchedule
   - OR add a toleration to your pod.
 
 4️⃣ Insufficient Resources
-Pods won’t schedule if:
-- Not enough CPU/memory on any node.
-- Resource requests are too high.
+- Pods won’t schedule if:
+  - Not enough CPU/memory on any node.
+  - Resource requests are too high.
 
 🛠 Troubleshoot:
-Check resource requests:
+- Check resource requests:
 ```
 resources:
   requests:
@@ -2558,7 +2558,7 @@ kubectl describe node <node-name>
 - Pods won’t schedule on nodes that are cordoned or drained.
 
 🛠 Troubleshoot:
-Check if nodes are Ready and Schedulable:
+- Check if nodes are Ready and Schedulable:
 ```
 kubectl get nodes
 ```
