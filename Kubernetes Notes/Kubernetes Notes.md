@@ -2201,7 +2201,7 @@ kubectl get limitrange -n <namespace>
 - Enable logging and monitoring (e.g., ELK stack, Prometheus + Grafana, Loki) for better visibility.
 
 ### ❓ImagePullBackOff
-ImagePullBackOff is a Pod status that indicates Kubernetes tried to pull a container image from a container registry (like DockerHub, Amazon ECR, or a private registry) but failed. Kubernetes will keep retrying, with increasing delay (back-off), hence the term BackOff.
+`ImagePullBackOff` is a Pod status that indicates Kubernetes tried to pull a container image from a container registry (like DockerHub, Amazon ECR, or a private registry) but failed. Kubernetes will keep retrying, with increasing delay (back-off), hence the term *BackOff*.
 
 It typically appears like this:
 ```
