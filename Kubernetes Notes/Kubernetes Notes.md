@@ -2442,3 +2442,178 @@ kubectl exec -it <pod-name> -- /bin/sh
 - Use `livenessProbe` and `readinessProbe` wisely.
 - Use a logging sidecar or centralized logging (e.g., Fluentd + Elasticsearch).
 - Keep the image entrypoint simple and reliable.
+
+### 🛠️ Kubernetes Pod Not Scheduling
+When a pod is stuck in Pending state, it usually means it can’t be scheduled onto any node. Here's how to troubleshoot that step-by-step.
+
+🔍 Step 1: Identify the Problem
+🔎 Check Pod Status
+```
+kubectl get pods
+```
+Output:
+```
+NAME        READY   STATUS    RESTARTS   AGE
+mypod       0/1     Pending   0          5m
+```
+🔍 Describe the Pod
+```
+kubectl describe pod mypod
+```
+Check the Events section for messages like:
+- `0/3 nodes are available: 3 node(s) didn't match node selector`
+- `0/3 nodes are available: 3 node(s) had taints that the pod didn't tolerate`
+- `0/3 nodes are available: insufficient memory`
+
+### 🧭 Key Concepts and How They Affect Scheduling
+1️⃣ Node Selector (`nodeSelector`)
+- Basic scheduling constraint to run pods on specific nodes based on labels.
+
+✅ How it works:
+```
+spec:
+  nodeSelector:
+    disktype: ssd
+```
+This means the pod will only schedule on a node with label `disktype=ssd`.
+
+#### 🛠 Troubleshoot:
+- Check if any node has the matching label:
+```
+kubectl get nodes --show-labels
+```
+- If not, label a node:
+```
+kubectl label nodes <node-name> disktype=ssd
+```
+2️⃣ Node Affinity (`nodeAffinity`)
+- Advanced version of nodeSelector. Allows more expressive rules.
+
+✅ Example:
+```
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: disktype
+          operator: In
+          values:
+          - ssd
+```
+🛠 Troubleshoot:
+- Again, check node labels.
+- Verify operator (`In`, `NotIn`, `Exists`, etc.) and values.
+- Ensure at least one node matches the terms.
+
+3️⃣ Taints and Tolerations
+- Used to repel pods from nodes unless the pod explicitly tolerates the taint.
+
+✅ Taint Example on Node:
+```
+kubectl taint nodes <node-name> key=value:NoSchedule
+```
+This taint prevents scheduling unless the pod tolerates it.
+
+✅ Pod Toleration Example:
+```
+tolerations:
+- key: "key"
+  operator: "Equal"
+  value: "value"
+  effect: "NoSchedule"
+```
+🛠 Troubleshoot:
+- Check taints on nodes:
+```
+kubectl describe node <node-name>
+```
+Look for:
+```
+Taints: key=value:NoSchedule
+```
+- If your pod doesn’t have a matching toleration, it won’t schedule.
+- Either:
+  - Remove the taint (if not needed)
+  - OR add a toleration to your pod.
+
+4️⃣ Insufficient Resources
+Pods won’t schedule if:
+- Not enough CPU/memory on any node.
+- Resource requests are too high.
+
+🛠 Troubleshoot:
+Check resource requests:
+```
+resources:
+  requests:
+    memory: "500Mi"
+    cpu: "1"
+```
+Check node available resources:
+```
+kubectl describe node <node-name>
+```
+5️⃣ Unschedulable Nodes / Cordoned Nodes
+- Pods won’t schedule on nodes that are cordoned or drained.
+
+🛠 Troubleshoot:
+Check if nodes are Ready and Schedulable:
+```
+kubectl get nodes
+```
+Look for:
+- STATUS = NotReady
+- Or `SchedulingDisabled`
+
+To uncordon a node:
+```
+kubectl uncordon <node-name>
+```
+6️⃣ Pod Topology Spread Constraints
+- In Kubernetes >=1.18+, pods can be blocked due to topology constraints (e.g., spread across zones).
+
+Check for:
+```
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: topology.kubernetes.io/zone
+  ...
+```
+These are used to distribute pods evenly. If they can't, the pod may be unschedulable.
+
+### 🧰 Master Troubleshooting Checklist
+|Check	                   |Command / Action                                |
+|--------------------------|------------------------------------------------|
+|Pod Events	               |`kubectl describe pod <pod>`                    |
+|Node Labels	             |`kubectl get nodes --show-labels`               |
+|Node Taints	             |`kubectl describe node <node>`                  |
+|Node Readiness	           |`kubectl get nodes`                             |
+|Resource Availability	   |`kubectl describe node`                         |
+|Resource Requests in Pod  |Check `.spec.containers[].resources`            |
+|Affinity/NodeSelector	   |Check `.spec.affinity`, `.spec.nodeSelector`    |
+|Topology Constraints	     |Check `.spec.topologySpreadConstraints`         |
+
+#### 🔧 Commands Summary
+```
+# Check pod scheduling issues
+kubectl describe pod <pod-name>
+
+# List nodes with labels
+kubectl get nodes --show-labels
+
+# Label a node
+kubectl label nodes <node-name> key=value
+
+# Check node taints
+kubectl describe node <node-name>
+
+# Add taint to a node
+kubectl taint nodes <node-name> key=value:NoSchedule
+
+# Remove a taint
+kubectl taint nodes <node-name> key=value:NoSchedule-
+
+# Uncordon a node
+kubectl uncordon <node-name>
+```
