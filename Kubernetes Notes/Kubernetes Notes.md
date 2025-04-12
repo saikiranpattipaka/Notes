@@ -2222,7 +2222,7 @@ my-app-pod       0/1     ImagePullBackOff   0          2m
 
 ### 🔍 How to Troubleshoot ImagePullBackOff
 1. Check Pod Events
-Use `describe` to see detailed error messages.
+- Use `describe` to see detailed error messages.
 ```
 kubectl describe pod <pod-name>
 ```
@@ -2236,8 +2236,8 @@ These messages will usually give the exact reason.
 2. Verify Image Name and Tag
 - Check spelling of the image name and tag in your Deployment, Pod, or StatefulSet YAML.
 - If using DockerHub, the correct format is:
- - `nginx` (official image)
- - `username/image:tag` (user image)
+  - `nginx` (official image)
+  - `username/image:tag` (user image)
 - Try pulling the image manually:
 ```
 docker pull <image-name>
@@ -2246,8 +2246,8 @@ docker pull <image-name>
 - **Public Registries** (e.g., DockerHub): Can be rate-limited or blocked if you exceed usage.
 
 - **Private Registries** (e.g., AWS ECR, GitHub Container Registry, GCR):
- - Requires imagePullSecrets.
- - Make sure your secret exists and is referenced properly.
+  - Requires imagePullSecrets.
+  - Make sure your secret exists and is referenced properly.
 
 Example:
 ```
