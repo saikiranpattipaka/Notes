@@ -2272,7 +2272,7 @@ kubectl exec -it <any-pod> -- curl <registry-url>
 - Check DNS resolution if using FQDNs in image names.
 
 5. Check DockerHub Rate Limits
-For unauthenticated pulls:
+- For unauthenticated pulls:
 - 100 pulls per 6 hours per IP (for anonymous users)
 - 200 pulls per 6 hours (for free authenticated accounts)
 
@@ -2283,12 +2283,12 @@ To fix:
 6. Node Issues
 - If the node is misconfigured or lacks storage, pulling the image can fail.
 
-- Check node status:
+ - Check node status:
 ```
 kubectl get nodes
 kubectl describe node <node-name>
 ```
-- Check disk space and internet connectivity.
+ - Check disk space and internet connectivity.
 
 #### ✅ Fix `ImagePullBackOff`
 |Fix	                                |How to Do It                                |
