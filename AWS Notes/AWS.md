@@ -3,7 +3,7 @@
 </p>
 
 ### ☁️ Cloud Computing
-Cloud computing is the delivery of computing services—servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ("the cloud") to offer faster innovation, flexible resources, and economies of scale.
+- Cloud computing is the delivery of computing services—servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ("the cloud") to offer faster innovation, flexible resources, and economies of scale.
 
 ### 📦 Real-Life Analogy:
 Like renting an apartment instead of buying a house. You use what you need and pay as you go.
@@ -22,7 +22,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Global Access – Access services anytime, from anywhere.
 - Maintenance-Free – Handled by providers.
 
-**🔹Types of Cloud Computing**
+####🔹Types of Cloud Computing
 **☁ 1. Public Cloud**
 - Owned and operated by third-party providers.
 - Example: AWS, Microsoft Azure, Google Cloud.
@@ -33,7 +33,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
-**🔹Cloud Service Models**
+####🔹Cloud Service Models
 **🧱 1. IaaS (Infrastructure as a Service)**
 - You rent infrastructure like virtual machines, networks, storage.
 - Example: AWS EC2, Azure Virtual Machines
