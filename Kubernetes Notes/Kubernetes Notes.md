@@ -2211,12 +2211,12 @@ NAME             READY   STATUS             RESTARTS   AGE
 my-app-pod       0/1     ImagePullBackOff   0          2m
 ```
 ### 🚨 Common Causes of ImagePullBackOff
-|🤔 Cause                         |Description                               |
-|❌ Incorrect image name or tag	 |Misspelled image name or non-existent tag |
-|🔒 Private container registry 	  |Missing authentication secrets            |
-|🌐 No internet/DNS issues	      |Node can't reach registry                 |
-|❗ Rate limiting (Docker Hub)	 |Too many unauthenticated pulls            |
-|🔍 Image deleted or unavailable  |Image has been removed or registry is down|
+|Cause                          |Description                               |
+|Incorrect image name or tag	  |Misspelled image name or non-existent tag |
+|Private container registry 	  |Missing authentication secrets            |
+|No internet/DNS issues	        |Node can't reach registry                 |
+|Rate limiting (Docker Hub)	    |Too many unauthenticated pulls            |
+|Image deleted or unavailable   |Image has been removed or registry is down|
 
 ### 🔍 How to Troubleshoot ImagePullBackOff
 1. Check Pod Events
