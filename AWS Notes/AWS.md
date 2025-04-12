@@ -95,7 +95,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 5. **Wavelength Zones**
 6. **Outposts**
 
-**🌐 AWS Regions**
+**🌐 1. AWS Regions**
 - A Region is a geographical area with multiple, physically separated, and isolated Availability Zones.
 
 **📌 Key Points:**
@@ -109,7 +109,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - `eu-west-1` → Ireland
 - `ap-south-1` → Mumbai
 
-**🏢 Availability Zones (AZs)**
+**🏢 2. Availability Zones (AZs)**
 - An Availability Zone is one or more data centers within a region, equipped with independent power, cooling, and networking, connected via low-latency links.
 
 **📌 Key Points:**
@@ -117,7 +117,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - AZs offer **fault isolation**, but **interconnected** with other AZs in the same region.
 - Best practice: Deploy applications across multiple AZs for high availability and fault tolerance.
 
-**📦 Edge Locations**
+**📦 3. Edge Locations**
 - Edge Locations are data centers that AWS uses to deliver content via services like **Amazon CloudFront** (CDN), **AWS Global Accelerator**, and **Route 53**.
 
 **📌 Key Points:**
@@ -125,7 +125,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Used for caching, DNS, and DDoS protection.
 - Thousands of edge locations globally.
 
-**📍 Local Zones**
+**📍 4. Local Zones**
 - AWS Local Zones bring AWS services closer to **large metropolitan areas**, reducing latency for applications that require real-time responses.
 
 **📌 Key Points:**
@@ -133,7 +133,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Useful for applications like gaming, media streaming, AR/VR, machine learning inference, etc.
 
 
-**📡 AWS Wavelength Zones**
+**📡 5. AWS Wavelength Zones**
 - Wavelength Zones bring AWS services to the edge of **5G networks**, allowing developers to build ultra-low-latency applications for **mobile and connected devices.**
 
 **📌 Use Cases:**
@@ -142,7 +142,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Augmented Reality/Virtual Reality (AR/VR)
 - Autonomous vehicles
 
-**🏭 AWS Outposts**
+**🏭 6. AWS Outposts**
 - AWS Outposts is a **fully managed service** that extends AWS infrastructure, services, APIs, and tools to on-premises environments.
 
 **📌 Key Points:**
