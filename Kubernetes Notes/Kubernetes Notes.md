@@ -2617,3 +2617,149 @@ kubectl taint nodes <node-name> key=value:NoSchedule-
 # Uncordon a node
 kubectl uncordon <node-name>
 ```
+
+### 🧱 Issue: StatefulSet with Persistent Volume Not Working After Cloud Migration
+#### 🧨 Common Symptoms After Migration
+- Pods stuck in `Pending` or `Init` state
+- PVCs not bound to PVs
+- Pod errors like:
+`MountVolume.MountDevice failed`,
+`FailedAttachVolume`,
+`Volume not found`,
+`Multi-Attach error for volume`
+- Logs show filesystem or mounting issues
+
+#### 📦 Step 1: Understand the Components
+Key components in a `StatefulSet` + `Storage setup`:
+- StatefulSet
+- PersistentVolumeClaims (PVCs)
+- PersistentVolumes (PVs)
+- StorageClass
+- Cloud provider's block storage (EBS for AWS, PD for GCP, etc.)
+Each replica in a StatefulSet has its own stable identity + dedicated volume.
+
+### 🧰 Step-by-Step Troubleshooting
+✅ 1. Check Pod Status
+```
+kubectl get pods -l app=myapp
+```
+Look for pods stuck in:
+- `Pending`
+- `Init:0/1`
+- `ContainerCreating`
+
+Then:
+```
+kubectl describe pod <pod-name>
+```
+Focus on Events section — look for:
+- Volume attachment/mounting failures
+- PVC binding errors
+
+✅ 2. Check PVCs & PVs
+```
+kubectl get pvc
+kubectl describe pvc <pvc-name>
+```
+Verify:
+|Check	            |Explanation                               |
+|-------------------|------------------------------------------|
+|PVC bound to PV?	|STATUS should be Bound                    |
+|PVC storageClass	|Matches new cluster’s provisioner         |
+|PVC volumeName	    |Refers to an existing PV                  |
+|PV availability	|PV status should be `Available` or `Bound`|
+
+Post-migration common issues:
+- Volume IDs no longer valid
+- PVs not restored or mismatched
+- StorageClass name changed or missing
+
+✅ 3. Check PV Definitions
+```
+kubectl get pv
+kubectl describe pv <pv-name>
+```
+Key fields to check:
+- `PersistentVolumeReclaimPolicy`
+- `storageClassName`
+- `volumeHandle` (e.g., disk ID or cloud provider volume ID)
+- `nodeAffinity` (may be outdated or invalid in new cluster)
+
+❗ After migration, the underlying storage volumes might:
+- Still point to old cloud zones or regions
+- Reference invalid disk IDs
+
+✅ 4. Verify Cloud Volume Exists
+- Depending on your cloud provider:
+AWS:
+```
+aws ec2 describe-volumes --volume-ids vol-xxxxxxx
+```
+Check:
+- Volume status = `available` or `in-use`
+- Region/Zone matches the new cluster nodes
+
+
+✅ 5. Check Node and Zone Mismatch
+- If PVs are zonal, they can only attach to nodes in that zone.
+
+Run:
+```
+kubectl get nodes -o wide
+```
+Check node zones vs PV zone.
+- If mismatched, pods will not be able to mount volumes:
+```
+Multi-Attach error for volume "pv-name" Volume is already used by another pod
+```
+Fix:
+- Either recreate the volume in correct zone
+- Or move nodes (not recommended)
+- Or recreate StatefulSet in proper zone
+
+✅ 6. Check StorageClass Compatibility
+```
+kubectl get sc
+kubectl describe sc <storageclass-name>
+```
+Things to confirm:
+- Storage class exists post-migration
+- The new cluster supports the specified provisioner (e.g., `kubernetes.io/aws-ebs`, `pd-standard`)
+- Is the provisioner compatible with the new cloud setup?
+- If missing, recreate or update StatefulSet and PVC definitions.
+
+✅ 7. Mount Errors Inside the Pod
+- If PVC is bound, but pod still fails:
+```
+kubectl logs <pod-name>
+kubectl exec -it <pod-name> -- /bin/sh
+```
+Check inside `/mnt`, `/data`, or wherever the volume is mounted.
+
+Errors could include:
+- File system errors
+- Permission errors
+- Empty directories (if the volume was re-provisioned instead of restored)
+
+#### 🛠️ Common Fixes
+|Problem	              |Fix                                                              |
+|-----------------------|-----------------------------------------------------------------|
+|PVC not bound	        |Check storageClass, recreate missing PVs                         |
+|PV not found	          |Recreate with correct disk ID / zone                             |
+|Wrong zone	            |Recreate volumes in matching zone                                |
+|StorageClass missing	  |Create it or update StatefulSet to use an existing one           |
+|Stale volumeHandle	    |Patch or recreate PVs to point to correct volume IDs             |
+|StatefulSet stuck	    |Delete StatefulSet with `--cascade=orphan`, fix PVCs, reapply    |
+
+#### 💡 Tips for Migration
+- Always backup and restore volumes with zone/region awareness.
+- Use volume snapshot + restore tools (Velero, Kasten, etc.).
+- Don't recreate StatefulSets before confirming PVCs are correctly restored.
+- Prefer dynamic provisioning for new clusters when possible.
+- Consider using volume snapshots for cross-zone or cross-region migrations.
+
+#### 🔁 StatefulSet Recovery Option
+If PVCs were accidentally deleted but data disks exist:
+- Manually create PVs pointing to the correct volume IDs.
+- Ensure they use the same name that the StatefulSet expects.
+- PVCs will auto-bind if names match.
