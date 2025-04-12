@@ -22,29 +22,29 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - Global Access – Access services anytime, from anywhere.
 - Maintenance-Free – Handled by providers.
 
-### 🔹Types of Cloud Computing
-#### ☁ 1. Public Cloud
+**🔹Types of Cloud Computing**
+**☁ 1. Public Cloud**
 - Owned and operated by third-party providers.
 - Example: AWS, Microsoft Azure, Google Cloud.
-#### 🏠 2. Private Cloud
+**🏠 2. Private Cloud**
 - Exclusive to one organization.
 - Higher control and security.
-#### 🌐 3. Hybrid Cloud
+**🌐 3. Hybrid Cloud**
 - Combination of public and private clouds.
 - Balance of flexibility and security.
 
-### 🔹Cloud Service Models
-#### 🧱 1. IaaS (Infrastructure as a Service)
+**🔹Cloud Service Models**
+**🧱 1. IaaS (Infrastructure as a Service)**
 - You rent infrastructure like virtual machines, networks, storage.
 - Example: AWS EC2, Azure Virtual Machines
-#### 🧰 2. PaaS (Platform as a Service)
+**🧰 2. PaaS (Platform as a Service)**
 - You get an environment to develop, test, and deploy software.
 - Example: Google App Engine, Heroku
-#### 💻 3. SaaS (Software as a Service)
+**💻 3. SaaS (Software as a Service)**
 - Ready-to-use applications delivered via the internet.
 - Example: Gmail, Microsoft 365, Dropbox
 
-### 🔹Components of Cloud Computing
+#### 🔹Components of Cloud Computing
 1. Compute – Virtual machines, containers, serverless computing.
 2. Storage – Object storage (S3), Block storage, File storage.
 3. Database – Managed databases (SQL/NoSQL).
@@ -53,13 +53,13 @@ Like renting an apartment instead of buying a house. You use what you need and p
 6. Monitoring & Logging – Track usage, performance, alerts.
 
 ### 🔹Popular Cloud Providers
-|Provider	                |Key Services                               |
+|Provider	                  |Key Services                               |
 |---------------------------|-------------------------------------------|
 |AWS (Amazon Web Services)	|EC2, S3, Lambda, RDS                       |
 |Microsoft Azure            |Azure VMs, Blob Storage, Azure Functions   |
 |Google Cloud Platform (GCP)|Compute Engine, Cloud Storage, BigQuery    |
 |IBM Cloud	                |Watson AI, IBM VPC                         |
-|Oracle Cloud	            |Autonomous Database, OCI                   |
+|Oracle Cloud	              |Autonomous Database, OCI                   |
 
 ### 🔹Core Concepts
 -  Virtualization - Allows multiple virtual machines to run on a single physical machine.
@@ -82,7 +82,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 - IoT device data management
 
 ## 🌍 AWS Global Infrastructure
-AWS global infrastructure is the foundation that enables cloud services to be delivered securely, reliably, and with low latency. It’s made up of:
+- AWS global infrastructure is the foundation that enables cloud services to be delivered securely, reliably, and with low latency. It’s made up of:
 1. **Regions**
 2. **Availability Zones (AZs)**
 3. **Edge Locations**
