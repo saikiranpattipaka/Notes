@@ -2183,11 +2183,11 @@ kubectl get limitrange -n <namespace>
 ```
 ### 📋 9. Useful Commands Recap
 |Command	                        |Purpose                             |
-|-----------------------------------|------------------------------------|
+|---------------------------------|------------------------------------|
 |`kubectl describe pod <pod>`	    |Detailed info and events            |
 |`kubectl logs <pod>`	            |Check app/container logs            |
 |`kubectl get events`	            |View recent cluster events          |
-|`kubectl top pod/node`	            |Resource usage                      |
+|`kubectl top pod/node`	          |Resource usage                      |
 |`kubectl exec -it <pod>`	        |Exec into pod                       |
 |`kubectl rollout status`	        |Monitor deployment rollouts         |
 |`kubectl get svc,ep`	            |Check service and endpoints         |
@@ -2262,7 +2262,7 @@ kubectl create secret docker-registry my-registry-secret \
   --docker-email=<your-email>
 ```
 4. Check Node Connectivity
-If nodes can't reach the image registry due to network issues, the image pull will fail.
+- If nodes can't reach the image registry due to network issues, the image pull will fail.
 
 - Try running:
 ```
