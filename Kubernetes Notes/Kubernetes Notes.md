@@ -2221,8 +2221,8 @@ my-app-pod       0/1     ImagePullBackOff   0          2m
 |Image deleted or unavailable   |Image has been removed or registry is down|
 
 ### 🔍 How to Troubleshoot ImagePullBackOff
-1. Check Pod Events
-- Use `describe` to see detailed error messages.
+#### 1. Check Pod Events
+Use `describe` to see detailed error messages.
 ```
 kubectl describe pod <pod-name>
 ```
@@ -2233,8 +2233,8 @@ Back-off pulling image "myrepo/myimage:tag"
 ```
 These messages will usually give the exact reason.
 
-2. Verify Image Name and Tag
-- Check spelling of the image name and tag in your Deployment, Pod, or StatefulSet YAML.
+#### 2. Verify Image Name and Tag
+Check spelling of the image name and tag in your Deployment, Pod, or StatefulSet YAML.
 - If using DockerHub, the correct format is:
   - `nginx` (official image)
   - `username/image:tag` (user image)
@@ -2242,7 +2242,7 @@ These messages will usually give the exact reason.
 ```
 docker pull <image-name>
 ```
-3. Check Image Registry Access
+#### 3. Check Image Registry Access
 - **Public Registries** (e.g., DockerHub): Can be rate-limited or blocked if you exceed usage.
 
 - **Private Registries** (e.g., AWS ECR, GitHub Container Registry, GCR):
@@ -2263,8 +2263,8 @@ kubectl create secret docker-registry my-registry-secret \
   --docker-password=<your-password> \
   --docker-email=<your-email>
 ```
-4. Check Node Connectivity
-- If nodes can't reach the image registry due to network issues, the image pull will fail.
+#### 4. Check Node Connectivity
+If nodes can't reach the image registry due to network issues, the image pull will fail.
 
 - Try running:
 ```
@@ -2273,8 +2273,8 @@ kubectl exec -it <any-pod> -- curl <registry-url>
 - Ensure your nodes have internet access.
 - Check DNS resolution if using FQDNs in image names.
 
-5. Check DockerHub Rate Limits
-- For unauthenticated pulls:
+#### 5. Check DockerHub Rate Limits
+For unauthenticated pulls:
 - 100 pulls per 6 hours per IP (for anonymous users)
 - 200 pulls per 6 hours (for free authenticated accounts)
 
@@ -2282,8 +2282,8 @@ To fix:
 - Use DockerHub login credentials with an imagePullSecret.
 - Switch to another registry like GitHub Packages, ECR, or GCR.
 
-6. Node Issues
-- If the node is misconfigured or lacks storage, pulling the image can fail.
+#### 6. Node Issues
+If the node is misconfigured or lacks storage, pulling the image can fail.
 
  - Check node status:
 ```
