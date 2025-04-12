@@ -2290,14 +2290,15 @@ kubectl describe node <node-name>
 ```
 - Check disk space and internet connectivity.
 
-✅ Fix `ImagePullBackOff`
+#### ✅ Fix `ImagePullBackOff`
 |Fix	                                |How to Do It                                |
-|✅ Correct image name/tag	          |Double-check DockerHub or registry          |
-|✅ Use correct imagePullSecret	      |Add secret + reference in Pod spec          |
-|✅ Ensure node internet access	      |Test from pod or node                       |
-|✅ Authenticate to DockerHub        |Avoid rate limits                           |
-|✅ Use private image registries	    |Push your image to trusted registry         |
-|✅ Check proxy settings	            |Ensure K8s nodes can reach outside networks |
+|-------------------------------------|--------------------------------------------|
+|Correct image name/tag	              |Double-check DockerHub or registry          |
+|Use correct imagePullSecret	        |Add secret + reference in Pod spec          |
+|Ensure node internet access	        |Test from pod or node                       |
+|Authenticate to DockerHub            |Avoid rate limits                           |
+|Use private image registries	        |Push your image to trusted registry         |
+|Check proxy settings	                |Ensure K8s nodes can reach outside networks |
  
 #### 🧪 Example: Correct Deployment with Secret
 ```
