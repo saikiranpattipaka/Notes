@@ -97,10 +97,12 @@ Like renting an apartment instead of buying a house. You use what you need and p
 
 **🌐 AWS Regions**
 - A Region is a geographical area with multiple, physically separated, and isolated Availability Zones.
+
 **📌 Key Points:**
 - Each region is a separate geographical area (e.g., `us-east-1` = N. Virginia).
 - Regions are completely isolated from each other to ensure fault tolerance and stability.
 - Users choose regions based on data residency, latency, and compliance needs.
+
 **🧠 Examples:**
 - `us-east-1` → N. Virginia
 - `us-west-2` → Oregon
@@ -109,6 +111,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 
 **🏢 Availability Zones (AZs)**
 - An Availability Zone is one or more data centers within a region, equipped with independent power, cooling, and networking, connected via low-latency links.
+
 **📌 Key Points:**
 - Each Region has **2–6 AZs.**
 - AZs offer **fault isolation**, but **interconnected** with other AZs in the same region.
@@ -116,6 +119,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 
 **📦 Edge Locations**
 - Edge Locations are data centers that AWS uses to deliver content via services like **Amazon CloudFront** (CDN), **AWS Global Accelerator**, and **Route 53**.
+
 **📌 Key Points:**
 - Located closer to end users for low-latency delivery.
 - Used for caching, DNS, and DDoS protection.
@@ -123,6 +127,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 
 **📍 Local Zones**
 - AWS Local Zones bring AWS services closer to **large metropolitan areas**, reducing latency for applications that require real-time responses.
+
 **📌 Key Points:**
 - Extend your VPC to Local Zones.
 - Useful for applications like gaming, media streaming, AR/VR, machine learning inference, etc.
@@ -130,6 +135,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 
 **📡 AWS Wavelength Zones**
 - Wavelength Zones bring AWS services to the edge of **5G networks**, allowing developers to build ultra-low-latency applications for **mobile and connected devices.**
+
 **📌 Use Cases:**
 - Real-time gaming
 - Live video streaming
@@ -138,6 +144,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 
 **🏭 AWS Outposts**
 - AWS Outposts is a **fully managed service** that extends AWS infrastructure, services, APIs, and tools to on-premises environments.
+
 **📌 Key Points:**
 - Offers a hybrid cloud model.
 - Use cases include low-latency workloads, data residency requirements, local data processing.
