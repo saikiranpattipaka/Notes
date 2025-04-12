@@ -2156,9 +2156,9 @@ kubectl auth can-i get pods --as=system:serviceaccount:<namespace>:<serviceaccou
 #### ✅ Fixing CrashLoopBackOff
 - Check logs and describe pod.
 - Check for:
- - App-level errors.
- - Readiness/liveness probe failures.
- - Resource limits causing OOM kills.
+  - App-level errors.
+  - Readiness/liveness probe failures.
+  - Resource limits causing OOM kills.
 
 #### ✅ Fixing ImagePullBackOff
 - Check:
