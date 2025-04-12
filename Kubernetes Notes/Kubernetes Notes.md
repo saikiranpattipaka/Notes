@@ -2015,3 +2015,314 @@ While similar to canary deployments, A/B testing is focused more on user experim
 
 6. Shadow Deployment Strategy
 In a shadow deployment, the new version of an application is deployed alongside the current version, but it does not serve actual user traffic. Instead, a copy of incoming traffic is mirrored to the shadow version to test how it behaves under real-world conditions. This approach allows developers and operations teams to assess performance, error rates, and overall behavior of the new version without exposing it to users. Shadow deployments are typically used with service meshes like Istio, which allow easy traffic mirroring. Although this strategy is safe and powerful, it requires additional resources since both versions are processing traffic, and it doesn’t allow full validation of end-to-end behavior because responses from the shadow version are ignored.
+
+### 🛠️ Kubernetes Troubleshooting
+Troubleshooting in Kubernetes involves identifying and resolving issues that occur within the cluster, including problems with Pods, Nodes, Deployments, Networking, Services, and more. Understanding where to look, how to interpret logs, and which commands to use is key to resolving issues efficiently.
+
+### 🔍 1. Pod Troubleshooting
+#### ❗ Common Issues:
+- Pods stuck in `Pending`, `CrashLoopBackOff`, `ImagePullBackOff`, or `Terminating`.
+
+### ✅ Steps to Troubleshoot:
+1. Check Pod status
+```
+kubectl get pods -n <namespace>
+```
+2. Describe the Pod (events + scheduling info)
+```
+kubectl describe pod <pod-name> -n <namespace>
+```
+3. Check Pod logs (for containers running or crashed)
+```
+kubectl logs <pod-name> -c <container-name> -n <namespace>
+```
+4. Check init containers or sidecars
+- These can block the main container from starting.
+```
+kubectl describe pod <pod-name>
+```
+5. Restart count > 0?
+- Indicates a crash loop.
+- Check logs and readiness/liveness probes.
+
+### 🧱 2. Deployment Issues
+#### ❗ Symptoms:
+- Deployment stuck in `progressing`, not scaling up/down properly, or not updating pods.
+
+### ✅ Troubleshooting Tips:
+1. Check deployment status
+```
+kubectl get deployments -n <namespace>
+kubectl describe deployment <deployment-name>
+```
+2. Look at ReplicaSet status
+```
+kubectl get rs -n <namespace>
+```
+3. Rollout history and undo
+```
+kubectl rollout history deployment/<deployment-name>
+kubectl rollout undo deployment/<deployment-name>
+```
+4. Check strategy and probe configs
+- Misconfigured liveness/readiness probes can block updates.
+
+### 🖥️ 3. Node Issues
+#### ❗ Symptoms:
+- Pods stuck in Pending.
+- Node in NotReady state.
+
+### ✅ Troubleshooting Steps:
+1. Check node status
+```
+kubectl get nodes
+kubectl describe node <node-name>
+```
+2. Check node resource availability
+- Are CPU, memory, disk full?
+
+3. Check taints and labels
+```
+kubectl describe node <node-name> | grep -A 5 Taints
+```
+4. Check kubelet status on the node
+```
+systemctl status kubelet
+journalctl -u kubelet
+```
+### 🌐 4. Networking Issues
+#### ❗ Common Problems:
+- Pods can't reach each other.
+- Service is not reachable.
+- DNS not resolving.
+
+### ✅ Troubleshooting Commands:
+1. Check if Services and Endpoints exist
+```
+kubectl get svc -n <namespace>
+kubectl get endpoints -n <namespace>
+```
+2. Exec into Pod and test networking
+```
+kubectl exec -it <pod-name> -- /bin/sh
+curl <service-name>.<namespace>.svc.cluster.local
+```
+3. Check CoreDNS logs
+```
+kubectl logs -n kube-system -l k8s-app=kube-dns
+```
+4. Check NetworkPolicy restrictions
+```
+kubectl get networkpolicy -n <namespace>
+```
+### 🧰 5. Persistent Volume (PV) & Storage Issues
+#### ❗ Symptoms:
+- Pod stuck in `ContainerCreating` or `Pending` due to volume issues.
+
+### ✅ Steps:
+1. Check PVC and PV status
+```
+kubectl get pvc -n <namespace>
+kubectl describe pvc <pvc-name>
+```
+2. Verify storage class and provisioner
+```
+kubectl get sc
+```
+3. Look at events related to volume mounting
+```
+kubectl describe pod <pod-name>
+```
+### 🔐 6. RBAC & Permission Issues
+#### ❗ Symptoms:
+- Access denied errors in logs.
+- “Forbidden” errors when using kubectl.
+
+### ✅ Checklist:
+1. Check ServiceAccount assigned to Pod
+```
+kubectl get pod <pod-name> -o jsonpath="{.spec.serviceAccountName}"
+```
+2. Verify RoleBindings/ClusterRoleBindings
+```
+kubectl get rolebinding -A
+kubectl describe rolebinding <rb-name> -n <namespace>
+```
+4. Test with impersonation
+```
+kubectl auth can-i get pods --as=system:serviceaccount:<namespace>:<serviceaccount>
+```
+### 🔧 7. CrashLoopBackOff & ImagePullBackOff
+#### ✅ Fixing CrashLoopBackOff
+- Check logs and describe pod.
+- Check for:
+ - App-level errors.
+ - Readiness/liveness probe failures.
+ - Resource limits causing OOM kills.
+
+#### ✅ Fixing ImagePullBackOff
+- Check:
+ - Image name, tag, registry.
+ - Secret for private repo access.
+ - Internet/DNS access from node.
+
+### 📈 8. Resource Limits & Quotas
+#### ❗ Issues:
+- Pods evicted or not scheduled.
+- “Exceeded quota” errors.
+
+#### ✅ Debug:
+1. Describe Pod for resource issues
+2. Check Namespace ResourceQuota
+```
+kubectl get resourcequota -n <namespace>
+```
+3. Check LimitRanges
+```
+kubectl get limitrange -n <namespace>
+```
+### 📋 9. Useful Commands Recap
+|Command	                        |Purpose                             |
+|-----------------------------------|------------------------------------|
+|`kubectl describe pod <pod>`	    |Detailed info and events            |
+|`kubectl logs <pod>`	            |Check app/container logs            |
+|`kubectl get events`	            |View recent cluster events          |
+|`kubectl top pod/node`	            |Resource usage                      |
+|`kubectl exec -it <pod>`	        |Exec into pod                       |
+|`kubectl rollout status`	        |Monitor deployment rollouts         |
+|`kubectl get svc,ep`	            |Check service and endpoints         |
+|`kubectl get pvc,pv`	            |Check volume issues                 |
+|`kubectl auth can-i`	            |Check RBAC permissions              |
+
+### 🧠 Pro Tips
+- Always check `kubectl describe` for Events—it gives great context.
+- Use Namespaces to scope your debugging.
+- Use Lens, K9s, or Octant for visual troubleshooting.
+- Enable logging and monitoring (e.g., ELK stack, Prometheus + Grafana, Loki) for better visibility.
+
+### ❓ImagePullBackOff
+ImagePullBackOff is a Pod status that indicates Kubernetes tried to pull a container image from a container registry (like DockerHub, Amazon ECR, or a private registry) but failed. Kubernetes will keep retrying, with increasing delay (back-off), hence the term BackOff.
+
+It typically appears like this:
+```
+kubectl get pods
+
+NAME             READY   STATUS             RESTARTS   AGE
+my-app-pod       0/1     ImagePullBackOff   0          2m
+```
+### 🚨 Common Causes of ImagePullBackOff
+|🤔 Cause                         |Description                               |
+|❌ Incorrect image name or tag	 |Misspelled image name or non-existent tag |
+|🔒 Private container registry 	  |Missing authentication secrets            |
+|🌐 No internet/DNS issues	      |Node can't reach registry                 |
+|❗ Rate limiting (Docker Hub)	 |Too many unauthenticated pulls            |
+|🔍 Image deleted or unavailable  |Image has been removed or registry is down|
+
+### 🔍 How to Troubleshoot ImagePullBackOff
+1. Check Pod Events
+Use `describe` to see detailed error messages.
+```
+kubectl describe pod <pod-name>
+```
+Look for messages like:
+```
+Failed to pull image "myrepo/myimage:tag": rpc error: ...
+Back-off pulling image "myrepo/myimage:tag"
+```
+These messages will usually give the exact reason.
+
+2. Verify Image Name and Tag
+- Check spelling of the image name and tag in your Deployment, Pod, or StatefulSet YAML.
+- If using DockerHub, the correct format is:
+ - `nginx` (official image)
+ - `username/image:tag` (user image)
+- Try pulling the image manually:
+```
+docker pull <image-name>
+```
+3. Check Image Registry Access
+- **Public Registries** (e.g., DockerHub): Can be rate-limited or blocked if you exceed usage.
+
+- **Private Registries** (e.g., AWS ECR, GitHub Container Registry, GCR):
+ - Requires imagePullSecrets.
+ - Make sure your secret exists and is referenced properly.
+
+Example:
+```
+spec:
+  imagePullSecrets:
+    - name: my-registry-secret
+```
+To create a secret:
+```
+kubectl create secret docker-registry my-registry-secret \
+  --docker-server=<registry-url> \
+  --docker-username=<your-username> \
+  --docker-password=<your-password> \
+  --docker-email=<your-email>
+```
+4. Check Node Connectivity
+If nodes can't reach the image registry due to network issues, the image pull will fail.
+
+- Try running:
+```
+kubectl exec -it <any-pod> -- curl <registry-url>
+```
+- Ensure your nodes have internet access.
+- Check DNS resolution if using FQDNs in image names.
+
+5. Check DockerHub Rate Limits
+For unauthenticated pulls:
+- 100 pulls per 6 hours per IP (for anonymous users)
+- 200 pulls per 6 hours (for free authenticated accounts)
+
+To fix:
+- Use DockerHub login credentials with an imagePullSecret.
+- Switch to another registry like GitHub Packages, ECR, or GCR.
+
+6. Node Issues
+If the node is misconfigured or lacks storage, pulling the image can fail.
+
+- Check node status:
+```
+kubectl get nodes
+kubectl describe node <node-name>
+```
+- Check disk space and internet connectivity.
+
+✅ Fix `ImagePullBackOff`
+|Fix	                                |How to Do It                                |
+|✅ Correct image name/tag	          |Double-check DockerHub or registry          |
+|✅ Use correct imagePullSecret	      |Add secret + reference in Pod spec          |
+|✅ Ensure node internet access	      |Test from pod or node                       |
+|✅ Authenticate to DockerHub          |Avoid rate limits                           |
+|✅ Use private image registries	      |Push your image to trusted registry         |
+|✅ Check proxy settings	              |Ensure K8s nodes can reach outside networks |
+ 
+#### 🧪 Example: Correct Deployment with Secret
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: private-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: private-app
+  template:
+    metadata:
+      labels:
+        app: private-app
+    spec:
+      containers:
+      - name: app
+        image: myregistry.com/myteam/myimage:latest
+      imagePullSecrets:
+      - name: my-registry-secret
+```
+#### 🧠 Pro Tips
+- Always run `kubectl describe pod <pod>` — it shows the real error.
+- If using GitOps (e.g., ArgoCD), ensure secrets are correctly synced and referenced.
+- Use `kubectl get events` to see all image pull errors in the namespace.
+- Try to pull the image manually on a local machine or directly on the node (if allowed).
