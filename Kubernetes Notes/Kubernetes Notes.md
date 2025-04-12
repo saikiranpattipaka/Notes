@@ -2069,8 +2069,8 @@ kubectl rollout undo deployment/<deployment-name>
 
 ### 🖥️ 3. Node Issues
 #### ❗ Symptoms:
-- Pods stuck in Pending.
-- Node in NotReady state.
+- Pods stuck in `Pending`.
+- Node in `NotReady` state.
 
 ### ✅ Troubleshooting Steps:
 1. Check node status
