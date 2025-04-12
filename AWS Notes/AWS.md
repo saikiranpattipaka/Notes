@@ -3,7 +3,7 @@
 </p>
 
 ### ☁️ Cloud Computing
-- Cloud computing is the delivery of computing services—servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ("the cloud") to offer faster innovation, flexible resources, and economies of scale.
+- Cloud computing is the delivery of computing services—servers, storage, databases, networking, software, analytics, and intelligence—over the Internet (**the cloud**) to offer faster innovation, flexible resources, and economies of scale.
 
 ### 📦 Real-Life Analogy:
 Like renting an apartment instead of buying a house. You use what you need and pay as you go.
