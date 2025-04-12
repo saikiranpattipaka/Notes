@@ -2162,9 +2162,9 @@ kubectl auth can-i get pods --as=system:serviceaccount:<namespace>:<serviceaccou
 
 #### ✅ Fixing ImagePullBackOff
 - Check:
- - Image name, tag, registry.
- - Secret for private repo access.
- - Internet/DNS access from node.
+  - Image name, tag, registry.
+  - Secret for private repo access.
+  - Internet/DNS access from node.
 
 ### 📈 8. Resource Limits & Quotas
 #### ❗ Issues:
