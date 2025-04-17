@@ -273,6 +273,7 @@ Like renting an apartment instead of buying a house. You use what you need and p
 #### 7. IAM Access Analyzer
 - Helps identify resources shared with external accounts or organizations.
 - Generates findings if a policy allows unintended access.
+- Good for auditing and compliance.
 - Works with:
   - S3
   - IAM roles and policies
