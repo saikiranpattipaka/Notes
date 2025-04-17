@@ -222,6 +222,12 @@ Like renting an apartment instead of buying a house. You use what you need and p
   }]
 }
 ```
+- Version: Policy language version
+- Statement: One or more individual permissions
+- Effect: `Allow` or `Deny`
+- Action: What actions are allowed (e.g., `s3:ListBucket`)
+- Resource: Which resource the action applies to
+
 ➤ Types of Policies
 - Identity-based policies – attached to users, groups, roles
 - Resource-based policies – attached to resources like S3, Lambda
