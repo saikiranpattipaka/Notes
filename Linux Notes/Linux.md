@@ -1,4 +1,4 @@
-### Linux
+# Linux
 - Linux is a free and open-source operating system based on Unix.
 - Created by Linus Torvalds in 1991.
 - It uses a monolithic kernel, meaning the core of the OS handles CPU, memory, device drivers, and system calls.
