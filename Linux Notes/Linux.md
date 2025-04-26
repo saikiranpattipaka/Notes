@@ -144,63 +144,9 @@ Security in Linux is enforced by several components and techniques:
   - Linux Mint (User-friendly desktop)
 
 ### Linux Boot Process
-
-+-----------------------------+
-|       1. BIOS / UEFI       |
-+-----------------------------+
-| - Power-On Self Test (POST)|
-| - Hardware initialization  |
-| - Searches for bootloader  |
-+-----------------------------+
-              |
-              v
-+-----------------------------+
-|        2. Bootloader        |
-|       (GRUB, LILO, etc.)    |
-+-----------------------------+
-| - Presents boot menu        |
-| - Loads kernel (vmlinuz)    |
-| - Loads initrd/initramfs    |
-+-----------------------------+
-              |
-              v
-+-----------------------------+
-|     3. Linux Kernel Init    |
-+-----------------------------+
-| - Initializes memory & CPU  |
-| - Mounts root filesystem    |
-| - Loads drivers (modules)   |
-| - Starts init system        |
-+-----------------------------+
-              |
-              v
-+-----------------------------+
-|       4. Init System        |
-|   (systemd, SysVinit, etc.) |
-+-----------------------------+
-| - First user-space process  |
-| - PID 1                     |
-| - Starts essential services |
-| - Targets/runlevels defined |
-+-----------------------------+
-              |
-              v
-+-----------------------------+
-|    5. System Services/DM    |
-+-----------------------------+
-| - Network, SSH, syslog, etc.|
-| - Starts display manager    |
-|   (e.g., GDM, LightDM)      |
-+-----------------------------+
-              |
-              v
-+-----------------------------+
-|      6. Login Prompt        |
-+-----------------------------+
-| - CLI login (tty/getty)     |
-| - GUI login (Display Mgr)   |
-| - Loads user session        |
-+-----------------------------+
+<p align="center">
+  <img src="Images/Boot Process.gif" width="800" height="400" />
+</p>
 
 #### 🔌 1. BIOS/UEFI (Firmware Initialization)
   - Runs immediately after powering on the system.
