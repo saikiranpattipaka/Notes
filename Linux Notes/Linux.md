@@ -16,49 +16,9 @@
 - Stability & Performance: Common in critical systems due to reliability.
 
 ### Core Components of Linux
-
-                                +----------------------+
-                                |     User Space       |
-                                +----------------------+
-                                         |
-         +-------------------------------+--------------------------------+
-         |                               |                                |
-+------------------+           +--------------------+           +-------------------+
-| Applications &   |           |    Libraries       |           | System Call       |
-| Utilities        |           |                    |           | Interface         |
-| - e.g., `ls`,    |           | - e.g., `glibc`    |           | - Bridge between  |
-| `ps`, `top`      |           |                    |           |   user-space and  |
-|                  |           |                    |           |  kernel for system|
-+------------------+           +--------------------+           |  resource requests|
-                                         |                      +-------------------+
-                                         |
-                            +-------------------------------+
-                            |           Kernel              |
-                            +-------------------------------+
-                                         |
-          +------------------------------+-------------------------------+
-          |                              |                               |
- +------------------+          +-------------------+          +--------------------+
- | Process          |          | Device Drivers    |          | File System        |
- | Management       |          | - Communication   |          | - Manages file     |
- | - Scheduling,    |          |   with hardware   |          |   storage & access |
- |   creation,      |          |   devices         |          | - Supports `ext4`, |
- |   termination    |          |                   |          |   `XFS`, `Btrfs`   |
- +------------------+          +-------------------+          +--------------------+
-                                         |
-                            +-------------------------------+
-                            |        Networking             |
-                            | - Manages network protocols   |
-                            |   like TCP/IP, communication  |
-                            |   between systems             |
-                            +-------------------------------+
-                                         |
-                            +-------------------------------+
-                            |           Security            |
-                            | - File permissions            |
-                            | - User authentication         |
-                            | - SELinux / AppArmor security |
-                            +-------------------------------+
+<p align="center">
+  <img src="Images/Linux Architecture.jpg" width="800" height="400" />
+</p>
 
 #### 1. The Linux Kernel
 The kernel is the core of the Linux operating system, acting as an interface between the hardware and software components. It manages system resources such as CPU, memory, and input/output devices.
