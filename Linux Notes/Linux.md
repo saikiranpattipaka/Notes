@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Images/Linux Logo.webp" width="800" height="400" />
+</p>
+
 # Linux
 - Linux is a free and open-source operating system based on Unix.
 - Created by Linus Torvalds in 1991.
