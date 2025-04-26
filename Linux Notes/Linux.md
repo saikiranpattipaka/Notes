@@ -677,12 +677,13 @@ A process is any program or command being executed. Each process has a:
 A package is a bundle containing compiled software, configuration files, and metadata.
 - Each Linux distro uses its own package manager:
 
-Distro	             Package Manager	      File Extension
---------------------------------------------------------------
-Ubuntu/Debian	    `apt`, `dpkg`	         `.deb`
-RHEL/CentOS/Fedora	`yum`, `dnf`, `rpm`	     `.rpm`
-Arch Linux	        `pacman`	             `.pkg.tar.zst`
-OpenSUSE	        `zypper`	             `.rpm`
+|Distro	            | Package Manager	       |File Extension  |
+--------------------------------------------------------------|
+|Ubuntu/Debian	    |`apt`, `dpkg`	         | `.deb`         |
+|RHEL/CentOS/Fedora	|`yum`, `dnf`, `rpm`	   |  `.rpm`        |
+|Arch Linux	        |`pacman`	               |`.pkg.tar.zst`  |
+|OpenSUSE	          |`zypper`	               |`.rpm`          |
+|-------------------------------------------------------------|
 
 #### Debian/Ubuntu-Based Systems – `apt`
 - `sudo apt update`	    Refresh package index
