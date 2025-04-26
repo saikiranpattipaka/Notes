@@ -145,7 +145,7 @@ Security in Linux is enforced by several components and techniques:
 
 ### Linux Boot Process
 <p align="center">
-  <img src="Images/Boot Process.gif" width="800" height="400" />
+  <img src="Images/Boot Process.gif" width="800" height="800" />
 </p>
 
 #### 🔌 1. BIOS/UEFI (Firmware Initialization)
