@@ -205,25 +205,25 @@ Security in Linux is enforced by several components and techniques:
 ### Linux File System Structure (Folder Hierarchy)
 Linux uses a tree-like hierarchical file system that starts at the root directory `/`.
 
-`/`	        Root directory of the entire file system
-`/bin`	    Essential binary executables (e.g., `ls`, `cp`)
-`/boot`	    Bootloader files (like `grub`, `vmlinuz`)
-`/dev`	    Device files (e.g., `/dev/sda`)
-`/etc`	    Configuration files for the system and applications
-`/home`	    User home directories (e.g., `/home/username`)
-`/lib`	    Essential shared libraries
-`/media`	Mounted media like USB drives
-`/mnt`	    Temporarily mounted filesystems
-`/opt`	    Optional or third-party software
-`/proc`	    Virtual filesystem for system information (e.g., `/proc/cpuinfo`)
-`/root`	    Home directory for root user
-`/run`	    Runtime data for processes
-`/sbin`	    System binaries used by root/admin
-`/srv`	    Data for services like FTP, HTTP
-`/sys`	    Interface to kernel devices
-`/tmp`	    Temporary files (auto-deleted)
-`/usr`	    User programs and utilities
-`/var`	    Variable data like logs, mail, spool files
+- `/`	        Root directory of the entire file system
+- `/bin`	    Essential binary executables (e.g., `ls`, `cp`)
+- `/boot`	    Bootloader files (like `grub`, `vmlinuz`)
+- `/dev`	    Device files (e.g., `/dev/sda`)
+- `/etc`	    Configuration files for the system and applications
+- `/home`	    User home directories (e.g., `/home/username`)
+- `/lib`	    Essential shared libraries
+- `/media`	Mounted media like USB drives
+- `/mnt`	    Temporarily mounted filesystems
+- `/opt`	    Optional or third-party software
+- `/proc`	    Virtual filesystem for system information (e.g., `/proc/cpuinfo`)
+- `/root`	    Home directory for root user
+- `/run`	    Runtime data for processes
+- `/sbin`	    System binaries used by root/admin
+- `/srv`	    Data for services like FTP, HTTP
+- `/sys`	    Interface to kernel devices
+- `/tmp`	    Temporary files (auto-deleted)
+- `/usr`	    User programs and utilities
+- `/var`	    Variable data like logs, mail, spool files
 
 ### Linux Command Line
 - The command line interface (CLI) is a text-based interface for interacting with the operating system.
