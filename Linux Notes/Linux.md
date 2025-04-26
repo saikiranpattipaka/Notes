@@ -678,7 +678,7 @@ A package is a bundle containing compiled software, configuration files, and met
 - Each Linux distro uses its own package manager:
 
 |Distro	            | Package Manager	       |File Extension  |
---------------------------------------------------------------|
+|-------------------|------------------------|----------------|
 |Ubuntu/Debian	    |`apt`, `dpkg`	         | `.deb`         |
 |RHEL/CentOS/Fedora	|`yum`, `dnf`, `rpm`	   |  `.rpm`        |
 |Arch Linux	        |`pacman`	               |`.pkg.tar.zst`  |
