@@ -17,7 +17,7 @@
 
 ### Core Components of Linux
 <p align="center">
-  <img src="Images/Linux Architecture.jpg" width="800" height="600" />
+  <img src="Images/Linux Architecture.jpg" width="800" height="700" />
 </p>
 
 #### 1. The Linux Kernel
