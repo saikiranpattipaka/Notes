@@ -683,7 +683,7 @@ A package is a bundle containing compiled software, configuration files, and met
 |RHEL/CentOS/Fedora	|`yum`, `dnf`, `rpm`	   |  `.rpm`        |
 |Arch Linux	        |`pacman`	               |`.pkg.tar.zst`  |
 |OpenSUSE	          |`zypper`	               |`.rpm`          |
-|-------------------------------------------------------------|
+
 
 #### Debian/Ubuntu-Based Systems – `apt`
 - `sudo apt update`	    Refresh package index
