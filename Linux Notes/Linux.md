@@ -15,7 +15,7 @@
 - Security: Based on file permissions, user roles, and tools like SELinux.
 - Stability & Performance: Common in critical systems due to reliability.
 
-### Core Components of Linux
+### Linux Architecture
 <p align="center">
   <img src="Images/Linux Architecture.jpg" width="800" height="700" />
 </p>
