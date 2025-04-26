@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images/Linux Logo.webp" width="800" height="400" />
+  <img src="Images/Linux Logo.webp" width="90" height="90" />
 </p>
 
 # Linux
