@@ -404,21 +404,21 @@ Linux uses a tree-like hierarchical file system that starts at the root director
 `exit`	Exit the shell session
 
 ### File and Directory Commands
-`mkdir dirname`	    Create a directory
-`touch filename`	Create an empty file
-`cp src dest`	    Copy files or directories
-`mv src dest`	    Move or rename files/directories
-`rm file`	        Remove a file
-`rm -r folder`	    Remove a directory recursively
-`rmdir folder`	    Remove an empty directory
+- `mkdir dirname`	    Create a directory
+- `touch filename`	Create an empty file
+- `cp src dest`	    Copy files or directories
+- `mv src dest`	    Move or rename files/directories
+- `rm file`	        Remove a file
+- `rm -r folder`	    Remove a directory recursively
+- `rmdir folder`	    Remove an empty directory
 
 ### Viewing Files
-`cat file`	    Print entire file
-`less file`	    Scrollable view
-`more file`	    Page-by-page display
-`head file`	    Show first 10 lines
-`tail file`	    Show last 10 lines
-`tail -f file`	Live update view (great for logs)
+- `cat file`	    Print entire file
+- `less file`	    Scrollable view
+- `more file`	    Page-by-page display
+- `head file`	    Show first 10 lines
+- `tail file`	    Show last 10 lines
+- `tail -f file`	Live update view (great for logs)
 
 ### CLI Tips
 - Tab Autocomplete: Press `Tab` to auto-complete files/commands.
@@ -429,9 +429,9 @@ Linux uses a tree-like hierarchical file system that starts at the root director
   - `!grep` – last command starting with `grep`
 
 ### Getting Help
-`man command`	    Manual page
-`command --help`	Quick help
-`info command`	    More detailed help pages
+- `man command`	    Manual page
+- `command --help`	Quick help
+- `info command`	    More detailed help pages
 
 ### Understanding File Permissions
 In Linux, every file and directory has permissions for:
@@ -442,10 +442,10 @@ In Linux, every file and directory has permissions for:
 ```
 -rw-r--r-- 1 user group  1024 Apr 26  notes.txt
 ```
-`-`	    Regular file (`d` for directory)
-`rw`-	Owner: read & write
-`r--`	Group: read-only
-`r--`	Others: read-only
+- `-`	    Regular file (`d` for directory)
+- `rw`-	Owner: read & write
+- `r--`	Group: read-only
+- `r--`	Others: read-only
 
 ### Changing Permissions – `chmod`
 Numeric mode
@@ -459,13 +459,13 @@ chmod 755 script.sh     # rwxr-xr-x
 chmod 644 notes.txt     # rw-r--r--
 ```
 ### File and Directory Types
-`-`	Regular file
-`d`	Directory
-`l`	Symbolic link
-`b`	Block device
-`c`	Character device
-`s`	Socket
-`p`	Named pipe (FIFO)
+- `-`	Regular file
+- `d`	Directory
+- `l`	Symbolic link
+- `b`	Block device
+- `c`	Character device
+- `s`	Socket
+- `p`	Named pipe (FIFO)
 
 ### Working with Links
 - Hard Link `ln original.txt hardlink.txt`
@@ -474,20 +474,20 @@ chmod 644 notes.txt     # rw-r--r--
 - Hard links can’t span file systems or point to directories
 
 ### File Compression
-`tar -cvf file.tar dir/` Create archive
-`tar -xvf file.tar`	     Extract archive
-`gzip file`	             Compress file (creates file.gz)
-`gunzip file.gz`	     Decompress
-`zip file.zip file`	     Create zip
-`unzip file.zip`	     Extract zip
+-`tar -cvf file.tar dir/` Create archive
+- `tar -xvf file.tar`	     Extract archive
+- `gzip file`	             Compress file (creates file.gz)
+- `gunzip file.gz`	     Decompress
+- `zip file.zip file`	     Create zip
+- `unzip file.zip`	     Extract zip
 
 ### Viewing and Displaying Text Files
-`cat file.txt`	    Print file contents to terminal
-`less file.txt`	    Scrollable view (use q to quit)
-`more file.txt`	    View page by page
-`head file.txt`	    Show first 10 lines
-`tail file.txt`	    Show last 10 lines
-`tail -f file.txt`	Real-time updates (log files)
+- `cat file.txt`	    Print file contents to terminal
+- `less file.txt`	    Scrollable view (use q to quit)
+- `more file.txt`	    View page by page
+- `head file.txt`	    Show first 10 lines
+- `tail file.txt`	    Show last 10 lines
+- `tail -f file.txt`	Real-time updates (log files)
 
 ### Editing Text Files
 - Nano: A simple, user-friendly text editor suitable for beginners. Straightforward and intuitive.
@@ -496,13 +496,13 @@ chmod 644 notes.txt     # rw-r--r--
 - Save: `Ctrl + O`
 - Exit: `Ctrl + X`
 #### Nano Keyboard Shortcuts
-`Ctrl + O`	Write file (save)
-`Ctrl + X`	Exit Nano
-`Ctrl + K`	Cut line
-`Ctrl + U`	Paste line
-`Ctrl + W`	Search
-`Ctrl + G`	Help
-`Ctrl + _`	Go to line
+- `Ctrl + O`	Write file (save)
+- `Ctrl + X`	Exit Nano
+- `Ctrl + K`	Cut line
+- `Ctrl + U`	Paste line
+- `Ctrl + W`	Search
+- `Ctrl + G`	Help
+- `Ctrl + _`	Go to line
 
 Vim Editor (Powerful, but advanced)
 - Vim: A powerful, modal, highly configurable text editor based on vi. Ideal for advanced users.
@@ -525,26 +525,26 @@ o        → Open new line below
 `ESC`
 
 💾 Save & Exit
-`:w`	         Save (write)
-`:q`	         Quit
-`:wq` or `ZZ`	 Save and quit
-`:q!`	         Quit without saving
+- `:w`	         Save (write)
+- `:q`	         Quit
+- `:wq` or `ZZ`	 Save and quit
+- `:q!`	         Quit without saving
 
 📦 Navigation in Normal Mode
-`h` `j` `k` `l`	 Move left, down, up, right
-`gg`	         Go to beginning of file
-`G`	             Go to end of file
-`:n`	         Go to line `n`
-`/word`	         Search for `word`
-`n`	             Next search result
+- `h` `j` `k` `l`	 Move left, down, up, right
+- `gg`	         Go to beginning of file
+- `G`	             Go to end of file
+- `:n`	         Go to line `n`
+- `/word`	         Search for `word`
+- `n`	             Next search result
 
 ✂️ Editing Text
-`dd`	    Delete current line
-`yy`	    Yank (copy) current line
-`p`	        Paste below cursor
-`x`	        Delete character under cursor
-`u`	        Undo last change
-`Ctrl + r`	Redo
+- `dd`	    Delete current line
+- `yy`	    Yank (copy) current line
+- `p`	        Paste below cursor
+- `x`	        Delete character under cursor
+- `u`	        Undo last change
+- `Ctrl + r`	Redo
 
 ### Searching with `grep`
 ```
@@ -588,9 +588,9 @@ sed 's/old/new/' file.txt        # Replace first occurrence
 sed 's/old/new/g' file.txt       # Replace all occurrences
 ```
 ### Redirection and Pipes
-`>`	    Redirect output to a file (overwrite)
-`>>`	Append output to file
-`<`	    Use file as input
+- `>`	    Redirect output to a file (overwrite)
+- `>>`	Append output to file
+- `<`	    Use file as input
 ```
 ls -l > files.txt
 cat files.txt | grep ".sh" | sort
@@ -607,36 +607,35 @@ Linux is a multi-user operating system, and every user has:
 - A default shell
 
 ### Adding and Managing Users
-`adduser username`	Add a new user (Debian/Ubuntu)
-`useradd username`	Add user (low-level, needs manual setup)
-`passwd username`	Set or change a user’s password
-`deluser username`	Delete a user (Ubuntu/Debian)
-`userdel username`	Delete a user (RHEL/CentOS)
+- `adduser username`	Add a new user (Debian/Ubuntu)
+- `useradd username`	Add user (low-level, needs manual setup)
+- `passwd username`	Set or change a user’s password
+- `deluser username`	Delete a user (Ubuntu/Debian)
+- `userdel username`	Delete a user (RHEL/CentOS)
 
 ### Modifying Users
-`usermod -aG group user`	    Add user to group
-`usermod -d /new/home user`	    Change home directory
-`usermod -l newname oldname`	Change username
+- `usermod -aG group user`	    Add user to group
+- `usermod -d /new/home user`	    Change home directory
+- `usermod -l newname oldname`	Change username
 
 ### Group Management
 Groups allow multiple users to share permissions.
-
-`groupadd groupname`	         Create a new group
-`groupdel groupname`	         Delete a group
-`groupmod -n newgroup oldgroup`	 Rename a group
-`gpasswd -a user group`	         Add user to a group
-`groups username`	             Show groups of a user
+- `groupadd groupname`	         Create a new group
+- `groupdel groupname`	         Delete a group
+- `groupmod -n newgroup oldgroup`	 Rename a group
+- `gpasswd -a user group`	         Add user to a group
+- `groups username`	             Show groups of a user
 
 ### User Information Files
-`/etc/passwd`	Stores user account info
-`/etc/shadow`	Stores encrypted passwords
-`/etc/group`	Stores group info
-`/etc/gshadow`	Stores secure group info
+- `/etc/passwd`	Stores user account info
+- `/etc/shadow`	Stores encrypted passwords
+- `/etc/group`	Stores group info
+- `/etc/gshadow`	Stores secure group info
 
 ### Switching Users and Becoming Root
-`su`	        Switch to another user
-`su - username`	Login as user with their environment
-`sudo command`	Run a command as another user (usually root)
+- `su`	        Switch to another user
+- `su - username`	Login as user with their environment
+- `sudo command`	Run a command as another user (usually root)
 
 - `sudo` is safer and preferred over `su` in modern distros.
 - Add user to sudoers:
@@ -654,24 +653,24 @@ A process is any program or command being executed. Each process has a:
 - State (running, sleeping, zombie, etc.)
 
 ### Viewing Processes
-`ps`	                Show running processes
-`ps aux`	            Detailed list of all running processes
-`top`	                Real-time process monitor
-`htop`	                Enhanced top (interactive, requires install)
-`pidof process_name`	Find PID of a process
-`pgrep name`	        Find PID by name
+- `ps`	                Show running processes
+- `ps aux`	            Detailed list of all running processes
+- `top`	                Real-time process monitor
+- `htop`	                Enhanced top (interactive, requires install)
+- `pidof process_name`	Find PID of a process
+- `pgrep name`	        Find PID by name
 
 ### Killing Processes
-`kill PID`	    Send termination signal to process
-`kill -9 PID`	Force kill a process
-`pkill name`	Kill by process name
-`killall name`	Kill all processes with the given name
+- `kill PID`	    Send termination signal to process
+- `kill -9 PID`	Force kill a process
+- `pkill name`	Kill by process name
+- `killall name`	Kill all processes with the given name
 
 ### Priority & Niceness
 - Nice value: Controls process priority (range: `-20` to `19`, lower = higher priority)
 
-`nice -n 10 command`	Start a command with lower priority
-`renice -n 5 -p 1234`	Change priority of running process
+- `nice -n 10 command`	Start a command with lower priority
+- `renice -n 5 -p 1234`	Change priority of running process
 
 ## Package Management
 ### Package
@@ -686,14 +685,14 @@ Arch Linux	        `pacman`	             `.pkg.tar.zst`
 OpenSUSE	        `zypper`	             `.rpm`
 
 #### Debian/Ubuntu-Based Systems – `apt`
-`sudo apt update`	    Refresh package index
-`sudo apt upgrade`	    Upgrade all packages
-`sudo apt install pkg`	Install a package
-`sudo apt remove pkg`	Remove a package
-`sudo apt purge pkg`	Remove with config files
-`sudo apt autoremove`	Remove unused dependencies
-`apt list --installed`	Show installed packages
-`apt search name`	    Search for a package
+- `sudo apt update`	    Refresh package index
+- `sudo apt upgrade`	    Upgrade all packages
+- `sudo apt install pkg`	Install a package
+- `sudo apt remove pkg`	Remove a package
+- `sudo apt purge pkg`	Remove with config files
+- `sudo apt autoremove`	Remove unused dependencies
+- `apt list --installed`	Show installed packages
+- `apt search name`	    Search for a package
 Similarly for Red Hat/CentOS-Based Systems – `yum` and `dnf`
 - `yum` is traditional; `dnf` is the newer default in Fedora and RHEL 8
 
@@ -710,33 +709,32 @@ Linux is widely used for networking tasks, whether it's for web servers, routers
 - DNS (Domain Name System): Resolves domain names to IP addresses.
 
 ### Checking Network Configuration
-`ifconfig`	    Display network interfaces (older, replaced by ip)
-`ip a`	        Show all network interfaces
-`ip link`	    Display network interfaces and their status
-`hostname`	    Show or set system hostname
-`hostname -I`	Display IP address
-`nmcli`	        Network manager command-line tool (Ubuntu)
+- `ifconfig`	    Display network interfaces (older, replaced by ip)
+- `ip a`	        Show all network interfaces
+- `ip link`	    Display network interfaces and their status
+- `hostname`	    Show or set system hostname
+- `hostname -I`	Display IP address
+- `nmcli`	        Network manager command-line tool (Ubuntu)
 
 ### Testing Network Connectivity
-`ping host`	        Test connectivity to a host
-`ping 8.8.8.8`	    Test connectivity to Google's DNS server
-`traceroute host`	Show the path packets take to a destination
-`curl url`	        Fetch content from a URL (can check connectivity to websites)
-`nslookup domain`	Query DNS server for domain info
+- `ping host`	        Test connectivity to a host
+- `ping 8.8.8.8`	    Test connectivity to Google's DNS server
+- `traceroute host`	Show the path packets take to a destination
+- `curl url`	        Fetch content from a URL (can check connectivity to websites)
+- `nslookup domain`	Query DNS server for domain info
 
 ### Troubleshooting Network Issues
-
-`netstat -tuln`	Show listening ports and connections
-`ss -tuln`	    Show socket statistics (more modern than `netstat`)
-`ufw status`	Check firewall status (for systems using `ufw`)
-`iptables -L`	List iptables firewall rules (more advanced)
+- `netstat -tuln`	Show listening ports and connections
+- `ss -tuln`	    Show socket statistics (more modern than `netstat`)
+- `ufw status`	Check firewall status (for systems using `ufw`)
+- `iptables -L`	List iptables firewall rules (more advanced)
 
 ### Basic Firewall Configuration – `ufw`
-`sudo ufw enable`	Enable the firewall
-`sudo ufw disable`	Disable the firewall
-`sudo ufw allow 22`	Allow SSH (port 22)
-`sudo ufw deny 80`	Deny HTTP (port 80)
-`sudo ufw status`	Check firewall status
+- `sudo ufw enable`	Enable the firewall
+- `sudo ufw disable`	Disable the firewall
+- `sudo ufw allow 22`	Allow SSH (port 22)
+- `sudo ufw deny 80`	Deny HTTP (port 80)
+- `sudo ufw status`	Check firewall status
 
 ## System Monitoring & Performance Tuning
 
@@ -757,9 +755,9 @@ Monitoring is crucial to ensure that your system is performing optimally and to 
 - `COMMAND`: The command that started the process
 To quit `top`, press `q`.
 
-`htop` is a more user-friendly version of `top` with a colorful, interactive interface.
-`vmstat` command provides insights into system memory, processes, and CPU performance.
-`iostat` Used to monitor CPU performance and I/O statistics
+- `htop` is a more user-friendly version of `top` with a colorful, interactive interface.
+- `vmstat` command provides insights into system memory, processes, and CPU performance.
+- `iostat` Used to monitor CPU performance and I/O statistics
 
 `df` command shows the amount of disk space used and available on mounted filesystems.
 ```
