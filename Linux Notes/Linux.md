@@ -47,17 +47,17 @@
  +------------------+          +-------------------+          +--------------------+
                                          |
                             +-------------------------------+
-                            |        Networking              |
-                            | - Manages network protocols    |
-                            |   like TCP/IP, communication   |
-                            |   between systems              |
+                            |        Networking             |
+                            | - Manages network protocols   |
+                            |   like TCP/IP, communication  |
+                            |   between systems             |
                             +-------------------------------+
                                          |
                             +-------------------------------+
-                            |           Security             |
-                            | - File permissions             |
-                            | - User authentication          |
-                            | - SELinux / AppArmor security  |
+                            |           Security            |
+                            | - File permissions            |
+                            | - User authentication         |
+                            | - SELinux / AppArmor security |
                             +-------------------------------+
 
 #### 1. The Linux Kernel
